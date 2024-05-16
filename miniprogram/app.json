@@ -1,7 +1,6 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/goods-list/index",
         "pages/examples/index",
         "pages/user-center/index",
         "pages/exampleDetail/index",
