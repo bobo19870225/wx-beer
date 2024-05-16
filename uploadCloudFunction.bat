@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Tencent\微信web开发者工具\cli.bat" cloud functions deploy --e beer-1g75udik38f745cf --n quickstartFunctions --r --project "D:\wxMini\beer" --report_first --report
