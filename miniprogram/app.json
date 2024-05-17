@@ -3,7 +3,8 @@
         "pages/index/index",
         "pages/user-center/index",
         "pages/web/index",
-        "pages/order/index"
+        "pages/order/index",
+        "pages/pay-car/index"
     ],
     "window": {
         "backgroundColor": "#F6F6F6",

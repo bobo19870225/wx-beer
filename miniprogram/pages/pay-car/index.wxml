@@ -1,0 +1,48 @@
+<!--pages/pay-car/index.wxml-->
+<view class="container">
+  <!-- 数据加载，显示loading态 -->
+  <block wx:if="{{ isLoading }}">
+    <view class="tip_text">
+      加载中...
+    </view>
+  </block>
+  <!-- 数据加载完毕 -->
+  <block wx:if="{{ !isLoading }}">
+    <!-- 有数据 -->
+    <scroll-view scroll-y="true" style="height: calc(100vh - 60rpx);" wx:if="{{ orderList.length >= 1 }}">
+      <view class="goods-list">
+        <block wx:for="{{ orderList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+          <view class="goods-item">
+            <image class="goods-image" src="../../images/default-goods-image.png" mode="widthFix" />
+            <view class="goods-title">{{ goodsDetail.title }}</view>
+            <view class="goods-bottom-container">
+              <view class="goods-price">
+                <view class="price-symbol">¥</view>
+                <view>{{ goodsDetail.price / 100 }}
+                </view>
+              </view>
+              <view style="color: gray;font-size: 12px;">
+                x{{ goodsDetail.number}}
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view style="position: fixed;bottom: 0;height: 60px;width: 100vw;background-color: white;display: flex;align-items: center;justify-content: space-between;">
+        <view style="margin-left: 16px;">
+          应付{{total}}
+        </view>
+        <view style="margin-right: 16px;">
+          <button style="width: 100px;background-color: rgb(255, 115, 0);color: white;border-radius: 50px;height: 30px;font-size: 14px;line-height: 14px;">
+            去支付
+          </button>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 无数据 -->
+    <block wx:else>
+      <view class="tip_text">暂无数据</view>
+    </block>
+  </block>
+</view>

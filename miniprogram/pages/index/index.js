@@ -79,4 +79,10 @@ Page({
       showOrder: true
     })
   },
+  goToPay(e) {
+    let goodsJ = JSON.stringify(this.data.orderList)
+    wx.navigateTo({
+      url: '/pages/pay-car/index?goods=' + goodsJ
+    })
+  }
 })

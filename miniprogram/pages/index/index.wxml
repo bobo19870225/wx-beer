@@ -10,7 +10,7 @@
   <!-- 数据加载完毕 -->
   <block wx:if="{{ !isLoading }}">
     <!-- 有数据 -->
-    <scroll-view scroll-y="true" style="height: calc(100vh - 60rpx);padding: 0 54rpx;" wx:if="{{ goodsList.length >= 1 }}">
+    <scroll-view scroll-y="true" style="height: calc(100vh - 60rpx);width: 100vw;" wx:if="{{ goodsList.length >= 1 }}">
       <!-- 底部结算 -->
       <view class="order-list" bindtap="openPopup">
         <view>
@@ -24,11 +24,11 @@
         <view wx:else style="margin-left: 12px;">
           请添加菜品
         </view>
-        <view class="order-pay">
+        <button  style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1}}">
           去结算
-        </view>
+        </button>
       </view>
-
+      <!-- 商品列表 -->
       <view class="goods-list">
         <block wx:for="{{ goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
           <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}}">
@@ -52,14 +52,14 @@
         </block>
       </view>
     </scroll-view>
-   
+
     <!-- 无数据 -->
     <block wx:else>
       <view class="tip_text">暂无数据</view>
     </block>
 
-     <!-- 底部弹窗 -->
-     <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
+    <!-- 底部弹窗 -->
+    <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
     <view class="info-bottom" wx:if="{{showOrder}}">
       <view class="row-info">
         <view>
