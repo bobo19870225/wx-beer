@@ -1,9 +1,7 @@
 /**index.wxss**/
 
 page {
-  padding-top: 54rpx;
   background-color: #fff;
-  padding-bottom: 60rpx;
 }
 
 .container {
@@ -23,6 +21,55 @@ page {
 .goods-list {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+}
+
+.order-total {
+  font-size: 36rpx;
+  color: #b15f02;
+}
+
+.order-number {
+  position: absolute;
+  color: white;
+  top: 3px;
+  background-color: #b15f02a4;
+  left: 15px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+
+.order-pay {
+  position: absolute;
+  text-align: center;
+  line-height: 37px;
+  font-size: 14px;
+  right: 0;
+  height: 100%;
+  color: white;
+  width: 90px;
+  background-color: #13227a;
+  border-radius: 0 90px 90px 0;
+}
+
+.order-image {
+  width: 24px;
+}
+
+.order-list {
+  font-size: 28rpx;
+  padding: 0 9px;
+  bottom: 3px;
+  align-items: center;
+  background-color: #dadadac0;
+  z-index: 1000;
+  border-radius: 90px;
+  width: 90%;
+  height: 36px;
+  display: flex;
+  position: fixed;
   flex-wrap: wrap;
 }
 
@@ -80,15 +127,17 @@ page {
   font-size: 24rpx;
 }
 
-.btn-share {
+.btn-add {
+  width: 18px;
+  height: 18px;
+  color: #ffffff;
+}
+
+.goods-flex {
   width: 60px;
-  height: 24px;
-  line-height: 24px;
-  border: 1px solid #07C160;
-  text-align: center;
-  border-radius: 18px;
-  font-size: 28rpx;
-  color: #07C160;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 
@@ -101,4 +150,148 @@ page {
   bottom: 100rpx;
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* 蒙层 */
+.popup-box {
+  position: absolute;
+  z-index: 199;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+/* 上 */
+.info-top {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+  background-color: white;
+  border-bottom-left-radius: 5rpx;
+  border-bottom-right-radius: 5rpx;
+}
+
+/* 中 */
+.info-center {
+  position: fixed;
+  z-index: 999;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rpx;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/* 下 */
+.info-bottom {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  bottom: 0;
+  background-color: white;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+}
+
+/* 左 */
+.info-left {
+  position: fixed;
+  z-index: 999;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  background-color: white;
+  border-top-right-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+}
+
+/* 右 */
+.info-right {
+  position: fixed;
+  z-index: 999;
+  width: 50%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  background-color: white;
+  border-top-left-radius: 10rpx;
+  border-bottom-left-radius: 10rpx;
+}
+
+/* 自定义内容（根据自己需求更改,可删除） */
+button {
+  margin: 15rpx 0;
+}
+
+.row-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15rpx;
+  font-size: 32rpx;
+}
+
+.row-info view {
+  padding: 10rpx 0;
+}
+
+.row-info view:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.line {
+  width: 100rpx;
+  height: 1rpx;
+}
+
+.left-line {
+  background-image: linear-gradient(to left, orange, white);
+}
+
+.right-line {
+  background-image: linear-gradient(to right, orange, white);
+}
+
+.row-author {
+  font-size: 24rpx;
+  color: gray;
+}
+
+.row-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: 1rpx dashed #f1f1f1;
+}
+
+.row-btn view {
+  flex: 1;
+  text-align: center;
+  margin: 20rpx 10%;
+  padding: 12rpx 0;
+  font-size: 32rpx;
+  border-radius: 10rpx;
+}
+
+.left-btn {
+  background-color: #f1f1f1;
+  color: #33ccff;
+}
+
+.right-btn {
+  background-color: #33ccff;
+  color: white;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 0;
+  width: 50%;
 }

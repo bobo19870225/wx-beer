@@ -1,11 +1,6 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: 'beer-1g75udik38f745cf' });
+const db = cloud.database();
 exports.main = async (event, context) => {
-  return {
-    dataList: [
-      { _id: '1', title: '微信气泡徽章', price: 1800 },
-      { _id: '2', title: '微信地球鼠标垫', price: 5800 },
-      { _id: '3', title: '微信黄脸大贴纸', price: 500 }
-    ],
-  }
+  return await db.collection('goods').get();
 };

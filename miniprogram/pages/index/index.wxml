@@ -10,7 +10,25 @@
   <!-- 数据加载完毕 -->
   <block wx:if="{{ !isLoading }}">
     <!-- 有数据 -->
-    <block wx:if="{{ goodsList.length >= 1 }}">
+    <scroll-view scroll-y="true" style="height: calc(100vh - 60rpx);padding: 0 54rpx;" wx:if="{{ goodsList.length >= 1 }}">
+      <!-- 底部结算 -->
+      <view class="order-list" bindtap="openPopup">
+        <view>
+          <image class="order-image" src="../../images/icons/car.png" mode="widthFix" />
+          <view wx:if="{{ orderList.length >= 1 }}" class="order-number">{{orderTotalNumber}}</view>
+        </view>
+        <view wx:if="{{orderTotalPrice}}" style="margin-left: 12px;">预计到手</view>
+        <view wx:if="{{orderTotalPrice}}" class="order-total">
+          {{'¥'+orderTotalPrice}}
+        </view>
+        <view wx:else style="margin-left: 12px;">
+          请添加菜品
+        </view>
+        <view class="order-pay">
+          去结算
+        </view>
+      </view>
+
       <view class="goods-list">
         <block wx:for="{{ goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
           <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}}">
@@ -19,24 +37,60 @@
             <view class="goods-bottom-container">
               <view class="goods-price">
                 <view class="price-symbol">¥</view>
-                <view class="price-content">{{ goodsDetail.price / 100 }}</view>
+                <view class="price-content">{{ goodsDetail.price / 100 }}
+                </view>
               </view>
-              <view class="btn-share" bind:tap="generateMPCode">下单</view>
+              <view class="goods-flex">
+                <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                </image>
+                <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                </image>
+              </view>
             </view>
           </view>
         </block>
       </view>
-    </block>
+    </scroll-view>
+   
     <!-- 无数据 -->
     <block wx:else>
-      <view class="tip_text">暂无数据，请按照快速入门教程操作并查看效果</view>
+      <view class="tip_text">暂无数据</view>
     </block>
 
-    <!-- 小程序码展示弹框 -->
-    <mp-code-modal visible="{{ codeModalVisible }}" imageSrc="{{ codeImageSrc }}" />
+     <!-- 底部弹窗 -->
+     <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
+    <view class="info-bottom" wx:if="{{showOrder}}">
+      <view class="row-info">
+        <view>
+          <text class="line left-line"></text>
+          <text>购物车</text>
+          <text class="line right-line"></text>
+        </view>
+        <scroll-view scroll-y="true" style="max-height: 200px;">
+          <block wx:for="{{ orderList }}" wx:for-item="ordersDetail" wx:key="_id" wx:for-index="index">
+            <view style="display: flex;align-items: center;">
+              <image class="order-image" src="../../images/default-goods-image.png" mode="widthFix" />
+              <view class="goods-title" style="margin-left: 9px;">{{ ordersDetail.title }}</view>
+              <view class="goods-bottom-container">
+                <view class="goods-price">
+                  <view class="price-symbol">¥</view>
+                  <view class="price-content">{{ ordersDetail.price / 100 }}
+                  </view>
+                </view>
+                <view class="goods-flex">
+                  <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/reduce.png">
+                  </image>
+                  <view wx:if="{{ordersDetail.number > 0}}" class="price-symbol">{{ordersDetail.number}}</view>
+                  <image class="btn-add" bind:tap="addGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/add.png">
+                  </image>
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+        <view style="height: 40px;"></view>
+      </view>
+    </view>
   </block>
-</view>
-
-<view class="bottom_tips">
-  <!-- 参考快速开始教程，快速了解使用云开发开发小程序 -->
 </view>

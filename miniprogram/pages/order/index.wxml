@@ -1,2 +1,42 @@
-<!--pages/order/index.wxml-->
-<text>pages/order/index.wxml</text>
+<!--order/index.wxml-->
+<view class="container">
+  <!-- 数据加载，显示loading态 -->
+  <block wx:if="{{ isLoading }}">
+    <view class="tip_text">
+      加载中...
+    </view>
+  </block>
+  <!-- 数据加载完毕 -->
+  <block wx:if="{{ !isLoading }}">
+    <!-- 有数据 -->
+    <scroll-view scroll-y="true" style="height: calc(100vh - 60rpx);padding: 0 54rpx;" wx:if="{{ orderList.length >= 1 }}">
+      <view class="goods-list">
+        <block wx:for="{{ orderList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+          <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}}">
+            <image class="goods-image" src="../../images/default-goods-image.png" mode="widthFix" />
+            <view class="goods-title">{{ goodsDetail.title }}</view>
+            <view class="goods-bottom-container">
+              <view class="goods-price">
+                <view class="price-symbol">¥</view>
+                <view class="price-content">{{ goodsDetail.price / 100 }}
+                </view>
+              </view>
+              <view class="goods-flex">
+                <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                </image>
+                <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                </image>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+
+    <!-- 无数据 -->
+    <block wx:else>
+      <view class="tip_text">暂无数据</view>
+    </block>
+  </block>
+</view>
