@@ -1,88 +1,120 @@
 Page({
-  data: {
-    orderTotalPrice: null,
-    orderTotalNumber: null,
-    goodsList: [],
-    orderList: [],
-    showOrder: false,
-    isLoading: false
-  },
+    data: {
+        orderTotalPrice: null,
+        orderTotalNumber: null,
+        goodsList: [],
+        orderList: [],
+        shopLisp: ['贵阳市数博万达店', '贵阳市八匹马万达店', '贵阳市观山湖店'],
+        showOrder: false,
+        isLoading: false,
+        index: 0,
+    },
 
-  onLoad() {
-    this.fetchGoodsList();
-  },
+    onLoad() {
+        this.getShopList();
+    },
 
-  async fetchGoodsList() {
-    this.setData({
-      isLoading: true
-    });
-    const res = await wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      data: {
-        type: 'fetchGoodsList'
-      },
-    });
-    const goodsList = res?.result?.data || [];
-    this.setData({
-      isLoading: false,
-      goodsList
-    });
-  },
+    bindPickerChange: function (e) {
+        // console.log('picker发送选择改变，携带值为', e.detail.value)
+        let id = this.data.shopLisp[e.detail.value]._id
+        id && this.fetchGoodsList(id);
+        this.setData({
+            index: e.detail.value
+        })
+    },
 
-  addGoods(e) {
-    let id = e.currentTarget.dataset.index
-    this._handleOrder(id, true)
-  },
-  reduceGoods(e) {
-    let id = e.currentTarget.dataset.index
-    this._handleOrder(id, false)
-  },
-  _handleOrder(goodsId, isAdd = true) {
-    let total = 0
-    let totalNumber = 0
-    let temp = this.data.goodsList.map((item) => {
-      // console.log(goodsId, item._id)
-      if (item._id == goodsId + "") {
-        let number = item.number
-        if (isAdd) {
-          item.number = number ? number + 1 : 1
-        } else {
-          item.number = number > 0 ? number - 1 : number
+    async getShopList() {
+        this.setData({
+            isLoading: true
+        });
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getShopList'
+            },
+        });
+        const shopLisp = res?.result?.data || [];
+        if (shopLisp[0]) {
+            this.fetchGoodsList(shopLisp[0]._id);
         }
-      }
-      return item
-    })
-    let orderTemp = temp.filter((item) => {
-      if (item.number > 0) {
-        totalNumber += item.number
-        total += item.number * item.price / 100
-        return true
-      }
-      return false
-    })
-    this.setData({
-      goodsList: temp,
-      orderTotalPrice: total,
-      orderTotalNumber: totalNumber,
-      orderList: orderTemp
-    });
-  },
-  //关闭弹窗
-  closePopup() {
-    this.setData({
-      showOrder: false
-    })
-  },
-  // 打开弹窗
-  openPopup(e) {
-    this.setData({
-      showOrder: true
-    })
-  },
-  goToPay(e) {
-    let goodsJ = JSON.stringify(this.data.orderList)
-    wx.navigateTo({
-      url: '/pages/pay-car/index?goods=' + goodsJ
-    })
-  }
+        this.setData({
+            isLoading: false,
+            shopLisp
+        });
+    },
+
+    async fetchGoodsList(shopId) {
+        this.setData({
+            isLoading: true
+        });
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'fetchGoodsList',
+                shopId
+            },
+        });
+        const goodsList = res?.result?.data || [];
+        this.setData({
+            isLoading: false,
+            goodsList
+        });
+    },
+
+    addGoods(e) {
+        let id = e.currentTarget.dataset.index
+        this._handleOrder(id, true)
+    },
+    reduceGoods(e) {
+        let id = e.currentTarget.dataset.index
+        this._handleOrder(id, false)
+    },
+    _handleOrder(goodsId, isAdd = true) {
+        let total = 0
+        let totalNumber = 0
+        let temp = this.data.goodsList.map((item) => {
+            // console.log(goodsId, item._id)
+            if (item._id == goodsId + "") {
+                let number = item.number
+                if (isAdd) {
+                    item.number = number ? number + 1 : 1
+                } else {
+                    item.number = number > 0 ? number - 1 : number
+                }
+            }
+            return item
+        })
+        let orderTemp = temp.filter((item) => {
+            if (item.number > 0) {
+                totalNumber += item.number
+                total += item.number * item.price / 100
+                return true
+            }
+            return false
+        })
+        this.setData({
+            goodsList: temp,
+            orderTotalPrice: total,
+            orderTotalNumber: totalNumber,
+            orderList: orderTemp
+        });
+    },
+    //关闭弹窗
+    closePopup() {
+        this.setData({
+            showOrder: false
+        })
+    },
+    // 打开弹窗
+    openPopup(e) {
+        this.setData({
+            showOrder: true
+        })
+    },
+    goToPay(e) {
+        let goodsJ = JSON.stringify(this.data.orderList)
+        wx.navigateTo({
+            url: '/pages/pay-car/index?goods=' + goodsJ
+        })
+    }
 })

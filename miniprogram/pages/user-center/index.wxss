@@ -97,3 +97,26 @@
   width: 30rpx;
   height: 30rpx;
 }
+
+.mytop-box{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    flex-direction:column;
+    justify-content: center;
+  }
+  .mytop-avatar{
+    overflow:hidden;  
+    width: 130rpx;
+    height: 130rpx; 
+    left: 50%;  
+    border-radius: 50%;  
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);  
+  }
+  .mytop-username{
+    font-size: 35rpx;
+    font-family: SourceHanSansCN-Medium;
+    color: #000000;
+    margin-top: 10rpx;
+  }

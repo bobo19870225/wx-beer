@@ -1,49 +1,69 @@
 <!-- pages/me/index.wxml -->
 <view class="page_container">
-  <view class="top_bg" />
-  <view class="main_content">
-    <view class="userinfo_container">
-      <image class="avatar" src="../../images/icons/avatar.png" bind:tap="getOpenId" mode="widthFix" />
-      <block wx:if="{{ !openId }}">
-        <view class="username" bind:tap="getOpenId">请点击登录</view>
-      </block>
-      <block wx:else>
-        <view class="username">openId: {{ openId }}</view>
-      </block>
-    </view>
-    <view class="settings_container">
-      <!-- <view class="setting_item">
+    <view class="top_bg" />
+    <view class="main_content">
+        <view class="userinfo_container">
+            <block wx:if="{{!hasUserInfo}}">
+                <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 登录 </button>
+                <button wx:else open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"> 获取头像昵称 </button>
+            </block>
+            <block wx:else>
+                <view class='mytop-box'>
+                    <view class="mytop-avatar">
+                        <open-data type="userAvatarUrl"></open-data>
+                    </view>
+                    <view class='mytop-username'>
+                        <open-data type="userNickName"></open-data>
+                    </view>
+                    <!-- <image bindtap="bindViewTap" class="mytop-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+                    <text class="mytop-nickname">{{userInfo.nickName}}</text> -->
+                </view>
+
+            </block>
+
+            <!-- 头像昵称end -->
+            <block wx:if="{{canIUse}}">
+                <!-- <view class="username" bind:tap="getOpenId">请点击登录</view> -->
+                <!-- 需要使用 button 来授权登录 -->
+                <!-- <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button> -->
+            </block>
+            <!-- <block wx:else>
+                <view class="username">openId: {{ openId }}</view>
+            </block> -->
+        </view>
+        <view class="settings_container">
+            <!-- <view class="setting_item">
         <view class="left">
           <image class="setting_icon" src="../../images/icons/setting.svg" />
           <view class="setting_text">个人信息设置</view>
         </view>
         <image class="arrow_icon" src="../../images/arrow.svg" />
       </view> -->
-      <!-- <view class="setting_item">
+            <!-- <view class="setting_item">
         <view class="left">
           <image class="setting_icon" src="../../images/icons/question.svg" />
           <view class="setting_text">常见问题</view>
         </view>
         <image class="arrow_icon" src="../../images/arrow.svg" />
       </view> -->
-      <view class="setting_item">
-        <view class="left">
-          <image class="setting_icon" src="../../images/icons/customer-service.svg" />
-          <!-- <view class="setting_text">联系客服</view> -->
-          <button open-type="contact" class="contact-button">
-            联系客服
-          </button>
+            <view class="setting_item">
+                <view class="left">
+                    <image class="setting_icon" src="../../images/icons/customer-service.svg" />
+                    <!-- <view class="setting_text">联系客服</view> -->
+                    <button open-type="contact" class="contact-button">
+                        联系客服
+                    </button>
+                </view>
+                <image class="arrow_icon" src="../../images/arrow.svg" />
+            </view>
+            <view class="setting_item" bind:tap="gotoWxCodePage">
+                <view class="left">
+                    <image class="setting_icon" src="../../images/icons/share.svg" />
+                    <view class="setting_text">分享小程序</view>
+                </view>
+                <image class="arrow_icon" src="../../images/arrow.svg" />
+            </view>
         </view>
-        <image class="arrow_icon" src="../../images/arrow.svg" />
-      </view>
-      <view class="setting_item" bind:tap="gotoWxCodePage">
-        <view class="left">
-          <image class="setting_icon" src="../../images/icons/share.svg" />
-          <view class="setting_text">分享小程序</view>
-        </view>
-        <image class="arrow_icon" src="../../images/arrow.svg" />
-      </view>
     </view>
-  </view>
-  <cloud-tip-modal showUploadTipProps="{{showUploadTip}}" />
+    <cloud-tip-modal showUploadTipProps="{{showUploadTip}}" />
 </view>
