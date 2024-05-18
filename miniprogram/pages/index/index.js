@@ -13,14 +13,23 @@ Page({
     onLoad() {
         this.getShopList();
     },
-
+    /**
+     * 切换店铺
+     * @param {} e 
+     */
     bindPickerChange: function (e) {
-        // console.log('picker发送选择改变，携带值为', e.detail.value)
         let id = this.data.shopLisp[e.detail.value]._id
-        id && this.fetchGoodsList(id);
-        this.setData({
-            index: e.detail.value
-        })
+        if (id) {
+            this.setData({
+                index: e.detail.value
+            })
+            wx.setStorage({
+                key: "shopId",
+                data: id
+            })
+            this.fetchGoodsList(id);
+        }
+
     },
 
     async getShopList() {
@@ -35,6 +44,10 @@ Page({
         });
         const shopLisp = res?.result?.data || [];
         if (shopLisp[0]) {
+            wx.setStorage({
+                key: "shopId",
+                data: shopLisp[0]._id
+            })
             this.fetchGoodsList(shopLisp[0]._id);
         }
         this.setData({

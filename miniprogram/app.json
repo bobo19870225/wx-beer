@@ -4,14 +4,17 @@
         "pages/user-center/index",
         "pages/web/index",
         "pages/order/index",
-        "pages/pay-car/index"
+        "pages/pay-car/index",
+        "pages/application/index"
     ],
     "window": {
-        "backgroundColor": "#F6F6F6",
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#F6F6F6",
-        "navigationBarTitleText": "千人吃鸡",
-        "navigationBarTextStyle": "black"
+        "navigationBarBackgroundColor": "#39b54a",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "千人吃鸡"
+    },
+    "usingComponents": {
+        "cu-custom": "/colorui/components/cu-custom"
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2",
@@ -20,8 +23,7 @@
         "color": "#A2A9B0",
         "selectedColor": "#07C160",
         "backgroundColor": "#ffffff",
-        "list": [
-            {
+        "list": [{
                 "pagePath": "pages/index/index",
                 "text": "菜单",
                 "iconPath": "images/icons/home.png",

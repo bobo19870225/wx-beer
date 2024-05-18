@@ -87,9 +87,9 @@ Page({
             });
     },
 
-    gotoWxCodePage() {
+    gotoApplicationPage() {
         wx.navigateTo({
-            url: `/pages/exampleDetail/index?envId=${envList?.[0]?.envId}&type=getMiniProgramCode`,
+            url: `/pages/application/index`,
         });
     },
 });

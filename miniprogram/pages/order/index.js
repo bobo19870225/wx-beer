@@ -1,12 +1,12 @@
 // pages/order/index.js
+const app = getApp()
 Page({
-
     /**
      * 页面的初始数据
      */
     data: {
-      orderList: [],
-      isLoading: false,
+        orderList: [],
+        isLoading: false,
     },
 
     /**
@@ -14,6 +14,29 @@ Page({
      */
     onLoad(options) {
 
+    },
+    async getOrderList() {
+        this.setData({
+            isLoading: true
+        });
+        var shopId = wx.getStorageSync('shopId')
+        var _openid = wx.getStorageSync('openid') || await app.getOpenid()
+        // let _openid = 'o4AG06_p2p4obaDiycY703GN8Nas'
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getOrderList',
+                shopId,
+                _openid
+            },
+        });
+       
+        const orderList = res?.result?.data || [];
+        this.setData({
+            isLoading: false,
+            orderList
+        });
+        console.log(this.data.orderList)
     },
 
     /**
@@ -27,7 +50,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        this.getOrderList()
     },
 
     /**

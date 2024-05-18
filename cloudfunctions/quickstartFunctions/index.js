@@ -1,6 +1,6 @@
 const getOpenId = require('./getOpenId/index');
 const getMiniProgramCode = require('./getMiniProgramCode/index');
-const createCollection = require('./createCollection/index');
+const getOrderList = require('./getOrderList/index');
 const selectRecord = require('./selectRecord/index');
 const updateRecord = require('./updateRecord/index');
 const sumRecord = require('./sumRecord/index');
@@ -15,8 +15,8 @@ exports.main = async (event, context) => {
             return await getOpenId.main(event, context);
         case 'getMiniProgramCode':
             return await getMiniProgramCode.main(event, context);
-        case 'createCollection':
-            return await createCollection.main(event, context);
+        case 'getOrderList':
+            return await getOrderList.main(event, context);
         case 'selectRecord':
             return await selectRecord.main(event, context);
         case 'updateRecord':

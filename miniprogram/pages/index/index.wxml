@@ -1,6 +1,9 @@
 <!--index.wxml-->
+<cu-custom bgColor="bg-white" isBack="{{false}}">
+	<view slot="backText">返回</view>
+	<view slot="content">千人吃鸡</view>
+</cu-custom>
 <view class="container">
-
     <!-- 数据加载，显示loading态 -->
     <block wx:if="{{ isLoading }}">
         <view class="tip_text">
