@@ -1,11 +1,7 @@
+
 {
-    "window": {
-        "navigationBarBackgroundColor": "#39b54a",
-        "navigationBarTextStyle": "white",
-        "navigationBarTitleText": "千人吃鸡"
-    },
     "usingComponents": {
-       
+      "cloud-tip-modal": "/components/cloudTipModal/index"
     },
     "navigationBarBackgroundColor": "#fff"
-}
+  }

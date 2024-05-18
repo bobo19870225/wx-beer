@@ -7,30 +7,34 @@ Page({
     data: {
         orderList: [],
         isLoading: false,
+        shop: null
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        var shop = wx.getStorageSync('shop')
+        this.setData({
+            shop
+        })
     },
     async getOrderList() {
         this.setData({
             isLoading: true
         });
-        var shopId = wx.getStorageSync('shopId')
+
         var _openid = wx.getStorageSync('openid') || await app.getOpenid()
         // let _openid = 'o4AG06_p2p4obaDiycY703GN8Nas'
         const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getOrderList',
-                shopId,
+                shopId:this.data.shop._id,
                 _openid
             },
         });
-       
+
         const orderList = res?.result?.data || [];
         this.setData({
             isLoading: false,

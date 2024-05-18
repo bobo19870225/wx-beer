@@ -1,53 +1,57 @@
 <!--order/index.wxml-->
-
 <wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
-	<view slot="backText">返回</view>
-	<view slot="content">订单</view>
+    <view slot="backText">返回</view>
+    <view slot="content">订单</view>
 </cu-custom>
-<view class="container">
+<view>
     <!-- 数据加载，显示loading态 -->
-    <block wx:if="{{ isLoading }}">
-        <view class="tip_text">
-            加载中...
-        </view>
-    </block>
+
+    <view class='cu-load load-modal' wx:if="{{isLoading}}">
+        <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+        <view class='gray-text text-xs'>加载中...</view>
+    </view>
+
     <!-- 数据加载完毕 -->
     <block wx:if="{{ !isLoading }}">
         <!-- 有数据 -->
-        <scroll-view scroll-y="true" style="height: calc(100vh - 10rpx);" wx:if="{{ orderList.length >= 1 }}">
-            <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
-                <view class="cu-card">
-                    <view class="cu-item shadow">
-                        <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-                            <view class="cu-list menu-avatar">
-                                <view class="cu-item">
-                                    <image class="cu-avatar round lg" src="../../images/default-goods-image.png" mode="widthFix" />
-                                    <view class="content flex-sub">
-                                        <view class="text-grey">{{ goodsDetail.title }}</view>
-                                        <view class="text-gray text-sm flex justify-between">
-                                            <view style="color: gold;">¥ {{ goodsDetail.price / 100 }}</view>
-                                            <view class="text-gray text-sm">
-                                                x{{ goodsDetail.number}}
+        <view wx:if="{{ orderList.length >= 1 }}">
+            <view class="padding">
+                {{shop.name}}
+            </view>
+            <scroll-view scroll-y="true" style="height: calc(100vh - 103px);">
+                <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
+                    <view class="cu-card">
+                        <view class="cu-item shadow">
+                            <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                                <view class="cu-list menu-avatar">
+                                    <view class="cu-item">
+                                        <image class="cu-avatar round lg" src="../../images/default-goods-image.png" mode="widthFix" />
+                                        <view class="content flex-sub">
+                                            <view class="text-grey">{{ goodsDetail.title }}</view>
+                                            <view class="text-gray text-sm flex justify-between">
+                                                <view style="color: gold;">¥ {{ goodsDetail.price / 100 }}</view>
+                                                <view class="text-gray text-sm">
+                                                    x{{ goodsDetail.number}}
+                                                </view>
                                             </view>
                                         </view>
                                     </view>
                                 </view>
-                            </view>
-                        </block>
-                        <view class="content padding flex align-center">
-                            <view>
-                                {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
-                            </view>
-                            <view class="margin-left ">
-                                总价：<span style="color: gold;">¥ {{orderDetail.total}}</span>
+                            </block>
+                            <view class="content padding flex align-center">
+                                <view>
+                                    {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
+                                </view>
+                                <view class="margin-left ">
+                                    总价：<span style="color: gold;">¥ {{orderDetail.total}}</span>
+                                </view>
                             </view>
                         </view>
                     </view>
-                </view>
-            </block>
-        </scroll-view>
-
+                </block>
+            </scroll-view>
+        </view>
         <!-- 无数据 -->
         <block wx:else>
             <view class="tip_text">暂无数据</view>

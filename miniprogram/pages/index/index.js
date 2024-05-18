@@ -24,8 +24,8 @@ Page({
                 index: e.detail.value
             })
             wx.setStorage({
-                key: "shopId",
-                data: id
+                key: "shop",
+                data: this.data.shopLisp[e.detail.value]
             })
             this.fetchGoodsList(id);
         }
@@ -45,8 +45,8 @@ Page({
         const shopLisp = res?.result?.data || [];
         if (shopLisp[0]) {
             wx.setStorage({
-                key: "shopId",
-                data: shopLisp[0]._id
+                key: "shop",
+                data: shopLisp[0]
             })
             this.fetchGoodsList(shopLisp[0]._id);
         }

@@ -1,20 +1,28 @@
 <!--index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{false}}">
-	<view slot="backText">返回</view>
-	<view slot="content">千人吃鸡</view>
+    <view slot="backText">返回</view>
+    <view slot="content">千人吃鸡</view>
 </cu-custom>
-<view class="container">
+<view>
     <!-- 数据加载，显示loading态 -->
-    <block wx:if="{{ isLoading }}">
-        <view class="tip_text">
-            加载中...
-        </view>
-    </block>
+    <view class='cu-load load-modal' wx:if="{{isLoading}}">
+        <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+        <view class='gray-text text-xs'>加载中...</view>
+    </view>
 
     <!-- 数据加载完毕 -->
     <block wx:if="{{ !isLoading }}">
+        <!-- 店铺 -->
+        <view style="display: flex;align-items: center;padding: 9px;width: 100vw;background-color: white;position: absolute;">
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{shopLisp}}" range-key="name">
+                <view style="font-size: 12px;padding-left: 9px;">
+                    {{shopLisp[index].name}}
+                </view>
+            </picker>
+            <image style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
+        </view>
         <!-- 有数据 -->
-        <scroll-view scroll-y="true" style="height: calc(100vh - 60rpx);width: 100vw;margin-top: 40px;" wx:if="{{ goodsList.length >= 1 }}">
+        <view wx:if="{{ goodsList.length >= 1 }}">
             <!-- 底部结算 -->
             <view class="order-list" bindtap="openPopup">
                 <view>
@@ -32,45 +40,38 @@
                     去结算
                 </button>
             </view>
-            <!-- 商品列表 -->
-            <view class="goods-list">
-                <block wx:for="{{ goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-                    <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}}">
-                        <image class="goods-image" src="../../images/default-goods-image.png" mode="widthFix" />
-                        <view class="goods-title">{{ goodsDetail.title }}</view>
-                        <view class="goods-bottom-container">
-                            <view class="goods-price">
-                                <view class="price-symbol">¥</view>
-                                <view class="price-content">{{ goodsDetail.price / 100 }}
+            <scroll-view scroll-y="true" style="height: calc(100vh - 66px);padding-top: 30px;">
+                <!-- 商品列表 -->
+                <view class="goods-list">
+                    <block wx:for="{{ goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                        <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}}">
+                            <image class="goods-image" src="../../images/default-goods-image.png" mode="widthFix" />
+                            <view class="goods-title">{{ goodsDetail.title }}</view>
+                            <view class="goods-bottom-container">
+                                <view class="goods-price">
+                                    <view class="price-symbol">¥</view>
+                                    <view class="price-content">{{ goodsDetail.price / 100 }}
+                                    </view>
+                                </view>
+                                <view class="goods-flex">
+                                    <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                    </image>
+                                    <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                                    <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                    </image>
                                 </view>
                             </view>
-                            <view class="goods-flex">
-                                <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
-                                </image>
-                                <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                                <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
-                                </image>
-                            </view>
                         </view>
-                    </view>
-                </block>
-            </view>
-        </scroll-view>
+                    </block>
+                </view>
+            </scroll-view>
+        </view>
+
 
         <!-- 无数据 -->
         <block wx:else>
             <view class="tip_text">暂无数据</view>
         </block>
-
-        <!-- 店铺 -->
-        <view style="display: flex;align-items: center;padding: 9px;width: 100vw;position: fixed;background-color: white;">
-            <picker bindchange="bindPickerChange" value="{{index}}" range="{{shopLisp}}" range-key="name">
-                <view style="font-size: 12px;padding-left: 9px;">
-                    {{shopLisp[index].name}}
-                </view>
-            </picker>
-            <image style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
-        </view>
 
         <!-- 底部弹窗 -->
         <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
