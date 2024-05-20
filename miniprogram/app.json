@@ -21,19 +21,19 @@
     "lazyCodeLoading": "requiredComponents",
     "tabBar": {
         "color": "#A2A9B0",
-        "selectedColor": "#07C160",
+        "selectedColor": "#13227a",
         "backgroundColor": "#ffffff",
         "list": [{
                 "pagePath": "pages/index/index",
-                "text": "菜单",
+                "text": "菜品",
                 "iconPath": "images/icons/home.png",
                 "selectedIconPath": "images/icons/home-active.png"
             },
             {
                 "pagePath": "pages/order/index",
                 "text": "订单",
-                "iconPath": "images/icons/examples.png",
-                "selectedIconPath": "images/icons/examples-active.png"
+                "iconPath": "images/icons/order.png",
+                "selectedIconPath": "images/icons/order-active.png"
             },
             {
                 "pagePath": "pages/user-center/index",

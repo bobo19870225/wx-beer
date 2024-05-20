@@ -6,7 +6,7 @@
 </cu-custom>
 <view>
   <!-- 数据加载，显示loading态 -->
-  <view class='cu-load load-modal' wx:if="{{isLoading}}">
+  <view class='cu-load load-modal'  wx:if="{{isLoading}}">
     <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
     <view class='gray-text text-xs'>加载中...</view>
   </view>

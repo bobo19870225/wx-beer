@@ -19,7 +19,7 @@ page {
 	--olive: #8dc63f;
 	--green: #39b54a;
 	--cyan: #1cbbb4;
-	--blue: #0081ff;
+	--blue: #13227a;
 	--purple: #6739b6;
 	--mauve: #9c26b0;
 	--pink: #e03997;
@@ -1153,7 +1153,7 @@ button.icon.lg {
 	border-top: 6rpx solid rgba(0, 0, 0, 0.05);
 	border-right: 6rpx solid rgba(0, 0, 0, 0.05);
 	border-bottom: 6rpx solid rgba(0, 0, 0, 0.05);
-	border-left: 6rpx solid var(--orange);
+	border-left: 6rpx solid var(--blue);
 	animation: cuIcon-spin 1s infinite linear;
 	z-index: -1;
 }
