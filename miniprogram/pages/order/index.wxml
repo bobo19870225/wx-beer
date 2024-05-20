@@ -14,12 +14,12 @@
     <!-- 数据加载完毕 -->
     <block wx:if="{{ !isLoading }}">
         <!-- 店铺名称 -->
-        <view style="height: 60rpx;line-height: 60rpx;padding-left: 9px;">
+        <view style="height: 100rpx;line-height: 100rpx;padding-left: 9px;">
             {{shop.name}}
         </view>
         <!-- 有数据 -->
         <view wx:if="{{ orderList.length >= 1 }}">
-            <scroll-view scroll-y="true" style="height: {{containerHeight-60}}rpx;">
+            <scroll-view scroll-y="true" style="height: {{containerHeight-90}}rpx;">
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card">
                         <view class="cu-item shadow">
