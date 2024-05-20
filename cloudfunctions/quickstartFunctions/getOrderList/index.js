@@ -11,5 +11,5 @@ exports.main = async (event, context) => {
     return await db.collection('order').where({
         shopId,
         _openid
-    }).get();
+    }).orderBy('createDate', 'desc').get();
 };

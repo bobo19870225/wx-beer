@@ -1,4 +1,5 @@
 // pages/pay-car/index.js
+const app = getApp()
 const db = wx.cloud.database({
     env: 'beer-1g75udik38f745cf'
 })
@@ -8,7 +9,11 @@ Page({
      */
     data: {
         orderList: [],
+        shop: null,
         total: 0,
+        vipTotal: 0,
+        containerHeight: app.globalData.containerHeightNoTabBar,
+        showDialogPay: false,
     },
 
     /**
@@ -16,18 +21,25 @@ Page({
      */
     onLoad(options) {
         console.log(options)
+        var shop = wx.getStorageSync('shop')
+        this.setData({
+            shop
+        })
         let goods = null
         if (options) {
             goods = options.goods
             if (goods) {
                 let orderListT = JSON.parse(options.goods)
                 let total = 0;
+                let vipTotal = 0;
                 orderListT.forEach(element => {
-                    total += element.number * element.price / 100
+                    total += Math.round(element.number * element.price / 100)
+                    vipTotal += Math.round(element.number * element.vipPrice / 100)
                 });
                 this.setData({
                     orderList: orderListT,
-                    total: total
+                    total,
+                    vipTotal,
                 })
             }
         }
@@ -85,6 +97,38 @@ Page({
      * 用户支付
      */
     pay(e) {
+        this.setData({
+            showDialogPay: true
+        })
+    },
+    vipPay() {
+        this.setData({
+            showDialogPay: false
+        })
+        var shopId = wx.getStorageSync('shopId')
+        db.collection('order').add({
+            // data 字段表示需新增的 JSON 数据
+            data: {
+                // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
+                description: "learn cloud database",
+                createDate: new Date(),
+                goodsList: this.data.orderList,
+                shopId,
+                total: this.data.vipTotal,
+                // 下单成功，制作中
+                state: 1
+            },
+            success: function (res) {
+                wx.switchTab({
+                    url: '/pages/order/index'
+                })
+            }
+        })
+    },
+    nonmemberPay() {
+        this.setData({
+            showDialogPay: false
+        })
         var shopId = wx.getStorageSync('shopId')
         db.collection('order').add({
             // data 字段表示需新增的 JSON 数据
@@ -99,13 +143,10 @@ Page({
                 state: 1
             },
             success: function (res) {
-                // wx.showToast({
-                //     title: '下单成功',
-                // })
-                wx.navigateBack({
-                    delta: 1
-                });
+                wx.switchTab({
+                    url: '/pages/order/index'
+                })
             }
         })
-    },
+    }
 })
