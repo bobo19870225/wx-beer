@@ -68,7 +68,7 @@
         <view class="cu-dialog">
             <view class="cu-bar bg-white justify-end">
                 <view class="content">会员钜惠</view>
-                <view class="action" bindtap="hideModal">
+                <view class="action" bindtap="closeDialogPay">
                     <text class="cuIcon-close text-red"></text>
                 </view>
             </view>

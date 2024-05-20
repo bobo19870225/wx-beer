@@ -102,9 +102,7 @@ Page({
         })
     },
     vipPay() {
-        this.setData({
-            showDialogPay: false
-        })
+        this.closeDialogPay()
         var shopId = wx.getStorageSync('shopId')
         db.collection('order').add({
             // data 字段表示需新增的 JSON 数据
@@ -125,10 +123,13 @@ Page({
             }
         })
     },
-    nonmemberPay() {
+    closeDialogPay() {
         this.setData({
             showDialogPay: false
         })
+    },
+    nonmemberPay() {
+        this.closeDialogPay()
         var shopId = wx.getStorageSync('shopId')
         db.collection('order').add({
             // data 字段表示需新增的 JSON 数据
