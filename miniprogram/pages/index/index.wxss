@@ -33,6 +33,7 @@
 }
 
 .order-pay {
+    line-height: 56rpx;
     position: absolute;
     font-size: 14px;
     right: 0;
@@ -48,16 +49,16 @@
 
 .order-list {
     font-size: 28rpx;
-    padding: 0 9px;
-    bottom: 3px;
+    padding: 0 30rpx;
+    bottom: 9rpx;
     align-items: center;
     background-color: #dadadac0;
     border: 1px solid #dadadac0;
     z-index: 1000;
-    border-radius: 90px;
-    margin-left: 2.5vw;
+    border-radius: 90rpx;
+    margin-left: 5vw;
     width: 90vw;
-    height: 36px;
+    height: 90rpx;
     display: flex;
     position: fixed;
     flex-wrap: wrap;
