@@ -1,6 +1,4 @@
-const {
-    envList
-} = require('../../envList');
+const app = getApp()
 
 // pages/me/index.js
 Page({
@@ -12,7 +10,8 @@ Page({
         openId: '',
         showUploadTip: false,
         canIUseGetUserProfile: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo')
+        canIUse: wx.canIUse('button.open-type.getUserInfo'),
+        containerHeight: app.globalData.containerHeight,
     },
     onLoad(options) {
         // if (wx.getUserProfile) {

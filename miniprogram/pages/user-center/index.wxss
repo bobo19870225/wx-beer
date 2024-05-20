@@ -12,7 +12,6 @@
   background-color: #fff;
   border-top-left-radius: 30rpx;
   border-top-right-radius: 30rpx;
-  height: calc(100vh - 120rpx);
   position: relative;
 }
 
