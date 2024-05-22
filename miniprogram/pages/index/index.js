@@ -6,7 +6,7 @@ Page({
         orderTotalNumber: null,
         goodsList: [],
         orderList: [],
-        shopLisp: ['贵阳市数博万达店', '贵阳市八匹马万达店', '贵阳市观山湖店'],
+        shopLisp: null,
         showOrder: false,
         isLoading: false,
         index: 0,
@@ -18,7 +18,6 @@ Page({
     },
     /**
      * 切换店铺
-     * @param {} e 
      */
     bindPickerChange: function (e) {
         let id = this.data.shopLisp[e.detail.value]._id
