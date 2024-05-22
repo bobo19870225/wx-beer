@@ -6,56 +6,60 @@ Page({
         orderTotalNumber: null,
         goodsList: [],
         orderList: [],
-        shopLisp: null,
+        shopList: null,
         showOrder: false,
         isLoading: false,
-        index: 0,
+        index: null,
         containerHeight: app.globalData.containerHeight,
     },
 
     onLoad() {
-        this.getShopList();
+
+    },
+    onShow() {
+        this.initData();
     },
     /**
      * 切换店铺
      */
     bindPickerChange: function (e) {
-        let id = this.data.shopLisp[e.detail.value]._id
+        let id = this.data.shopList[e.detail.value]._id
         if (id) {
             this.setData({
                 index: e.detail.value
             })
             wx.setStorage({
                 key: "shop",
-                data: this.data.shopLisp[e.detail.value]
+                data: this.data.shopList[e.detail.value]
             })
             this.fetchGoodsList(id);
         }
 
     },
 
-    async getShopList() {
+    async initData() {
+        const shop = wx.getStorageSync('shop')
+        let indexShop = 0
+        const shopList = app.globalData.shopList || await app.initGlobalData()
         this.setData({
-            isLoading: true
-        });
-        const res = await wx.cloud.callFunction({
-            name: 'quickstartFunctions',
-            data: {
-                type: 'getShopList'
-            },
-        });
-        const shopLisp = res?.result?.data || [];
-        if (shopLisp[0]) {
-            wx.setStorage({
-                key: "shop",
-                data: shopLisp[0]
-            })
-            this.fetchGoodsList(shopLisp[0]._id);
+            shopList
+        })
+        if (shop) {
+            this.data.shopList.forEach((element, index) => {
+                if (shop._id == element._id) {
+                    indexShop = index
+                }
+            });
+        } else {
+            indexShop = 0
+            shop = this.data.shopList[indexShop]
         }
+
         this.setData({
-            isLoading: false,
-            shopLisp
-        });
+            index: indexShop,
+            shop
+        })
+        this.fetchGoodsList(shop._id)
     },
 
     async fetchGoodsList(shopId) {
