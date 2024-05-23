@@ -38,5 +38,5 @@
       </view>
     </view>
   </scroll-view>
-  <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round">新增店铺</button>
+  <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addShop">新增店铺</button>
 </block>

@@ -1,2 +1,48 @@
 <!--pages/manage/shop-edit/index.wxml-->
-<text>pages/manage/shop-edit/index.wxml</text>
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">新增店铺</view>
+</cu-custom>
+<form catchsubmit="formSubmit" catchreset="formReset">
+    <view class="cu-form-group margin-top">
+        <view class="title">店铺名称</view>
+        <input name="name" placeholder="请输入..."></input>
+    </view>
+
+    <view class="cu-form-group" bind:tap="openMap">
+        <view class="title">店铺位置</view>
+        <input name="location" placeholder="请填点开地图选择..." disabled></input>
+        <text class="cuIcon-locationfill text-orange"></text>
+    </view>
+   
+
+    <view class="cu-bar bg-white margin-top">
+        <view class="action">
+            上传店铺图片
+        </view>
+        <view class="action">
+            {{imgList.length}}/2
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="grid col-4 grid-square flex-sub">
+            <view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage" data-url="{{imgList[index]}}">
+                <image src='{{imgList[index]}}' mode='aspectFill'></image>
+                <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+                    <text class="cuIcon-close"></text>
+                </view>
+            </view>
+            <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<2}}">
+                <text class="cuIcon-cameraadd"></text>
+            </view>
+        </view>
+    </view>
+    <view class="cu-form-group align-start">
+        <view class="title">备注</view>
+        <textarea name="remarks" maxlength="300"  bindinput="textareaBInput" placeholder="请输入备注..."></textarea>
+    </view>
+    <view class="flex padding" style="gap: 8px">
+        <button class="cu-btn round bg-blue" formType="submit">提交审核</button>
+        <button class="cu-btn round bg-black" formType="reset">重置</button>
+    </view>
+</form>

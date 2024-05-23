@@ -5,7 +5,8 @@
         "pages/pay-car/index",
         "pages/application/index",
         "pages/manage/shop/index",
-        "pages/manage/shop-edit/index"
+        "pages/manage/shop-edit/index",
+        "pages/manage/shop-map/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",
@@ -18,5 +19,10 @@
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2",
-    "lazyCodeLoading": "requiredComponents"
+    "lazyCodeLoading": "requiredComponents",
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序定位"
+        }
+    }
 }
