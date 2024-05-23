@@ -10,7 +10,6 @@
         <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
         <view class='gray-text text-xs'>加载中...</view>
     </view>
-
     <!-- 数据加载完毕 -->
     <block wx:if="{{ !isLoading }}">
         <!-- 店铺 -->
@@ -64,6 +63,5 @@
                 <view style="top: -240rpx;">暂无数据</view>
             </view>
         </block>
-
     </block>
 </view>

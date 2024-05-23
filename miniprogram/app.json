@@ -1,11 +1,10 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/user-center/index",
         "pages/web/index",
-        "pages/order/index",
         "pages/pay-car/index",
-        "pages/application/index"
+        "pages/application/index",
+        "pages/manage/shop/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",
@@ -18,29 +17,5 @@
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2",
-    "lazyCodeLoading": "requiredComponents",
-    "tabBar": {
-        "color": "#A2A9B0",
-        "selectedColor": "#13227a",
-        "backgroundColor": "#ffffff",
-        "list": [{
-                "pagePath": "pages/index/index",
-                "text": "菜品",
-                "iconPath": "images/icons/home.png",
-                "selectedIconPath": "images/icons/home-active.png"
-            },
-            {
-                "pagePath": "pages/order/index",
-                "text": "订单",
-                "iconPath": "images/icons/order.png",
-                "selectedIconPath": "images/icons/order-active.png"
-            },
-            {
-                "pagePath": "pages/user-center/index",
-                "text": "我",
-                "iconPath": "images/icons/usercenter.png",
-                "selectedIconPath": "images/icons/usercenter-active.png"
-            }
-        ]
-    }
+    "lazyCodeLoading": "requiredComponents"
 }

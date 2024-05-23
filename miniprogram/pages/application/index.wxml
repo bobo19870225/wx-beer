@@ -23,9 +23,9 @@
     </view>
     <view class="cu-form-group margin-top">
         <view class="title">选择店铺</view>
-        <picker name="shopIndex" bindchange="PickerChange" value="{{index}}" range="{{shopLisp}}" range-key="name">
+        <picker name="shopIndex" bindchange="PickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
             <view class="picker">
-                {{index?shopLisp[index].name:'请选择一家店铺...'}}
+                {{index?shopList[index].name:'请选择一家店铺...'}}
             </view>
         </picker>
     </view>
@@ -40,7 +40,7 @@
     </view>
     <view class="cu-form-group">
         <view class="grid col-4 grid-square flex-sub">
-            <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+            <view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage" data-url="{{imgList[index]}}">
                 <image src='{{imgList[index]}}' mode='aspectFill'></image>
                 <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
                     <text class="cuIcon-close"></text>

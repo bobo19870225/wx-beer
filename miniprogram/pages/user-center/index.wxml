@@ -97,7 +97,8 @@
             </view>
         </view>
     </view>
-    <cloud-tip-modal showUploadTipProps="{{showUploadTip}}" />
+    <!-- <cloud-tip-modal showUploadTipProps="{{showUploadTip}}" /> -->
+    <!-- 购买VIP -->
     <view class="cu-modal bottom-modal {{showPayDialog?'show':''}}">
         <view class="cu-dialog">
             <view class="cu-bar bg-white">
@@ -106,7 +107,7 @@
             </view>
             <view class="">
                 <radio-group bindchange="radioChange">
-                    <view style="width: 100vw;" class="flex padding align-center " wx:for="{{vips}}" wx:key="{{item.value}}">
+                    <view style="width: 100vw;" class="flex padding align-center " wx:for="{{vips}}" wx:key="value">
                         <view class="margin-lr">
                             <radio value="{{item.value}}" checked="true" />
                         </view>

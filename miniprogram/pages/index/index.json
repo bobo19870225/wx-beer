@@ -1,2 +1,9 @@
 
-{}
+{
+  "usingComponents": {
+    "manage": "/pages/manage/index",
+    "home": "/pages/home/index",
+    "order": "/pages/order/index",
+    "user-center": "/pages/user-center/index"
+  }
+}

@@ -1,0 +1,126 @@
+<!--index.wxml-->
+<cu-custom bgColor="bg-white" isBack="{{false}}">
+    <view slot="backText">返回</view>
+    <view slot="content">千人吃鸡</view>
+</cu-custom>
+
+<!-- 数据加载，显示loading态 -->
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+    <view class='gray-text text-xs'>加载中...</view>
+</view>
+
+<!-- 数据加载完毕 -->
+<block wx:if="{{ !isLoading }}">
+    <!-- 店铺 -->
+    <view class="cu-bar bg-white padding-lr" style="display: flex;align-items: center;width: 100vw;height: 90rpx;">
+        <picker style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
+            <view style="font-size: 12px;line-height: 90rpx;">
+                {{shopList[index].name}}
+            </view>
+        </picker>
+        <image style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
+    </view>
+    <!-- 有数据 -->
+    <view wx:if="{{ goodsList.length >= 1 }}">
+        <!-- 底部结算 -->
+        <view class="order-list" bindtap="openPopup">
+            <view>
+                <image class="order-image" src="../../images/icons/car.png" mode="widthFix" />
+                <view wx:if="{{ orderList.length >= 1 }}" class="order-number">{{orderTotalNumber}}</view>
+            </view>
+            <view class="margin-left" wx:if="{{orderTotalPrice}}">
+                <view class="flex">
+                    <view style="margin-left: 12px;">会员到手</view>
+                    <view class="order-total margin-left-xs">
+                        {{'¥'+orderTotalVipPrice}}
+                    </view>
+                </view>
+                <view>
+                    <view style="margin-left: 12px;font-size: 21rpx;text-decoration: line-through;color: gray;">原价 {{'¥'+orderTotalPrice}}</view>
+                </view>
+            </view>
+
+            <view wx:else style="margin-left: 12px;">
+                请添加菜品
+            </view>
+            <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1}}">
+                去结算
+            </button>
+        </view>
+        <scroll-view scroll-y="true" style="height: {{containerHeight - 100}}rpx;">
+            <!-- 商品列表 -->
+            <view class="goods-list cu-card">
+                <block wx:for="{{ goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                    <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}} cu-item shadow">
+                        <image class="goods-image" src="../../images/default-goods-image.png" mode="widthFix" />
+                        <view class="goods-title">{{ goodsDetail.title }}</view>
+                        <view class="goods-bottom-container">
+                            <view class="vip-price">
+                                <view class="price-symbol">会员 ¥</view>
+                                <view class="price-content">{{ goodsDetail.vipPrice / 100 }}
+                                </view>
+                            </view>
+                            <view class="goods-flex">
+                                <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                </image>
+                                <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                                <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                </image>
+                            </view>
+                        </view>
+                        <view class="goods-price" style="width: 100%;">
+                            <view class="price-symbol">原价 ¥</view>
+                            <view class="price-symbol" style="flex: 1;">{{ goodsDetail.price / 100 }}
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </view>
+            <view style="height: 90rpx;"></view>
+        </scroll-view>
+    </view>
+
+    <!-- 无数据 -->
+    <block wx:else>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
+    </block>
+
+    <!-- 底部弹窗 -->
+    <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
+    <view class="info-bottom" wx:if="{{showOrder}}">
+        <view class="row-info">
+            <view>
+                <text class="line left-line"></text>
+                <text>购物车</text>
+                <text class="line right-line"></text>
+            </view>
+            <scroll-view scroll-y="true" style="max-height: 200px;">
+                <block wx:for="{{ orderList }}" wx:for-item="ordersDetail" wx:key="_id" wx:for-index="index">
+                    <view style="display: flex;align-items: center;">
+                        <image class="order-image" src="../../images/default-goods-image.png" mode="widthFix" />
+                        <view class="goods-title" style="margin-left: 9px;">{{ ordersDetail.title }}</view>
+                        <view class="goods-bottom-container">
+                            <view class="goods-price">
+                                <view class="price-symbol">¥</view>
+                                <view class="price-content">{{ ordersDetail.price / 100 }}
+                                </view>
+                            </view>
+                            <view class="goods-flex">
+                                <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/reduce.png">
+                                </image>
+                                <view wx:if="{{ordersDetail.number > 0}}" class="price-symbol">{{ordersDetail.number}}</view>
+                                <image class="btn-add" bind:tap="addGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/add.png">
+                                </image>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </scroll-view>
+        </view>
+        <view style="height: 120rpx;"></view>
+    </view>
+</block>
