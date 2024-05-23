@@ -1,8 +1,9 @@
-// pages/manage/shop-edit/index.js
+// pages/manage/dishes-edit/index.js
 const app = getApp()
 const db = wx.cloud.database({
     env: 'beer-1g75udik38f745cf'
 })
+
 Page({
 
     /**
@@ -10,26 +11,32 @@ Page({
      */
     data: {
         imgList: [],
-        latitude: '',
-        longitude: '',
-        location: ''
+        id: null,
+        shop: null
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
-    },
-    openMap() {
-        console.log("WWW");
-        wx.navigateTo({
-            url: '/pages/manage/shop-map/index',
+        const eventChannel = this.getOpenerEventChannel()
+        // eventChannel.emit('acceptDataFromOpenedPage', {data: 'test'});
+        // eventChannel.emit('someEvent', {data: 'test'});
+        eventChannel && eventChannel.on && eventChannel.on('acceptDataFromOpenerPage', (data) => {
+            let {
+                id,
+                shop
+            } = data
+            this.setData({
+                id,
+                shop
+            })
         })
     },
+
     ChooseImage() {
         wx.chooseImage({
-            count: 2, //默认9
+            count: 1, //默认9
             sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album'], //从相册选择
             success: (res) => {
@@ -68,17 +75,19 @@ Page({
         })
     },
     formSubmit(e) {
-        // console.log(e);
         let {
-            name,
-            remarks
+            title,
+            remarks,
+            price,
+            vipPrice
         } = e.detail.value
-        db.collection('shop').add({
+        db.collection('goods').add({
             data: {
-                name,
+                title,
                 remarks,
-                longitude: this.data.longitude, //经度
-                latitude: this.data.latitude,
+                price,
+                vipPrice,
+                img: '',
                 isDelete: false
             },
             success: function (res) {

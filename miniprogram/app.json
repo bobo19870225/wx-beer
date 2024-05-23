@@ -6,7 +6,9 @@
         "pages/application/index",
         "pages/manage/shop/index",
         "pages/manage/shop-edit/index",
-        "pages/manage/shop-map/index"
+        "pages/manage/shop-map/index",
+        "pages/manage/dishes/index",
+        "pages/manage/dishes-edit/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",

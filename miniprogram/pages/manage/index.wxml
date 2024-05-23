@@ -1,7 +1,7 @@
 <!--pages/manage/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{false}}">
   <view slot="backText">返回</view>
-  <view slot="content">千人吃鸡</view>
+  <view slot="content">管理</view>
 </cu-custom>
 
 <!-- 数据加载，显示loading态 -->
@@ -12,18 +12,13 @@
 
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-  <!-- 店铺 -->
-  <!-- <view class="cu-bar bg-white padding-lr" style="display: flex;align-items: center;width: 100vw;height: 90rpx;">
-    <picker style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
-      <view style="font-size: 12px;line-height: 90rpx;">
-        {{shopList[index].name}}
-      </view>
-    </picker>
-    <image style="width: 16px;" src="../../images/icons/choice.svg" mode="widthFix" />
-  </view> -->
+
   <view class="cu-list menu margin-top-sm">
     <view class="cu-item arrow" bind:tap="goTopManageShop">
       店铺管理
+    </view>
+    <view class="cu-item arrow" bind:tap="goTopManageDishes">
+      菜品管理
     </view>
     <view class="cu-item arrow">
       会员价格管理

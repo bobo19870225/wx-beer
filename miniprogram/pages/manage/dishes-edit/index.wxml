@@ -1,27 +1,35 @@
-<!--pages/manage/shop-edit/index.wxml-->
+<!--pages/manage/dishes-edit/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">新增店铺</view>
+    <view slot="backText">返回</view>
+    <view slot="content">新增商品</view>
 </cu-custom>
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class="cu-form-group margin-top">
-        <view class="title">店铺名称</view>
-        <input name="name" placeholder="请输入..."></input>
+        <view class="title">所属店铺</view>
+        <input value="{{shop.name}}"></input>
+    </view>
+    <view class="cu-form-group margin-top">
+        <view class="title">商品名称</view>
+        <input name="title" placeholder="请输入..."></input>
     </view>
 
     <view class="cu-form-group" bind:tap="openMap">
-        <view class="title">店铺位置</view>
-        <input name="location" placeholder="请填点开地图选择..." value="{{location}}" disabled></input>
-        <text class="cuIcon-locationfill text-orange"></text>
+        <view class="title">原价</view>
+        <input name="price" type="number" placeholder="请输入..."></input>
+        <text class="text-orange">单位分</text>
     </view>
-   
+    <view class="cu-form-group" bind:tap="openMap">
+        <view class="title">会员原价</view>
+        <input name="vipPrice" type="number" placeholder="请输入..."></input>
+        <text class="text-orange">单位分</text>
+    </view>
 
     <view class="cu-bar bg-white margin-top">
         <view class="action">
-            上传店铺图片
+            上传商品图片
         </view>
         <view class="action">
-            {{imgList.length}}/2
+            {{imgList.length}}/1
         </view>
     </view>
     <view class="cu-form-group">
@@ -32,17 +40,17 @@
                     <text class="cuIcon-close"></text>
                 </view>
             </view>
-            <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<2}}">
+            <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<1}}">
                 <text class="cuIcon-cameraadd"></text>
             </view>
         </view>
     </view>
     <view class="cu-form-group align-start">
         <view class="title">备注</view>
-        <textarea name="remarks" maxlength="300"  bindinput="textareaBInput" placeholder="请输入备注..."></textarea>
+        <textarea name="remarks" maxlength="300" bindinput="textareaBInput" placeholder="请输入备注..."></textarea>
     </view>
     <view class="flex padding" style="gap: 8px">
-        <button class="cu-btn round bg-blue" formType="submit">提交审核</button>
+        <button class="cu-btn round bg-blue" formType="submit">提交</button>
         <button class="cu-btn round bg-black" formType="reset">重置</button>
     </view>
 </form>
