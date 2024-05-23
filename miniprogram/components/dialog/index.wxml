@@ -1,0 +1,19 @@
+<view class="cu-modal {{showDialog?'show':''}} ">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">{{title}}</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl bg-white">
+      {{content}}
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button style="width: 150rpx;margin-right: 9rpx;" class="cu-btn line-green text-gray round" bindtap="hideModal">取消</button>
+        <button style="width: 150rpx;" class="cu-btn bg-blue round margin-left" data-type="ok" bindtap="hideModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -22,7 +22,7 @@
     <image style="width: 16px;" src="../../images/icons/choice.svg" mode="widthFix" />
   </view> -->
   <view class="cu-list menu margin-top-sm">
-    <view class="cu-item arrow">
+    <view class="cu-item arrow" bind:tap="goTopManageShop">
       店铺管理
     </view>
     <view class="cu-item arrow">

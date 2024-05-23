@@ -4,7 +4,8 @@
         "pages/web/index",
         "pages/pay-car/index",
         "pages/application/index",
-        "pages/manage/shop/index"
+        "pages/manage/shop/index",
+        "pages/manage/shop-edit/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",
