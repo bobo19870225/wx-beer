@@ -95,8 +95,11 @@ Page({
       })
       return
     }
-    if (this.data.id) {
-      db.collection('goods').doc(this.data.id).update({
+    wx.cloud.callFunction({
+      name: 'quickstartFunctions',
+      data: {
+        type: 'updateGoods',
+        id: this.data.id,
         data: {
           title,
           remarks,
@@ -105,27 +108,11 @@ Page({
           shopId,
           img,
           isDelete: false
-        },
-        success: function (res) {
-          wx.navigateBack()
         }
-      })
-    } else {
-      db.collection('goods').add({
-        data: {
-          title,
-          remarks,
-          price,
-          vipPrice,
-          shopId,
-          img,
-          isDelete: false
-        },
-        success: function (res) {
-          wx.navigateBack()
-        }
-      })
-    }
+      },
+    }).then((res) => {
+      wx.navigateBack()
+    });
   },
 
   formReset(e) {

@@ -2,7 +2,7 @@ const getOpenId = require('./getOpenId/index');
 const getMiniProgramCode = require('./getMiniProgramCode/index');
 const getOrderList = require('./getOrderList/index');
 const deleteShop = require('./deleteShop/index');
-const updateRecord = require('./updateRecord/index');
+const updateGoods = require('./updateGoods/index');
 const sumRecord = require('./sumRecord/index');
 const fetchGoodsList = require('./fetchGoodsList/index');
 const getShopList = require('./getShopList/index');
@@ -20,8 +20,8 @@ exports.main = async (event, context) => {
             return await getOrderList.main(event, context);
         case 'deleteShop':
             return await deleteShop.main(event, context);
-        case 'updateRecord':
-            return await updateRecord.main(event, context);
+        case 'updateGoods':
+            return await updateGoods.main(event, context);
         case 'sumRecord':
             return await sumRecord.main(event, context);
         case 'fetchGoodsList':
