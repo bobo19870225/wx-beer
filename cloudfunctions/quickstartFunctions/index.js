@@ -3,7 +3,7 @@ const getMiniProgramCode = require('./getMiniProgramCode/index');
 const getOrderList = require('./getOrderList/index');
 const deleteShop = require('./deleteShop/index');
 const updateGoods = require('./updateGoods/index');
-const sumRecord = require('./sumRecord/index');
+const updateShop = require('./updateShop/index');
 const fetchGoodsList = require('./fetchGoodsList/index');
 const getShopList = require('./getShopList/index');
 const genMpQrcode = require('./genMpQrcode/index');
@@ -22,8 +22,8 @@ exports.main = async (event, context) => {
             return await deleteShop.main(event, context);
         case 'updateGoods':
             return await updateGoods.main(event, context);
-        case 'sumRecord':
-            return await sumRecord.main(event, context);
+        case 'updateShop':
+            return await updateShop.main(event, context);
         case 'fetchGoodsList':
             return await fetchGoodsList.main(event, context);
         case 'genMpQrcode':

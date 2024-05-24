@@ -1,42 +1,45 @@
 <!--pages/manage/shop/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">店铺管理</view>
+    <view slot="backText">返回</view>
+    <view slot="content">店铺管理</view>
 </cu-custom>
 <!-- 对话框 -->
 <dialog showDialogProps="{{showDialog}}" postDataProps="{{dialogData}}" bind:onOk="onDelete"> </dialog>
 <!-- 数据加载，显示loading态 -->
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-  <view class='gray-text text-xs'>加载中...</view>
+    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+    <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-  <view class="cu-bar search bg-white">
-    <view class="search-form round">
-      <text class="cuIcon-search"></text>
-      <input type="text" placeholder="输入店名搜索" confirm-type="search"></input>
-    </view>
-    <view class="action">
-      <text class="cuIcon-search">
-      </text>
-    </view>
-  </view>
-  <scroll-view>
-    <view class="cu-list menu margin-top-sm">
-      <view class="cu-item" wx:for="{{ shopList }}" wx:key="_id">
-        <view class="content">
-          {{item.name}}
+    <view class="cu-bar search bg-white">
+        <view class="search-form round">
+            <text class="cuIcon-search"></text>
+            <input type="text" placeholder="输入店名搜索" confirm-type="search"></input>
         </view>
         <view class="action">
-          <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteShop" data-shopid="{{item._id}}">
-            <!-- {{item._id}} -->
-            <text class="cuIcon-delete">
+            <text class="cuIcon-search">
             </text>
-          </button>
         </view>
-      </view>
     </view>
-  </scroll-view>
-  <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addShop">新增店铺</button>
+    <scroll-view>
+        <view class="cu-list menu margin-top-sm">
+            <view class="cu-item" wx:for="{{ shopList }}" wx:key="_id">
+                <view class="content">
+                    {{item.name}}
+                </view>
+                <view class="action">
+                    <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteShop" data-shopid="{{item._id}}">
+                        <text class="cuIcon-delete">
+                        </text>
+                    </button>
+                    <button class="cu-btn bg-blue shadow sm" style="width: 50rpx;border-radius: 50%;margin-left: 9rpx;" bind:tap="editShop" data-id="{{item._id}}">
+                        <text class="cuIcon-edit">
+                        </text>
+                    </button>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+    <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addShop">新增店铺</button>
 </block>

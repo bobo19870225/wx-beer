@@ -25,13 +25,26 @@ Page({
     onLoad(options) {
 
     },
+
+    bindPickerChange(e) {
+        let id = this.data.shopList[e.detail.value]._id
+        if (id) {
+            this.setData({
+                shop:this.data.shopList[e.detail.value],
+                index: e.detail.value
+            })
+            this.fetchGoodsList(id);
+        }
+    },
     async initData() {
         const shopList = app.globalData.shopList || await app.getShopList()
-        this.setData({
-            shopList,
-            index: 0,
-            shop: shopList[0]
-        })
+        if(!this.data.shop){
+            this.setData({
+                shopList,
+                index: 0,
+                shop: shopList[0]
+            })
+        }
         this.fetchGoodsList(this.data.shop._id)
     },
     async fetchGoodsList(shopId) {
@@ -68,7 +81,7 @@ Page({
         //     },
         // });
     },
-    editShop(e) {
+    edit(e) {
         console.log(e);
         wx.navigateTo({
             url: '/pages/manage/dishes-edit/index',
@@ -97,10 +110,10 @@ Page({
         wx.navigateTo({
             url: '/pages/manage/dishes-edit/index',
             success: (res) => {
-              res.eventChannel.emit('acceptDataFromOpenerPage', {
-                  shop: this.data.shop
-              })
-          }
+                res.eventChannel.emit('acceptDataFromOpenerPage', {
+                    shop: this.data.shop
+                })
+            }
         })
     },
     /**

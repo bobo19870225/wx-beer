@@ -34,7 +34,7 @@ Component({
       this.setData({
         imgListId: imgs
       })
-      console.log("sdasda", imgs);
+    //   console.log("sdasda", imgs);
     },
   },
   attached() {

@@ -58,7 +58,7 @@ Component({
       } else {
         indexShop = 0
         shop = this.data.shopList[indexShop]
-        wx.setStorage({
+        await wx.setStorage({
           key: "shop",
           data: shop
         })
