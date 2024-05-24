@@ -26,7 +26,7 @@ Page({
 
     },
     async initData() {
-        const shopList = app.globalData.shopList || await app.initGlobalData()
+        const shopList = app.globalData.shopList || await app.getShopList()
         this.setData({
             shopList,
             index: 0,

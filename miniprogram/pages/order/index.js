@@ -47,7 +47,7 @@ Component({
       const shop = wx.getStorageSync('shop')
       let indexShop = 0
       this.setData({
-        shopList: app.globalData.shopList || await app.initGlobalData()
+        shopList: app.globalData.shopList || await app.getShopList()
       })
       this.data.shopList.forEach((element, index) => {
         if (shop._id == element._id) {

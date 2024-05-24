@@ -27,6 +27,9 @@
       会员管理
     </view>
     <view class="cu-item arrow">
+      申请管理
+    </view>
+    <view class="cu-item arrow">
       运营统计
     </view>
   </view>

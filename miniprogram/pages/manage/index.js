@@ -31,7 +31,7 @@ Component({
     async initData() {
       const shop = wx.getStorageSync('shop')
       let indexShop = 0
-      const shopList = app.globalData.shopList || await app.initGlobalData()
+      const shopList = app.globalData.shopList || await app.getShopList()
       this.setData({
         shopList
       })

@@ -11,8 +11,6 @@ Page({
   data: {
     isLoading: false,
     shopList: null,
-    index: null,
-    shop: null,
     showDialog: false,
     dialogData: {},
     containerHeight: app.globalData.containerHeight,
@@ -22,31 +20,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.initData();
+
   },
   async initData() {
-    const shop = wx.getStorageSync('shop')
-    let indexShop = 0
-    const shopList = app.globalData.shopList || await app.initGlobalData()
+    const shopList = app.globalData.shopList || await app.getShopList()
     this.setData({
       shopList
     })
-    if (shop) {
-      this.data.shopList.forEach((element, index) => {
-        if (shop._id == element._id) {
-          indexShop = index
-        }
-      });
-    } else {
-      indexShop = 0
-      shop = this.data.shopList[indexShop]
-    }
-
-    this.setData({
-      index: indexShop,
-      shop
-    })
-    // this.fetchGoodsList(shop._id)
   },
   deleteShop(e) {
     this.setData({
@@ -56,18 +36,19 @@ Page({
       }
     })
   },
- async onDelete(e) {
-    console.log(e);
-    const res = await wx.cloud.callFunction({
+  async onDelete(e) {
+    // console.log(e);
+    await wx.cloud.callFunction({
       name: 'quickstartFunctions',
       data: {
         type: 'deleteShop',
         shopId: e.detail.shopId
       },
     });
-    console.log(res);
+    await app.getShopList();
+    this.initData()
   },
-  addShop(){
+  addShop() {
     wx.navigateTo({
       url: '/pages/manage/shop-edit/index',
     })
@@ -83,7 +64,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.initData();
   },
 
   /**

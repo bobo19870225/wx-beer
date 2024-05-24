@@ -13,8 +13,9 @@ Page({
     shopList: null,
     imgList: [],
     index: null,
+    hadApplication: false,
+    containerHeight: app.globalData.containerHeight,
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -25,7 +26,7 @@ Page({
     const shop = wx.getStorageSync('shop')
     let indexShop = 0
     this.setData({
-      shopList: app.globalData.shopList || await app.initGlobalData()
+      shopList: app.globalData.shopList || await app.getShopList()
     })
     this.data.shopList.forEach((element, index) => {
       if (shop._id == element._id) {
@@ -38,16 +39,33 @@ Page({
       index: indexShop,
       shop
     })
+    this.getApplication()
   },
-
-
+  getApplication() {
+    this.setData({
+      isLoading: true
+    })
+    db.collection("task").where({
+      _openid: this.data._openid
+    }).get().then((res) => {
+      console.log(res);
+      if (res.data && res.data.length > 0) {
+        this.setData({
+          hadApplication: true
+        })
+      }
+      this.setData({
+        isLoading: false
+      })
+    })
+  },
   PickerChange(e) {
     this.setData({
       index: e.detail.value
     })
   },
   onUploadOk(e) {
-    console.log("SC", e);
+    // console.log("SC", e);
     this.setData({
       imgList: e.detail
     })
@@ -88,7 +106,9 @@ Page({
         phone,
         shopId,
         imgs,
-        remarks: remarks ? remarks : "无"
+        state: 0,
+        remarks: remarks ? remarks : "无",
+        createDate: new Date(),
       },
       success: (res) => {
         wx.navigateBack()
