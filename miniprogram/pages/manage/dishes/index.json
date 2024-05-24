@@ -1,5 +1,6 @@
 {
     "usingComponents": {
-      "dialog": "/components/dialog/index"
+      "dialog": "/components/dialog/index",
+      "shopBar": "/components/shopBar/index"
     }
 }

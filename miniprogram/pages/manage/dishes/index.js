@@ -10,9 +10,7 @@ Page({
      */
     data: {
         isLoading: false,
-        shopList: null,
         goodsList: null,
-        index: null,
         shop: null,
         showDialog: false,
         dialogData: {},
@@ -26,28 +24,18 @@ Page({
 
     },
 
-    bindPickerChange(e) {
-        let id = this.data.shopList[e.detail.value]._id
-        if (id) {
-            this.setData({
-                shop:this.data.shopList[e.detail.value],
-                index: e.detail.value
-            })
-            this.fetchGoodsList(id);
-        }
+    /**
+     * 切换店铺
+     */
+    onShopChange(e) {
+        let shop = e.detail
+        this.setData({
+            shop
+        })
+        this.fetchGoodsList();
     },
-    async initData() {
-        const shopList = app.globalData.shopList || await app.getShopList()
-        if(!this.data.shop){
-            this.setData({
-                shopList,
-                index: 0,
-                shop: shopList[0]
-            })
-        }
-        this.fetchGoodsList(this.data.shop._id)
-    },
-    async fetchGoodsList(shopId) {
+
+    async fetchGoodsList() {
         this.setData({
             isLoading: true
         });
@@ -55,7 +43,7 @@ Page({
             name: 'quickstartFunctions',
             data: {
                 type: 'fetchGoodsList',
-                shopId
+                shopId: this.data.shop._id
             },
         });
         const goodsList = res?.result?.data || [];
@@ -127,7 +115,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        this.initData();
+        this.fetchGoodsList();
     },
 
     /**
