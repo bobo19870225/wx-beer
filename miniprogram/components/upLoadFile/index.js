@@ -20,10 +20,25 @@ Component({
       type: String,
       value: ''
     },
+    imgs: {
+      type: Array,
+      value: []
+    },
     label: {
       type: String,
       value: '上传图片'
     },
+  },
+  observers: {
+    imgs: function (imgs) {
+      this.setData({
+        imgListId: imgs
+      })
+      console.log("sdasda", imgs);
+    },
+  },
+  attached() {
+
   },
 
   /**

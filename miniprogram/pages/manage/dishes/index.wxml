@@ -1,28 +1,28 @@
 <!--pages/manage/dishes/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">菜品管理</view>
+  <view slot="backText">返回</view>
+  <view slot="content">菜品管理</view>
 </cu-custom>
 <!-- 对话框 -->
 <dialog showDialogProps="{{showDialog}}" postDataProps="{{dialogData}}" bind:onOk="onDelete"> </dialog>
 <!-- 数据加载，显示loading态 -->
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text text-xs'>加载中...</view>
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-    <!-- 店铺 -->
-    <view class="cu-bar bg-white padding-lr" style="display: flex;align-items: center;width: 100vw;height: 90rpx;">
-        <picker style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
-            <view style="font-size: 12px;line-height: 90rpx;">
-                {{shopList[index].name}}
-            </view>
-        </picker>
-        <image style="width: 16px;" src="../../../images/icons/choice.svg" mode="widthFix" />
-    </view>
+  <!-- 店铺 -->
+  <view class="cu-bar bg-white padding-lr" style="display: flex;align-items: center;width: 100vw;height: 90rpx;">
+    <picker style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
+      <view style="font-size: 12px;line-height: 90rpx;">
+        {{shopList[index].name}}
+      </view>
+    </picker>
+    <image style="width: 16px;" src="../../../images/icons/choice.svg" mode="widthFix" />
+  </view>
 
-    <!-- <view class="cu-bar search bg-white">
+  <!-- <view class="cu-bar search bg-white">
     <view class="search-form round">
       <text class="cuIcon-search"></text>
       <input type="text" placeholder="输入店名搜索" confirm-type="search"></input>
@@ -33,32 +33,31 @@
     </view>
   </view> -->
 
-    <scroll-view>
-        <view class="cu-list menu margin-top-sm">
-            <view class="cu-item cur" wx:for="{{ goodsList }}" wx:key="_id">
-
-                <view class="cu-avatar radius lg" style="background-image:url(../../../images/default-goods-image.png);">
-                </view>
-                <view class="content padding-left">
-                    <text class="text-cut"> {{item.title}}</text>
-                    <view class="cu-tag round bg-gray sm">¥ {{item.price/100}}</view>
-                    <view class="cu-tag round bg-orange sm">¥ {{item.vipPrice/100}}</view>
-                    <!-- <view class="text-gray text-sm flex">
+  <scroll-view>
+    <view class="cu-list menu margin-top-sm">
+      <view class="cu-item cur" wx:for="{{ goodsList }}" wx:key="_id">
+        <image class="cu-avatar radius lg" src="{{item.img||'../../../images/default-goods-image.png'}}">
+        </image>
+        <view class="content padding-left">
+          <text class="text-cut"> {{item.title}}</text>
+          <view class="cu-tag round bg-gray sm">¥ {{item.price/100}}</view>
+          <view class="cu-tag round bg-orange sm">¥ {{item.vipPrice/100}}</view>
+          <!-- <view class="text-gray text-sm flex">
                         <text class="text-cut"> 伊泽瑞尔：<text class="cuIcon-locationfill text-orange margin-right-xs"></text> 传送中...</text>
                     </view> -->
-                </view>
-                <view class="action">
-                    <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteShop" data-id="{{item._id}}">
-                        <text class="cuIcon-delete">
-                        </text>
-                    </button>
-                    <button class="cu-btn bg-blue shadow sm" style="width: 50rpx;border-radius: 50%;margin-left: 9rpx;" bind:tap="editShop" data-id="{{item._id}}">
-                        <text class="cuIcon-edit">
-                        </text>
-                    </button>
-                </view>
-            </view>
         </view>
-    </scroll-view>
-    <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addShop">新增商品</button>
+        <view class="action">
+          <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteShop" data-id="{{item._id}}">
+            <text class="cuIcon-delete">
+            </text>
+          </button>
+          <button class="cu-btn bg-blue shadow sm" style="width: 50rpx;border-radius: 50%;margin-left: 9rpx;" bind:tap="editShop" data-id="{{item._id}}">
+            <text class="cuIcon-edit">
+            </text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addGoods">新增商品</button>
 </block>

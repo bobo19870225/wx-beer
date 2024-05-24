@@ -93,9 +93,14 @@ Page({
         //     url: '/pages/manage/dishes-edit/index?id=' + e.detail.id,
         // })
     },
-    addDishes() {
+    addGoods() {
         wx.navigateTo({
             url: '/pages/manage/dishes-edit/index',
+            success: (res) => {
+              res.eventChannel.emit('acceptDataFromOpenerPage', {
+                  shop: this.data.shop
+              })
+          }
         })
     },
     /**

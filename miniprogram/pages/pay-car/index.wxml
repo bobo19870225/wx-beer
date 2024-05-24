@@ -1,93 +1,93 @@
 <!--pages/pay-car/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">{{shop.name}}</view>
+  <view slot="backText">返回</view>
+  <view slot="content">{{shop.name}}</view>
 </cu-custom>
 <view>
-    <!-- 数据加载，显示loading态 -->
-    <block wx:if="{{ isLoading }}">
-        <view class="tip_text">
-            加载中...
-        </view>
-    </block>
-    <!-- 数据加载完毕 -->
-    <block wx:if="{{ !isLoading }}">
-        <!-- 有数据 -->
-        <scroll-view scroll-y="true" style="height: {{containerHeight}}rpx;" wx:if="{{ orderList.length >= 1 }}">
-            <view class="cu-list sm-border menu">
-                <block wx:for="{{ orderList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-                    <view class="cu-item">
-                        <view class="content flex align-center justify-between padding-tb">
-                            <image style="width: 100rpx;border-radius: 15rpx;" src="../../images/default-goods-image.png" mode="widthFix" />
-                            <view class="goods-title">{{ goodsDetail.title }} x{{ goodsDetail.number}}</view>
-                            <view>
-                                <view class="text-orange">
-                                    会员价
-                                    ¥{{ goodsDetail.vipPrice / 100 }}
-                                </view>
-                                <view class="goods-price">
-                                    原价
-                                    <view class="price-symbol">¥</view>
-                                    <view style=" text-decoration: line-through;">{{ goodsDetail.price / 100 }}</view>
-                                </view>
-                            </view>
-                        </view>
-                    </view>
-                </block>
-            </view>
-            <view style="position: fixed;bottom: 0;height: 160rpx;width: 100vw;background-color: white;display: flex;align-items: center;justify-content: space-between;">
-                <view style="margin-left: 16px;">
-                    <view>
-                        会员支付
-                        <span class="padding-left text-orange">
-                            ¥{{vipTotal}}
-                        </span>
-                    </view>
-                    <view>
-                        普通应付
-                        <span class="padding-left">
-                            ¥{{total}}
-                        </span>
-                    </view>
-                </view>
-                <view style="margin-right: 16px;">
-                    <button class="cu-btn sm round bg-orange" bind:tap="pay">
-                        去支付
-                    </button>
-                </view>
-            </view>
-        </scroll-view>
-
-        <!-- 无数据 -->
-        <block wx:else>
-            <view class="tip_text">暂无数据</view>
-        </block>
-    </block>
-
-    <view class="cu-modal {{showDialogPay?'show':''}}">
-        <view class="cu-dialog">
-            <view class="cu-bar bg-white justify-end">
-                <view class="content">会员钜惠</view>
-                <view class="action" bindtap="closeDialogPay">
-                    <text class="cuIcon-close text-red"></text>
-                </view>
-            </view>
-            <view class="padding-xl">
-                使用会员支付本单立省
-                <span class="text-red">
-                    ¥{{total - vipTotal}}
-                </span>
-            </view>
-            <view class="cu-bar bg-white">
-                <view class="action margin-0 flex-sub text-orange " bindtap="vipPay">
-                    <text class="cuIcon-vip"></text>会员支付
-                </view>
-
-                <view class="action margin-0 flex-sub  solid-left" bindtap="nonmemberPay">
-                    <text class="cuIcon-pay"></text> 普通支付
-                </view>
-            </view>
-        </view>
+  <!-- 数据加载，显示loading态 -->
+  <block wx:if="{{ isLoading }}">
+    <view class="tip_text">
+      加载中...
     </view>
+  </block>
+  <!-- 数据加载完毕 -->
+  <block wx:if="{{ !isLoading }}">
+    <!-- 有数据 -->
+    <scroll-view scroll-y="true" style="height: {{containerHeight}}rpx;" wx:if="{{ orderList.length >= 1 }}">
+      <view class="cu-list sm-border menu">
+        <block wx:for="{{ orderList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+          <view class="cu-item">
+            <view class="content flex align-center justify-between padding-tb">
+              <image style="width: 100rpx;height: 100rpx; border-radius: 15rpx;" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+              <view class="goods-title">{{ goodsDetail.title }} x{{ goodsDetail.number}}</view>
+              <view>
+                <view class="text-orange">
+                  会员价
+                  ¥{{ goodsDetail.vipPrice / 100 }}
+                </view>
+                <view class="goods-price">
+                  原价
+                  <view class="price-symbol">¥</view>
+                  <view style=" text-decoration: line-through;">{{ goodsDetail.price / 100 }}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view style="position: fixed;bottom: 0;height: 160rpx;width: 100vw;background-color: white;display: flex;align-items: center;justify-content: space-between;">
+        <view style="margin-left: 16px;">
+          <view>
+            会员支付
+            <span class="padding-left text-orange">
+              ¥{{vipTotal}}
+            </span>
+          </view>
+          <view>
+            普通应付
+            <span class="padding-left">
+              ¥{{total}}
+            </span>
+          </view>
+        </view>
+        <view style="margin-right: 16px;">
+          <button class="cu-btn sm round bg-orange" bind:tap="pay">
+            去支付
+          </button>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 无数据 -->
+    <block wx:else>
+      <view class="tip_text">暂无数据</view>
+    </block>
+  </block>
+
+  <view class="cu-modal {{showDialogPay?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">会员钜惠</view>
+        <view class="action" bindtap="closeDialogPay">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">
+        使用会员支付本单立省
+        <span class="text-red">
+          ¥{{total - vipTotal}}
+        </span>
+      </view>
+      <view class="cu-bar bg-white">
+        <view class="action margin-0 flex-sub text-orange " bindtap="vipPay">
+          <text class="cuIcon-vip"></text>会员支付
+        </view>
+
+        <view class="action margin-0 flex-sub  solid-left" bindtap="nonmemberPay">
+          <text class="cuIcon-pay"></text> 普通支付
+        </view>
+      </view>
+    </view>
+  </view>
 
 </view>
