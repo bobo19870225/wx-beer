@@ -1,7 +1,9 @@
 // pages/application/index.js
 const app = getApp()
+const db = wx.cloud.database({
+  env: 'beer-1g75udik38f745cf'
+})
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -9,8 +11,8 @@ Page({
     _openid: null,
     isLoading: false,
     shopList: null,
-    imgList:[],
-    index:null,
+    imgList: [],
+    index: null,
   },
 
   /**
@@ -44,57 +46,63 @@ Page({
       index: e.detail.value
     })
   },
-
-  ChooseImage() {
-    wx.chooseImage({
-      count: 2, //默认9
-      sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album'], //从相册选择
+  onUploadOk(e) {
+    console.log("SC", e);
+    this.setData({
+      imgList: e.detail
+    })
+  },
+  formSubmit(e) {
+    const phone = e.detail.value.phone
+    const remarks = e.detail.value.remarks
+    const shopId = this.data.shopList[e.detail.value.shopIndex]._id
+    const imgs = this.data.imgList
+    if (!phone) {
+      wx.showToast({
+        title: '手机号必填',
+        icon: 'error'
+      })
+      return
+    }
+    if (!shopId) {
+      wx.showToast({
+        title: '店铺必填',
+        icon: 'error'
+      })
+      return
+    }
+    if (imgs.length != 2) {
+      wx.showToast({
+        title: '需要两张身份证图片',
+        icon: 'error'
+      })
+      return
+    }
+    console.log('提交携带数据为：', e.detail.value)
+    this.setData({
+      isLoading: true
+    })
+    db.collection('task').add({
+      data: {
+        type: 1,
+        phone,
+        shopId,
+        imgs,
+        remarks: remarks ? remarks : "无"
+      },
       success: (res) => {
-        if (this.data.imgList.length != 0) {
-          this.setData({
-            imgList: this.data.imgList.concat(res.tempFilePaths)
-          })
-        } else {
-          this.setData({
-            imgList: res.tempFilePaths
-          })
-        }
-      }
-    });
-  },
-  ViewImage(e) {
-    wx.previewImage({
-      urls: this.data.imgList,
-      current: e.currentTarget.dataset.url
-    });
-  },
-  DelImg(e) {
-    wx.showModal({
-      title: '温馨提示',
-      content: '确定要删除吗？',
-      cancelText: '取消',
-      confirmText: '确定',
-      success: res => {
-        if (res.confirm) {
-          this.data.imgList.splice(e.currentTarget.dataset.index, 1);
-          this.setData({
-            imgList: this.data.imgList
-          })
-        }
+        wx.navigateBack()
+      },
+      complete: (res) => {
+        this.setData({
+          isLoading: false
+        })
       }
     })
   },
-
-  formSubmit(e) {
-    console.log('form发生了submit事件，携带数据为：', e)
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
-  },
-
   formReset(e) {
     console.log('form发生了reset事件，携带数据为：', e.detail.value)
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -1,0 +1,27 @@
+<!--components/upLoadFile/index.wxml-->
+<view class="cu-bar bg-white margin-top">
+  <view class="action">
+    {{label}}
+  </view>
+  <view class="action">
+    {{imgListId.length}}/{{count}}
+  </view>
+</view>
+<view class="cu-form-group">
+  <view wx:if="{{isUpLoading}}" style="display: flex;z-index: 100;width: 90%; height: 180rpx; align-items:flex-start;background-color: rgba(211, 211, 211, 0.863);position: absolute;justify-content: center;align-items: center;">
+    <view class="cu-load loading "></view>
+  </view>
+  <view class="grid col-4 grid-square flex-sub">
+    <view class="bg-img" wx:for="{{imgListId}}" wx:key="index" bindtap="ViewImage" data-url="{{imgListId[index]}}">
+
+      <image src='{{item}}' mode='aspectFill'>
+      </image>
+      <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+        <text class="cuIcon-close"></text>
+      </view>
+    </view>
+    <view class="solids" bindtap="ChooseImage" wx:if="{{imgListId.length < count}}">
+      <text class="cuIcon-cameraadd"></text>
+    </view>
+  </view>
+</view>

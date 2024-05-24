@@ -111,7 +111,7 @@ Component({
         vipUserInfo: null
       })
       db.collection('user').where({
-        _openid:this.data._openid,
+        _openid: this.data._openid,
         shopId: this.data.shop._id,
       }).get().then((res) => {
         if (res.data && res.data.length > 0) {
@@ -124,65 +124,52 @@ Component({
         })
       })
     },
+    gotoApplicationPage() {
+      wx.navigateTo({
+        url: `/pages/application/index`,
+      });
+    },
+    radioChange(e) {
+      let data = e.detail.value.split(',')
+      console.log('radio发生change事件，携带value值为：', data)
+      this.setData({
+        money: data[0],
+        points: data[1]
+      })
+    },
+    toBeVip() {
+      this.setData({
+        showPayDialog: true
+      })
+    },
+    async payVip() {
+      this.setData({
+        isLoading: true
+      })
+      const shop = this.data.shop
+      const balance = Number.parseInt(this.data.money)
+      const points = Number.parseInt(this.data.points)
+      const res = await wx.cloud.callFunction({
+        name: 'quickstartFunctions',
+        data: {
+          type: 'payForVip',
+          shopId: shop._id,
+          _openid: this.data._openid,
+          name: this.data.userInfo.nickName,
+          balance,
+          points
+        },
+      });
+      this.getVip()
+      this.closePayDialog()
+      this.setData({
+        isLoading: false
+      })
+    },
+    closePayDialog() {
+      this.setData({
+        showPayDialog: false
+      })
+    },
   },
-  onLoad(options) {
-
-
-  },
-  async getOpenid() {
-
-  },
-  radioChange(e) {
-    let data = e.detail.value.split(',')
-    console.log('radio发生change事件，携带value值为：', data)
-    this.setData({
-      money: data[0],
-      points: data[1]
-    })
-  },
-
-
-
-  toBeVip() {
-    this.setData({
-      showPayDialog: true
-    })
-  },
-  async payVip() {
-    this.setData({
-      isLoading: true
-    })
-    const shop = this.data.shop
-    const balance = Number.parseInt(this.data.money)
-    const points = Number.parseInt(this.data.points)
-    const res = await wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      data: {
-        type: 'payForVip',
-        shopId: shop._id,
-        _openid: this.data._openid,
-        name: this.data.userInfo.nickName,
-        balance,
-        points
-      },
-    });
-    this.getVip()
-    this.closePayDialog()
-    this.setData({
-      isLoading: false
-    })
-  },
-  closePayDialog() {
-    this.setData({
-      showPayDialog: false
-    })
-  },
-
-  gotoApplicationPage() {
-    wx.navigateTo({
-      url: `/pages/application/index`,
-    });
-  },
-
-
 });
