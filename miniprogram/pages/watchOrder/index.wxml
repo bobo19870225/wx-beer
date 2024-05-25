@@ -1,8 +1,7 @@
-<!--order/index.wxml-->
 <wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
     <view slot="backText">返回</view>
-    <view slot="content">订单</view>
+    <view slot="content">听单</view>
 </cu-custom>
 <view>
     <!-- 数据加载，显示loading态 -->
@@ -17,6 +16,32 @@
     <block wx:if="{{ !isLoading }}">
         <!-- 有数据 -->
         <view wx:if="{{ orderList.length >= 1 }}">
+
+            <!-- <view class="cu-card">
+                <view class="cu-item shadow">
+                    <view class="cu-tag bg-blue"> 最新订单</view>
+                    <view class="cu-list menu-avatar">
+                        <view wx:if="{{newOrder}}" class="cu-item">
+                            <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                            <view class="content flex-sub">
+                                <view class="text-grey">{{ goodsDetail.title }}</view>
+                                <view class="text-gray text-sm flex justify-between">
+                                    <view style="color: gold;">¥ {{ goodsDetail.price / 100 }}</view>
+                                    <view class="text-gray text-sm">
+                                        x{{ goodsDetail.number}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view wx:else class="cu-item">
+                            <view class="content flex-sub">
+                                暂无最新订单
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view> -->
+
             <scroll-view scroll-y="true" style="height: {{containerHeight-90}}rpx;">
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card">
@@ -42,8 +67,11 @@
                                     {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
                                 </view>
                                 <view class="margin-left ">
-                                    总价：<span style="color: gold;">¥ {{orderDetail.total}}</span>
+                                    备注：<span>{{orderDetail.remarks}}</span>
                                 </view>
+                            </view>
+                            <view class="flex">
+                                <button class="cu-btn round bg-blue" data-id="{{orderDetail._id}}" bind:tap="setOrderFinish">设为已完成</button>
                             </view>
                         </view>
                     </view>

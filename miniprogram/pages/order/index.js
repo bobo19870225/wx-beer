@@ -40,10 +40,11 @@ Component({
                 },
             });
             const orderList = res?.result?.data || [];
+            console.log(res);
             this.setData({
                 isLoading: false,
                 orderList
-            });
+            })
         },
     },
 

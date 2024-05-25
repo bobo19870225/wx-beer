@@ -4,6 +4,7 @@ const getOrderList = require('./getOrderList/index');
 const deleteShop = require('./deleteShop/index');
 const updateGoods = require('./updateGoods/index');
 const updateShop = require('./updateShop/index');
+const updateOrder = require('./updateOrder/index');
 const fetchGoodsList = require('./fetchGoodsList/index');
 const getShopList = require('./getShopList/index');
 const genMpQrcode = require('./genMpQrcode/index');
@@ -24,6 +25,8 @@ exports.main = async (event, context) => {
             return await updateGoods.main(event, context);
         case 'updateShop':
             return await updateShop.main(event, context);
+        case 'updateOrder':
+            return await updateOrder.main(event, context);
         case 'fetchGoodsList':
             return await fetchGoodsList.main(event, context);
         case 'genMpQrcode':

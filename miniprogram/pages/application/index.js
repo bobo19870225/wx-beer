@@ -23,7 +23,7 @@ Page({
         this.initData()
     },
     async initData() {
-        const shop = wx.getStorageSync('shop')
+        const shop = app.globalData.shop
         let indexShop = 0
         this.setData({
             shopList: app.globalData.shopList || await app.getShopList()

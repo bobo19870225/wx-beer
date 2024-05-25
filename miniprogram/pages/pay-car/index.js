@@ -21,7 +21,7 @@ Page({
      */
     onLoad(options) {
         console.log(options)
-        var shop = wx.getStorageSync('shop')
+        var shop = app.globalData.shop
         this.setData({
             shop
         })
@@ -101,53 +101,54 @@ Page({
             showDialogPay: true
         })
     },
-    vipPay() {
-        this.closeDialogPay()
-        var shopId = wx.getStorageSync('shopId')
-        db.collection('order').add({
-            // data 字段表示需新增的 JSON 数据
-            data: {
-                // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-                // description: "learn cloud database",
-                createDate: new Date(),
-                goodsList: this.data.orderList,
-                shopId,
-                total: this.data.vipTotal,
-                // 下单成功，制作中
-                state: 1
-            },
-            success: function (res) {
-                wx.switchTab({
-                    url: '/pages/order/index'
-                })
-            }
-        })
-    },
+
     closeDialogPay() {
         this.setData({
             showDialogPay: false
         })
     },
-    nonmemberPay() {
+    async formSubmit(e) {
+        // console.log(e);
+        let typeSub = e.detail.target.dataset.type
+        let remarks = e.detail.value.remarks
+        let total = 0
+        let type = 1
+        const _openid = wx.getStorageSync('openid') || await app.getOpenid()
+        if (typeSub == 'vipPay') {
+            total = this.data.vipTotal
+            type = 1
+        } else {
+            total = this.data.total
+            type = 0
+        }
         this.closeDialogPay()
-        var shopId = wx.getStorageSync('shopId')
-        db.collection('order').add({
-            // data 字段表示需新增的 JSON 数据
+        const shopId = this.data.shop._id
+        wx.cloud.callFunction({
+            name: 'quickstartFunctions',
             data: {
-                // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-                description: "learn cloud database",
-                createDate: new Date(),
-                goodsList: this.data.orderList,
-                shopId,
-                total: this.data.total,
-                // 下单成功，制作中
-                state: 1
+                type: 'updateOrder',
+                data: {
+                    _openid,
+                    type,
+                    createDate: new Date(),
+                    goodsList: this.data.orderList,
+                    shopId,
+                    total,
+                    remarks,
+                    // 下单成功，制作中
+                    state: 1
+                },
             },
-            success: function (res) {
-                wx.switchTab({
-                    url: '/pages/order/index'
+        }).then((res) => {
+            if (res.result.success) {
+                app.globalData.PageCur = "order"
+                wx.navigateBack()
+            } else {
+                wx.showToast({
+                    icon: 'error',
+                    title: '下单失败！',
                 })
             }
         })
-    }
+    },
 })

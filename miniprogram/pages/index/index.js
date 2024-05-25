@@ -1,13 +1,22 @@
 const app = getApp()
 Page({
-  data: {
-    PageCur: 'home'
-  },
-  onLoad() {},
-  onShow() {},
-  NavChange(e) {
-    this.setData({
-      PageCur: e.currentTarget.dataset.cur
-    })
-  },
+    data: {
+        PageCur: 'home'
+    },
+    onLoad() {
+
+    },
+    onShow() {
+        const PageCur = app.globalData.PageCur
+        if (PageCur) {
+            this.setData({
+                PageCur
+            })
+        }
+    },
+    NavChange(e) {
+        this.setData({
+            PageCur: e.currentTarget.dataset.cur
+        })
+    },
 })

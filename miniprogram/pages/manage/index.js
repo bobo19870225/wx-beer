@@ -29,7 +29,7 @@ Component({
    */
   methods: {
     async initData() {
-      const shop = wx.getStorageSync('shop')
+      const shop = app.globalData.shop
       let indexShop = 0
       const shopList = app.globalData.shopList || await app.getShopList()
       this.setData({

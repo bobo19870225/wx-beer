@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <home wx:if="{{PageCur=='home'}}"></home>
 <order wx:if="{{PageCur=='order'}}"></order>
+<watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
 <user-center wx:if="{{PageCur=='user-center'}}"></user-center>
 <manage wx:if="{{PageCur=='manage'}}"></manage>
 
@@ -17,6 +18,13 @@
       <image src="/images/tabbar/order{{PageCur=='order'?'_cur':''}}.png"></image>
     </view>
     <view class="{{PageCur=='order'?'text-blue':'text-gray'}}">订单</view>
+  </view>
+
+  <view class="action" bindtap="NavChange" data-cur="watchOrder">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/watchOrder{{PageCur=='watchOrder'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='watchOrder'?'text-blue':'text-gray'}}">听单</view>
   </view>
 
   <view class="action" bindtap="NavChange" data-cur="manage">
