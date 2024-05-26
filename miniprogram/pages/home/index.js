@@ -74,16 +74,17 @@ Component({
             let orderTemp = temp.filter((item) => {
                 if (item.number > 0) {
                     totalNumber += item.number
-                    total += Math.round(item.number * item.price / 100)
-                    vipTotal += Math.round(item.number * item.vipPrice / 100)
+                    total += item.number * item.price
+                    vipTotal += item.number * item.vipPrice
                     return true
                 }
                 return false
             })
+            // Math.round(）
             this.setData({
                 goodsList: temp,
-                orderTotalPrice: total,
-                orderTotalVipPrice: vipTotal,
+                orderTotalPrice: total / 100,
+                orderTotalVipPrice: vipTotal / 100,
                 orderTotalNumber: totalNumber,
                 orderList: orderTemp
             });

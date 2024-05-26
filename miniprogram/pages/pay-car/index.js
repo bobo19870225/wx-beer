@@ -12,6 +12,7 @@ Page({
         shop: null,
         total: 0,
         vipTotal: 0,
+        preferential: 0,
         containerHeight: app.globalData.containerHeightNoTabBar,
         showDialogPay: false,
     },
@@ -33,13 +34,15 @@ Page({
                 let total = 0;
                 let vipTotal = 0;
                 orderListT.forEach(element => {
-                    total += Math.round(element.number * element.price / 100)
-                    vipTotal += Math.round(element.number * element.vipPrice / 100)
+                    total += element.number * element.price
+                    vipTotal += element.number * element.vipPrice
                 });
+                const preferential = total - vipTotal
                 this.setData({
                     orderList: orderListT,
-                    total,
-                    vipTotal,
+                    total: total / 100,
+                    vipTotal: vipTotal / 100,
+                    preferential: preferential / 100
                 })
             }
         }

@@ -17,10 +17,12 @@
     <block wx:if="{{ !isLoading }}">
         <!-- 有数据 -->
         <view wx:if="{{ orderList.length >= 1 }}">
-            <scroll-view scroll-y="true" style="height: {{containerHeight-90}}rpx;">
+            <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;">
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card">
                         <view class="cu-item shadow">
+                            <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
+                            <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
                             <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
                                 <view class="cu-list menu-avatar">
                                     <view class="cu-item">
@@ -28,7 +30,8 @@
                                         <view class="content flex-sub">
                                             <view class="text-grey">{{ goodsDetail.title }}</view>
                                             <view class="text-gray text-sm flex justify-between">
-                                                <view style="color: gold;">¥ {{ goodsDetail.price / 100 }}</view>
+                                                <view style="color: gray;">原价： ¥ {{ goodsDetail.price / 100 }}</view>
+                                                <view style="color: gold;">会员价： ¥ {{ goodsDetail.vipPrice / 100 }}</view>
                                                 <view class="text-gray text-sm">
                                                     x{{ goodsDetail.number}}
                                                 </view>
@@ -42,7 +45,7 @@
                                     {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
                                 </view>
                                 <view class="margin-left ">
-                                    总价：<span style="color: gold;">¥ {{orderDetail.total}}</span>
+                                    {{orderDetail.type==0?'原价支付：':'会员支付：'}} <span style="color: red;font-size: large;">¥ {{orderDetail.total}}</span>
                                 </view>
                             </view>
                         </view>

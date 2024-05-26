@@ -41,18 +41,18 @@ Component({
                 })
                 .watch({
                     onChange: function (res) {
+                        console.log("watch", res);
                         //监控数据发生变化时触发
                         if (res.docChanges != null) {
                             for (const changeData of res.docChanges) {
                                 if (changeData.dataType == "add") {
-                                    console.log("add");
-                                    setData({
+                                    this.setData({
                                         newOrder: changeData.doc
                                     })
+                                    this.getOrderList()
                                 }
                                 if (changeData.dataType == "remove") {
                                     console.log("remove");
-                                    // that.removeCommentInList(changeData.docId)
                                 }
                             }
                         }
@@ -99,11 +99,12 @@ Component({
                 },
             }).then((res) => {
                 if (res.result.success) {
-                   wx.showToast({
-                     title: '设置成功',
-                   })
+                    wx.showToast({
+                        title: '设置成功',
+                    })
+                    this.getOrderList()
                 } else {
-                   
+
                 }
             })
         }

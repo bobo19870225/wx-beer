@@ -75,7 +75,7 @@
             <view class="padding bg-white">
                 使用会员支付本单立省
                 <span class="text-red">
-                    ¥{{total - vipTotal}}
+                    ¥{{preferential}}
                 </span>
                 <form catchsubmit="formSubmit" catchreset="formReset">
                     <view class="cu-form-group align-start">
