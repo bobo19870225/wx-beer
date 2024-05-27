@@ -5,13 +5,10 @@
 </cu-custom>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange"></shopBar>
-
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
     <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
     <view class='gray-text text-xs'>加载中...</view>
 </view>
-
-
 <view class="main_content" style="height: {{containerHeight - 120}}rpx;">
     <view class=" userinfo_container">
         <view class='mytop-box '>
@@ -25,7 +22,15 @@
                 <open-data type="userNickName"></open-data>
             </view>
         </view>
-        <view>{{vipUserInfo==null?'非会员':'会员'}}</view>
+        <view wx:if="{{vipUserInfo&&vipUserInfo.vipPackage}}">
+            <!-- （消费{{vipUserInfo.vipPackage.rate==100?'不打':vipUserInfo.vipPackage.rate}}折） -->
+            <view>{{vipUserInfo.vipPackage.name}}</view>
+            <view class="text-gray text-sm">{{vipUserInfo.vipPackage.remarks}}</view>
+        </view>
+        <view wx:else>
+            非会员
+        </view>
+
     </view>
     <!-- VIP -->
     <block wx:if="{{!vipLoading}}">
@@ -100,13 +105,18 @@
             <view class="action text-blue" bind:tap="payVip">支付</view>
             <view class="action text-gray" bindtap="closePayDialog">取消</view>
         </view>
-        <view class="">
+        <view class="margin-bottom-lg">
             <radio-group bindchange="radioChange">
                 <view style="width: 100vw;" class="flex padding align-center " wx:for="{{vips}}" wx:key="value">
                     <view class="margin-lr">
                         <radio value="{{item.value}}" checked="true" />
                     </view>
-                    <view>{{item.name}}</view>
+                    <view style="text-align: start;">
+                        <view>{{item.name}} ¥{{item.price/100}}</view>
+                        <view class="text-gray">
+                            {{item.remarks}}
+                        </view>
+                    </view>
                 </view>
             </radio-group>
         </view>

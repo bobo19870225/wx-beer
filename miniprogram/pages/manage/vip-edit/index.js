@@ -34,17 +34,9 @@ Page({
         })
         db.collection('vipPackage').doc(id).get().then((res) => {
             console.log(res);
-            let {
-                latitude,
-                longitude,
-                imgs
-            } = res.data
+           
             this.setData({
-                shop: res.data,
-                imgList: imgs,
-                location: '[' + latitude + ']' + '[' + longitude + ']',
-                latitude,
-                longitude,
+                vip: res.data,
                 isLoading: false
             })
         })
@@ -53,9 +45,9 @@ Page({
         let {
             name,
             remarks,
-            price
+            price,
+            rate
         } = e.detail.value
-        const imgs = this.data.imgList
         if (!name) {
             wx.showToast({
                 title: '名称必填',
@@ -70,6 +62,14 @@ Page({
             })
             return
         }
+
+        // if (!rate) {
+        //     wx.showToast({
+        //         title: '折扣率必填',
+        //         icon: 'error'
+        //     })
+        //     return
+        // }
        
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
@@ -80,6 +80,7 @@ Page({
                     name,
                     remarks,
                     price,
+                    // rate,
                     isDelete: false
                 },
             },

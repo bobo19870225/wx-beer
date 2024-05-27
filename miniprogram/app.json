@@ -10,7 +10,8 @@
         "pages/manage/dishes/index",
         "pages/manage/dishes-edit/index",
         "pages/manage/vip-edit/index",
-        "pages/manage/vip/index"
+        "pages/manage/vip/index",
+        "pages/manage/application/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",

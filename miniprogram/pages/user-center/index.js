@@ -22,24 +22,8 @@ Component({
         points: 0,
         containerHeight: app.globalData.containerHeight,
         showPayDialog: false,
-        vips: [{
-                value: [288, 88],
-                name: '充值¥288,送88积分'
-            },
-            {
-                value: [388, 188],
-                name: '充值¥388,送188积分'
-            },
-            {
-                value: [488, 288],
-                name: '充值¥488,送288积分'
-            },
-            {
-                value: [888, 888],
-                name: '充值¥888,送888积分',
-                checked: true
-            },
-        ],
+        vips: null,
+        vipPackage: null,
         shop: null,
     },
     attached() {
@@ -52,32 +36,48 @@ Component({
         /**
          * 切换店铺
          */
-        onShopChange(e) {
+        async onShopChange(e) {
             let shop = e.detail
             this.setData({
                 shop
             })
-            this.getVip();
-        },
-        async getVip() {
             this.setData({
-                vipLoading: true
+                vipLoading: true,
             })
+            await this.getVipType();
+            await this.getVipUser();
+            this.setData({
+                vipLoading: false,
+            })
+        },
+        async getVipUser() {
             this.setData({
                 vipUserInfo: null
             })
-            db.collection('user').where({
+            const res = await db.collection('user').where({
                 _openid: this.data._openid,
                 shopId: this.data.shop._id
-            }).get().then((res) => {
-                if (res.data && res.data.length > 0) {
-                    this.setData({
-                        vipUserInfo: res.data[0]
-                    })
-                }
+            }).get()
+            console.log(res);
+            if (res.data && res.data.length > 0) {
+                let vipUserInfo = res.data[0]
+                this.data.vips.forEach(element => {
+                    if (element._id == vipUserInfo.vipPackageId) {
+                        vipUserInfo.vipPackage = element
+                    }
+                });
                 this.setData({
-                    vipLoading: false
+                    vipUserInfo: vipUserInfo
                 })
+                console.log("AAA", this.data.vipUserInfo);
+            }
+        },
+        async getVipType() {
+            const res = await db.collection('vipPackage').where({
+                isDelete: false
+            }).get()
+            this.setData({
+                vips: res.data
             })
         },
         gotoApplicationPage() {

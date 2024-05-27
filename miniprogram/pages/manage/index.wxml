@@ -23,10 +23,10 @@
     <view class="cu-item arrow" bind:tap="goToVipEdit">
       会员套餐管理
     </view>
-    <view class="cu-item arrow">
+    <!-- <view class="cu-item arrow">
       会员管理
-    </view>
-    <view class="cu-item arrow">
+    </view> -->
+    <view class="cu-item arrow" bind:tap="goToApplication">
       申请管理
     </view>
     <view class="cu-item arrow">

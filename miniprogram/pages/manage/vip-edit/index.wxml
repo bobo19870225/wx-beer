@@ -6,18 +6,23 @@
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class="cu-form-group margin-top">
         <view class="title">套餐名称</view>
-        <input name="name" value="{{shop.name}}" placeholder="请输入..."></input>
+        <input name="name" value="{{vip.name}}" placeholder="请输入..."></input>
     </view>
 
     <view class="cu-form-group" bind:tap="openMap">
         <view class="title">套餐价格</view>
-        <input name="price" placeholder="请填写..."  ></input>
+        <input name="price" placeholder="请填写..." value="{{vip.price}}"></input>
         <text class="text-orange">单位分</text>
     </view>
-
+    <!-- rate -->
+    <!-- <view class="cu-form-group" bind:tap="openMap">
+        <view class="title">折扣率</view>
+        <input name="rate" placeholder="请填写..." value="{{vip.rate}}"></input>
+        <text class="text-orange">折</text>
+    </view> -->
     <view class="cu-form-group align-start">
         <view class="title">备注</view>
-        <textarea name="remarks" value="{{shop.remarks}}" maxlength="300" placeholder="请输入备注..."></textarea>
+        <textarea name="remarks" value="{{vip.remarks}}" maxlength="300" placeholder="请输入备注..."></textarea>
     </view>
     <view class="flex padding" style="gap: 8px">
         <button class="cu-btn round bg-blue" formType="submit">提交</button>

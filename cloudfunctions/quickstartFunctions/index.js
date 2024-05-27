@@ -8,6 +8,7 @@ const updateOrder = require('./updateOrder/index');
 const updateVip = require('./updateVip/index');
 const fetchGoodsList = require('./fetchGoodsList/index');
 const getShopList = require('./getShopList/index');
+const getApplication = require('./getApplication/index');
 const genMpQrcode = require('./genMpQrcode/index');
 const payForVip = require('./payForVip/index');
 
@@ -36,6 +37,8 @@ exports.main = async (event, context) => {
       return await genMpQrcode.main(event, context);
     case 'getShopList':
       return await getShopList.main(event, context);
+      case 'getApplication':
+      return await getApplication.main(event, context);
     case 'payForVip':
       return await payForVip.main(event, context);
   }
