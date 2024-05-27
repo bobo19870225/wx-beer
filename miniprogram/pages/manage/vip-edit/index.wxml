@@ -1,29 +1,26 @@
-<!--pages/manage/shop-edit/index.wxml-->
+<!--pages/manage/vip-edit/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
     <view slot="backText">返回</view>
-    <view slot="content">新增店铺</view>
+    <view slot="content">编辑会员套餐</view>
 </cu-custom>
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class="cu-form-group margin-top">
-        <view class="title">店铺名称</view>
+        <view class="title">套餐名称</view>
         <input name="name" value="{{shop.name}}" placeholder="请输入..."></input>
     </view>
 
     <view class="cu-form-group" bind:tap="openMap">
-        <view class="title">店铺位置</view>
-        <input name="location" placeholder="请点开地图选择..." value="{{location}}" disabled></input>
-        <text class="cuIcon-locationfill text-orange"></text>
+        <view class="title">套餐价格</view>
+        <input name="price" placeholder="请填写..."  ></input>
+        <text class="text-orange">单位分</text>
     </view>
-
-    <upLoadFile count="2" directory="shop" imgs="{{shop.imgs?shop.imgs:[]}}" label="请上店铺图片" bind:onUploadOk="onUploadOk">
-    </upLoadFile>
 
     <view class="cu-form-group align-start">
         <view class="title">备注</view>
         <textarea name="remarks" value="{{shop.remarks}}" maxlength="300" placeholder="请输入备注..."></textarea>
     </view>
     <view class="flex padding" style="gap: 8px">
-        <button class="cu-btn round bg-blue" formType="submit">提交审核</button>
+        <button class="cu-btn round bg-blue" formType="submit">提交</button>
         <button class="cu-btn round bg-black" formType="reset">重置</button>
     </view>
 </form>

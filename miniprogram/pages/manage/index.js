@@ -62,5 +62,10 @@ Component({
           url: '/pages/manage/dishes/index',
         })
       },
+      goToVipEdit(){
+        wx.navigateTo({
+          url: '/pages/manage/vip/index',
+        })
+      },
   }
 })

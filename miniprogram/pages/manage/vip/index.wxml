@@ -1,0 +1,43 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">会员套餐管理</view>
+</cu-custom>
+<!-- 对话框 -->
+<dialog showDialogProps="{{showDialog}}" postDataProps="{{dialogData}}" bind:onOk="onDelete"> </dialog>
+<!-- 数据加载，显示loading态 -->
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text text-xs'>加载中...</view>
+</view>
+<!-- 数据加载完毕 -->
+<block wx:if="{{ !isLoading }}">
+
+  <scroll-view>
+    <view class="cu-list menu margin-top-sm">
+      <view class="cu-item" wx:for="{{ vipList }}" wx:key="_id">
+        <view class="content">
+          <view>
+            {{item.name}}
+          </view>
+          <view>
+            价格：￥{{item.price/100}}
+          </view>
+          <view>
+            备注：{{item.remarks}}
+          </view>
+        </view>
+        <view class="action">
+          <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="delete" data-shopid="{{item._id}}">
+            <text class="cuIcon-delete">
+            </text>
+          </button>
+          <button class="cu-btn bg-blue shadow sm" style="width: 50rpx;border-radius: 50%;margin-left: 9rpx;" bind:tap="edit" data-id="{{item._id}}">
+            <text class="cuIcon-edit">
+            </text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="add">新增套餐</button>
+</block>

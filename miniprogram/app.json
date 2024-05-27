@@ -8,7 +8,9 @@
         "pages/manage/shop-edit/index",
         "pages/manage/shop-map/index",
         "pages/manage/dishes/index",
-        "pages/manage/dishes-edit/index"
+        "pages/manage/dishes-edit/index",
+        "pages/manage/vip-edit/index",
+        "pages/manage/vip/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",
