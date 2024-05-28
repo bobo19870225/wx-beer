@@ -1,5 +1,4 @@
 /* pages/pay-car/index.wxss */
 page {
     width: 100%;
-    /* background-color: #fff; */
 }

@@ -134,19 +134,23 @@
 
 .price-symbol {
     font-size: 24rpx;
+    padding-left: 6rpx;
+    padding-right: 6rpx;
 }
 
 .btn-add {
-    width: 18px;
-    height: 18px;
+    width: 32rpx;
+    height: 32rpx;
     color: #ffffff;
 }
 
 .goods-flex {
-    width: 60px;
+    /* width: 210rpx; */
+    padding-right: 18rpx;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    /* background-color: aqua; */
+    justify-content: flex-end;
 }
 
 
@@ -251,4 +255,43 @@ button {
 .right-btn {
     background-color: #33ccff;
     color: white;
+}
+
+/* pages/component/nav/nav.wxss */
+.VerticalNav.nav {
+  width: 200rpx;
+  white-space: initial;
+}
+
+.VerticalNav.nav .cu-item {
+  width: 100%;
+  text-align: center;
+  /* background-color: #fff; */
+  margin: 0;
+  border: none;
+  height: 50px;
+  position: relative;
+}
+
+.VerticalNav.nav .cu-item.cur {
+  /* background-color: #f1f1f1; */
+  background-image: linear-gradient(to right, rgb(160, 160, 160), #f1f1f1);
+}
+.VerticalNav.nav .cu-item.cur::after {
+  content: "";
+  width: 6rpx;
+  height: 60rpx;
+  border-radius: 10rpx 0 0 10rpx;
+  position: absolute;
+  background-color: currentColor;
+  top: 0;
+  right: 0rpx;
+  bottom: 0;
+  margin: auto;
+}
+.VerticalBox{
+  display: flex;
+}
+.VerticalMain{
+  background-color: #f1f1f1;
 }

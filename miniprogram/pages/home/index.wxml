@@ -10,12 +10,12 @@
   <view class='gray-text text-xs'>加载中...</view>
 </view>
 
- <!-- 店铺 -->
- <shopBar bind:onShopChange="onShopChange"></shopBar>
- 
+<!-- 店铺 -->
+<shopBar bind:onShopChange="onShopChange"></shopBar>
+
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
- 
+
   <!-- 有数据 -->
   <view wx:if="{{ goodsList.length >= 1 }}">
     <!-- 底部结算 -->
@@ -43,37 +43,71 @@
         去结算
       </button>
     </view>
-    <scroll-view scroll-y="true" style="height: {{containerHeight - 150}}rpx;">
-      <!-- 商品列表 -->
-      <view class="goods-list cu-card">
-        <block wx:for="{{ goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-          <view class="goods-item {{ index % 2 === 0 ? 'even' : 'odd'}} cu-item shadow">
-            <image class="goods-image" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
-            <view class="goods-title">{{ goodsDetail.title }}</view>
-            <view class="goods-bottom-container">
-              <view class="vip-price">
-                <view class="price-symbol">会员 ¥</view>
-                <view class="price-content">{{ goodsDetail.vipPrice / 100 }}
+
+
+    <!-- 商品列表 -->
+    <view class="VerticalBox">
+      <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx)">
+        <view class="cu-item {{index==TabCur?'text-blue cur':''}}" wx:for="{{goodsTypeList}}" wx:key="index" bindtap='tabSelect' data-id="{{item.value}}">
+          {{item.title}}
+        </view>
+      </scroll-view>
+      <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 150}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">
+        <view class="padding-top padding-lr" wx:for="{{goodsTypeList}}" wx:key="index" id="main-{{item.value}}">
+          <view class='cu-bar solid-bottom bg-white'>
+            <view class='action'>
+              <text class='cuIcon-title text-blue'></text> {{item.title}}
+            </view>
+          </view>
+          <view class="cu-list menu-avatar bg-white" style="min-height: 900rpx;position: relative;">
+            <image style="width: 100%; position: absolute;top: 20%;opacity: 0.1;" src="../../images/no-goods.svg" mode=""></image>
+            <view wx:if="{{item.value==0&&index<5}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+              <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+              <view class="content">
+                <view>
+                  <text class="text-cut">{{goodsDetail.title }}</text>
+                  <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                </view>
+                <view class="text-gray text-sm flex">
+                  <text class="text-cut">￥<text style="text-decoration:line-through;">{{ goodsDetail.price / 100 }}</text> <text class="cuIcon-vip text-orange margin-left-xs"></text><text class="text-orange">￥{{ goodsDetail.price / 100 }}</text></text>
                 </view>
               </view>
-              <view class="goods-flex">
-                <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
-                </image>
-                <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
-                </image>
+              <view class="action">
+                <view class="goods-flex">
+                  <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                  </image>
+                  <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                  <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                  </image>
+                </view>
               </view>
             </view>
-            <view class="goods-price" style="width: 100%;">
-              <view class="price-symbol">原价 ¥</view>
-              <view class="price-symbol" style="flex: 1;">{{ goodsDetail.price / 100 }}
+            <view wx:if="{{item.value!=0&&goodsDetail.classify==item.value}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+              <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+              <view class="content">
+                <view>
+                  <text class="text-cut">{{goodsDetail.title }}</text>
+                  <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                </view>
+                <view class="text-gray text-sm flex">
+                  <text class="text-cut">￥<text style="text-decoration:line-through;">{{ goodsDetail.price / 100 }}</text> <text class="cuIcon-vip text-orange margin-left-xs"></text><text class="text-orange">￥{{ goodsDetail.price / 100 }}</text></text>
+                </view>
+              </view>
+              <view class="action">
+                <view class="goods-flex">
+                  <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                  </image>
+                  <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                  <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                  </image>
+                </view>
               </view>
             </view>
           </view>
-        </block>
-      </view>
-      <view style="height: 90rpx;"></view>
-    </scroll-view>
+        </view>
+        <view style="height: 90rpx;"></view>
+      </scroll-view>
+    </view>
   </view>
 
   <!-- 无数据 -->
