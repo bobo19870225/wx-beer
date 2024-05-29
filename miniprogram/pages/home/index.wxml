@@ -82,7 +82,9 @@
                 </view>
               </view>
             </view>
-            <view wx:if="{{item.value!=0&&goodsDetail.classify==item.value}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+
+            <view wx:if="{{m1.isShow(item,goodsDetail)}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+
               <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
               <view class="content">
                 <view>
@@ -153,3 +155,11 @@
     <view style="height: 320rpx;"></view>
   </view>
 </block>
+
+<wxs module="m1">
+  var isShow = function (item, goods) {
+    var tag = goods.classifyTag
+    return tag.indexOf(item.title) > -1
+  }
+  module.exports.isShow = isShow;
+</wxs>

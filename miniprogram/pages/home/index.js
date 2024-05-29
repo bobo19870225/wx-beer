@@ -37,9 +37,14 @@ Component({
    */
   methods: {
     getGoodsTypeList() {
-      db.collection('goodsType').get().then((res) => {
-        console.log(res);
+      db.collection('goodsType').where({
+        isDelete: false
+      }).orderBy('value', 'asc').get().then((res) => {
         if (res.data) {
+          res.data.unshift({
+            title: '人气Top5',
+            value: 0
+          })
           this.setData({
             goodsTypeList: res.data
           })
@@ -146,11 +151,9 @@ Component({
       if (this.data.load) {
         for (let i = 0; i < list.length; i++) {
           let view = this.createSelectorQuery().select("#main-" + list[i].value);
-          console.log(view);
           view.fields({
             size: true
           }, data => {
-            console.log(data);
             list[i].top = tabHeight;
             tabHeight = tabHeight + data.height;
             list[i].bottom = tabHeight;
