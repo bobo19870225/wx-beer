@@ -11,8 +11,8 @@ Component({
      */
     data: {
         orderList: [],
-        newOrder: null,
         isLoading: false,
+        isRefreshing: false,
         shop: null,
         containerHeight: app.globalData.containerHeight,
     },
@@ -26,30 +26,34 @@ Component({
         /**
          * 切换店铺
          */
-        onShopChange(e) {
+        async onShopChange(e) {
             let shop = e.detail
             this.setData({
                 shop
             })
+            this.setData({
+                isLoading: true
+            });
             this.watchOrder()
-            this.getOrderList();
+            await this.getOrderList();
+            this.setData({
+                isLoading: false
+            });
         },
         watchOrder() {
+           let that = this
             db.collection('order').where({
                     shopId: this.data.shop._id,
                     state: 1
                 })
                 .watch({
-                    onChange: function (res) {
-                        console.log("watch", res);
+                    onChange: (res) => {
+                        console.log("watch", that);
                         //监控数据发生变化时触发
                         if (res.docChanges != null) {
                             for (const changeData of res.docChanges) {
                                 if (changeData.dataType == "add") {
-                                    this.setData({
-                                        newOrder: changeData.doc
-                                    })
-                                    this.getOrderList()
+                                    that.getOrderList()
                                 }
                                 if (changeData.dataType == "remove") {
                                     console.log("remove");
@@ -65,7 +69,7 @@ Component({
 
         async getOrderList() {
             this.setData({
-                isLoading: true
+                isRefreshing: true
             });
             const res = await db.collection('order').where({
                 shopId: this.data.shop._id,
@@ -79,9 +83,9 @@ Component({
             //     }
             //     return value
             // })
-            console.log(orderList);
+            // console.log(orderList);
             this.setData({
-                isLoading: false,
+                isRefreshing: false,
                 orderList
             });
         },

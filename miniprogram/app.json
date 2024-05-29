@@ -1,4 +1,5 @@
 {
+    "entryPagePath": "pages/index/index",
     "pages": [
         "pages/index/index",
         "pages/web/index",
@@ -11,7 +12,9 @@
         "pages/manage/dishes-edit/index",
         "pages/manage/vip-edit/index",
         "pages/manage/vip/index",
-        "pages/manage/application/index"
+        "pages/manage/application/index",
+        "pages/manage/operation/index",
+        "pages/test/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",

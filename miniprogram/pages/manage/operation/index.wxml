@@ -1,0 +1,23 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">运营统计</view>
+</cu-custom>
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+    <view class='gray-text text-xs'>加载中...</view>
+</view>
+<!-- 店铺 -->
+<shopBar bind:onShopChange="onShopChange"></shopBar>
+<block wx:if="{{!isLoading}}">
+    <view class="container">
+        <view class="title">
+            <view wx:if="{{!isMainChartDisplay}}" class="back-btn" bindtap="backToMainChart">返回</view>
+            {{chartTitle}}
+        </view>
+        <canvas canvas-id="columnCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+        <view style="text-align:center">点击数据每一项查看详情</view>
+    </view>
+
+    <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandlerLine"></canvas>
+
+</block>

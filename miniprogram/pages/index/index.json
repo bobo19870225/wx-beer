@@ -1,10 +1,9 @@
-
 {
-  "usingComponents": {
-    "manage": "/pages/manage/index",
-    "home": "/pages/home/index",
-    "order": "/pages/order/index",
-    "watchOrder": "/pages/watchOrder/index",
-    "user-center": "/pages/user-center/index"
-  }
+    "usingComponents": {
+        "manage": "/pages/manage/index",
+        "home": "/pages/home/index",
+        "order": "/pages/order/index",
+        "watchOrder": "/pages/watchOrder/index",
+        "user-center": "/pages/user-center/index"
+    }
 }

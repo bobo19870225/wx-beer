@@ -29,7 +29,7 @@
     <view class="cu-item arrow" bind:tap="goToApplication">
       申请管理
     </view>
-    <view class="cu-item arrow">
+    <view class="cu-item arrow" bind:tap="goToOperation">
       运营统计
     </view>
   </view>

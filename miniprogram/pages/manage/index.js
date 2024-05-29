@@ -72,5 +72,10 @@ Component({
                 url: '/pages/manage/application/index',
             })
         },
+        goToOperation(){
+            wx.navigateTo({
+                url: '/pages/manage/operation/index',
+            })
+        },
     }
 })
