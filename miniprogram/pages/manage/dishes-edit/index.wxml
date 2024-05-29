@@ -15,9 +15,9 @@
 
   <view class="cu-form-group">
     <view class="title">分类</view>
-    <picker name="classify" style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{goodsTypeList}}" range-key="title">
+    <picker name="classify" mode="multiSelector" style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{goodsTypeList}}" range-key="title">
       <view style="font-size: 12px;line-height: 90rpx;">
-        {{goodsTypeList[index].title}}
+        {{goodsTypeList[0][index[0]].title}}，{{goodsTypeList[1][index[1]].title}}
       </view>
     </picker>
     <!-- <image style="width: 16px;" src="../../../images/icons/choice.svg" mode="widthFix" /> -->
