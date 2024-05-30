@@ -21,8 +21,7 @@ Component({
      * 组件的初始数据
      */
     data: {
-        shopList: null,
-        index: 0,
+        shop: null
     },
     attached() {
         this.initShopList()
@@ -48,10 +47,31 @@ Component({
                 }
             }
             this.setData({
-                shopList,
-                index
+                shop
             })
             this.triggerEvent('onShopChange', shop)
+        },
+        openMap() {
+            wx.navigateTo({
+                url: '/pages/map/index',
+                events: {
+                    callbackData: (shop) => {
+                        const shopId = shop._id
+                        if (shopId) {
+                            if (this.properties.cacheable) {
+                                app.globalData.shop = shop
+                            }
+                            this.setData({
+                                shop
+                            })
+                            this.triggerEvent('onShopChange', shop)
+                        }
+                    },
+                },
+                success: (res) => {
+
+                }
+            })
         },
         /**
          * 切换店铺

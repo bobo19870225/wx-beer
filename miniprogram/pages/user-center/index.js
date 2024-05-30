@@ -116,7 +116,7 @@ Component({
                     points
                 },
             });
-            await this.getVip()
+            await this.getVipUser()
             this.closePayDialog()
             this.setData({
                 isLoading: false

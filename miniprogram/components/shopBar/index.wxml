@@ -1,6 +1,6 @@
-<view class="cu-bar bg-white padding-lr" style="display: flex;align-items: center;width: 100vw;height: 90rpx;">
+<view class="cu-bar bg-white padding-lr flex justify-start" style="align-items: center;width: 100vw;height: 90rpx;" bind:tap="openMap">
   <view style="font-size: 12px;line-height: 90rpx;">
-    {{shopList[index].name}}
+    {{shop.name}}
   </view>
-  <image style="width: 16px;" src="../../images/icons/choice.svg" mode="widthFix" />
+  <image style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
 </view>

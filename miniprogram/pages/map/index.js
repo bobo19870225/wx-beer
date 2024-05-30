@@ -1,4 +1,3 @@
-
 // pages/manage/shop-map/index.js
 const app = getApp()
 Page({
@@ -9,76 +8,73 @@ Page({
     data: {
         latitude: null,
         longitude: null,
-        markers: [{
-            id: 0,
-            latitude: 26.20252849089062,
-            longitude: 105.47991719994945,
-            width: 50,
-            height: 50
-        }],
-        containerHeight: app.globalData.containerHeight,
+        shopList: null,
+        eventChannel: null,
+        markers: [],
+        containerHeight: app.globalData.containerHeightNoTabBar,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        wx.getLocation({
-            type: 'wgs84',
-            success(res) {
-                console.log(res);
-                const latitude = res.latitude
-                const longitude = res.longitude
-                const speed = res.speed
-                const accuracy = res.accuracy
-            }
+        this.setData({
+            eventChannel: this.getOpenerEventChannel()
+        })
+        this.initShopList()
+    },
+    onMapLoaded(e) {
+
+    },
+    /**
+     * 初始化商店
+     */
+    async initShopList() {
+        const shopList = app.globalData.shopList || await app.getShopList()
+        // let shop = app.globalData.shop
+        this.setData({
+            shopList,
         })
         this.loadMarkers()
     },
-
     loadMarkers: function () {
-        //生成 markers 列表，用于在地图上展示
-        let markersData = this.data.markers.map(marker => {
-            return {
-                id: marker.id,
-                longitude: marker.longitude,
-                latitude: marker.latitude,
-                iconPath: '../../../images/icons/Location.svg',
-                width: 30,
-                height: 30,
-            };
-        });
+        const shopList = this.data.shopList
+        let markersData = this.data.markers
+        if (shopList) {
+            shopList.forEach((value, index) => {
+                let markers = {
+                    id: index,
+                    longitude: value.longitude,
+                    latitude: value.latitude,
+                    iconPath: '../../images/icons/shop-location.png',
+                    callout: {
+                        content: value.name,
+                        color: '#13227a',
+                        display: 'ALWAYS',
+                        padding: 6,
+                        borderRadius: 3
+                    },
+                    width: 30,
+                    height: 30,
+                }
+                markersData.push(markers)
+            })
+        }
         this.setData({
             markers: markersData
         });
     },
 
-    onMapTap(e) {
-        console.log(e);
-        let {
-            latitude,
-            longitude
-        } = e.detail
-        let markersData = this.data.markers.map(marker => {
-            return {
-                id: marker.id,
-                longitude: longitude,
-                latitude: latitude,
-                iconPath: '../../../images/icons/Location.svg',
-                width: 30,
-                height: 30,
-            };
-        });
-        this.setData({
-            latitude,
-            longitude,
-            markers: markersData
-        });
-    },
-    onSelect() {
-        app.globalData.selectMap = {
-            latitude:this.data.latitude,
-            longitude:this.data.longitude
+    onSelect(e) {
+        const index = e.detail.markerId
+        const shop = this.data.shopList[index]
+        if (this.data.eventChannel && this.data.eventChannel.emit) {
+            this.data.eventChannel.emit(
+                /** 事件名称 */
+                'callbackData',
+                /** 事件参数 */
+                shop
+            )
         }
         wx.navigateBack()
     },
@@ -86,7 +82,29 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
-
+        const mapContext = wx.createMapContext('mapId', this)
+        console.log("onMapLoaded", mapContext);
+        mapContext.moveToLocation({
+            success: (res) => {
+                console.log("moveToLocation", res);
+                mapContext.getCenterLocation({
+                    success: (res) => {
+                        console.log("getCenterLocation", res);
+                        let {
+                            latitude,
+                            longitude
+                        } = res
+                        this.setData({
+                            latitude,
+                            longitude
+                        })
+                    }
+                })
+            },
+            fail: (e) => {
+                console.log("moveToLocation", e);
+            }
+        })
     },
 
     /**
