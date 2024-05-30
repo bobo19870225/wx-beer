@@ -14,7 +14,8 @@
         "pages/manage/vip/index",
         "pages/manage/application/index",
         "pages/manage/operation/index",
-        "pages/test/index"
+        "pages/test/index",
+        "pages/map/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",

@@ -1,0 +1,8 @@
+<!--pages/manage/shop-map/index.wxml-->
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">店铺位置</view>
+</cu-custom>
+<map style="width: 100vw;height: {{containerHeight}}rpx;" bind:tap="onMapTap" latitude="26.20252849089062" longitude="105.47991719994945" scale="12" markers="{{markers}}">
+</map>
+<button bind:tap="onSelect" class="cu-btn bg-blue round" style="z-index: 100;position: absolute;bottom: 100rpx;width: 90vw;margin-left: 5vw;">确定</button>

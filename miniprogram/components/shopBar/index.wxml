@@ -1,8 +1,6 @@
 <view class="cu-bar bg-white padding-lr" style="display: flex;align-items: center;width: 100vw;height: 90rpx;">
-    <picker style="flex: 1;height: 100%;text-align: center;" bindchange="bindPickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
-        <view style="font-size: 12px;line-height: 90rpx;">
-            {{shopList[index].name}}
-        </view>
-    </picker>
-    <image style="width: 16px;" src="../../images/icons/choice.svg" mode="widthFix" />
+  <view style="font-size: 12px;line-height: 90rpx;">
+    {{shopList[index].name}}
+  </view>
+  <image style="width: 16px;" src="../../images/icons/choice.svg" mode="widthFix" />
 </view>

@@ -125,33 +125,62 @@ Page({
             type = 0
         }
         this.closeDialogPay()
-        const shopId = this.data.shop._id
+
         wx.cloud.callFunction({
-            name: 'quickstartFunctions',
-            data: {
-                type: 'updateOrder',
-                data: {
-                    _openid,
-                    type,
-                    createDate: new Date(),
-                    goodsList: this.data.orderList,
-                    shopId,
-                    total,
-                    remarks,
-                    // 下单成功，制作中
-                    state: 1
-                },
-            },
-        }).then((res) => {
-            if (res.result.success) {
-                app.globalData.PageCur = "order"
-                wx.navigateBack()
-            } else {
-                wx.showToast({
-                    icon: 'error',
-                    title: '下单失败！',
+          name: 'wxpayFunctions',
+          data: {
+            type: 'wxpay_order',
+          },
+          success: (res) => {
+            console.log('下单结果: ', res);
+            const paymentData = res.result?.data;
+            // 唤起微信支付组件，完成支付
+            wx.requestPayment({
+              timeStamp: paymentData?.timeStamp,
+              nonceStr: paymentData?.nonceStr,
+              package: paymentData?.packageVal,
+              paySign: paymentData?.paySign,
+              signType: 'RSA', // 该参数为固定值
+              success(res) {
+                // 支付成功回调，实现自定义的业务逻辑
+                console.log('唤起支付组件成功：', res);
+
+                const shopId = this.data.shop._id
+                wx.cloud.callFunction({
+                    name: 'quickstartFunctions',
+                    data: {
+                        type: 'updateOrder',
+                        data: {
+                            _openid,
+                            type,
+                            createDate: new Date(),
+                            goodsList: this.data.orderList,
+                            shopId,
+                            total,
+                            remarks,
+                            // 下单成功，制作中
+                            state: 1
+                        },
+                    },
+                }).then((res) => {
+                    if (res.result.success) {
+                        app.globalData.PageCur = "order"
+                        wx.navigateBack()
+                    } else {
+                        wx.showToast({
+                            icon: 'error',
+                            title: '下单失败！',
+                        })
+                    }
                 })
-            }
-        })
+
+              },
+              fail(err) {
+                // 支付失败回调
+                console.error('唤起支付组件失败：', err);
+              },
+            });
+          },
+        });
     },
 })
