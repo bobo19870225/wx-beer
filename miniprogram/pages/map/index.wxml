@@ -1,8 +1,16 @@
 <!--pages/manage/shop-map/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">选择店铺</view>
+  <view slot="backText">返回</view>
+  <view slot="content">选择店铺</view>
 </cu-custom>
-<map id="mapId" style="width: 100vw;height: {{containerHeight}}rpx;" latitude="26.20252849089062" longitude="105.47991719994945" markers="{{markers}}" scale="3" show-location="true" show-scale="true" bindmarkertap="onSelect" bindupdated="onMapLoaded">
+<map id="mapId" style="width: 100vw;height: {{containerHeight}}rpx;" latitude="26.20252849089062" longitude="105.47991719994945" markers="{{markers}}" scale="8" show-location="true" show-scale="true" bindmarkertap="onMapSelect" bindupdated="onMapLoaded">
 </map>
-<view class="text-gray" style="position: fixed; text-align: center;line-height: 120rpx; bottom: 0;z-index: 100;width: 100vw;background-color: white;height: 120rpx;font-size: 31rpx;">请在地图上选择店铺</view>
+<view class="cu-list menu bg-white" style="position: fixed;  bottom: 0;z-index: 100;width: 100vw;padding-bottom: 100rpx;">
+  <view class="cu-item" wx:for="{{shopList}}" wx:key="_id" wx:for-index="index" data-index="{{index}}" bind:tap="onSelect">
+    <view class="content">
+      <text class="text-cut"> {{item.name}}</text>
+    </view>
+    <view wx:if="{{index==indexShop}}" class="cu-tag round bg-blue sm">当前店铺</view>
+  </view>
+  <button class="cu-btn round bg-blue margin-tb" style="width: 90vw;left: 5vw;" bind:tap="onSure">确定选择</button>
+</view>
