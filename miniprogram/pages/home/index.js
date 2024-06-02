@@ -195,7 +195,7 @@ Component({
                 wx.navigateTo({
                     url: '/pages/pay-car/index',
                     success: (result) => {
-
+                        this.setData({});
                     }
                 })
             }
