@@ -12,7 +12,7 @@ Component({
         orderTotalVipPrice: null,
         orderTotalNumber: null,
         goodsList: [],
-        tableSeatsList: [],
+        unPayList: [],
         orderList: [],
         showOrder: false,
         isLoading: false,
@@ -84,21 +84,21 @@ Component({
                 },
             });
             const goodsList = res?.result?.data || [];
-            const tableRes = await db.collection('tableSeats').where({
+            const _openid = wx.getStorageSync('openid') || await app.getOpenid()
+            const unPayRes = await db.collection('order').where({
                 isDelete: false,
-                shopId
+                _openid,
+                shopId,
+                state: 0 //未付款的
             }).get()
-            const tableSeatsList = tableRes?.data || []
+            console.log(unPayRes);
+            const unPayList = unPayRes?.data || []
             this.setData({
                 goodsList,
-                tableSeatsList,
+                unPayList,
                 isRefreshing: false
             });
         },
-        tableChange(e) {
-            console.log(e);
-        },
-
         addGoods(e) {
             let id = e.currentTarget.dataset.index
             this._handleOrder(id, true)
@@ -132,7 +132,6 @@ Component({
                 }
                 return false
             })
-            // Math.round(）
             this.setData({
                 goodsList: temp,
                 orderTotalPrice: total / 100,
@@ -153,11 +152,53 @@ Component({
                 showOrder: true
             })
         },
-        goToPay(e) {
-            let goodsJ = JSON.stringify(this.data.orderList)
-            wx.navigateTo({
-                url: '/pages/pay-car/index?goods=' + goodsJ
-            })
+        async goToPay(e) {
+            if (this.data.orderList.length > 0) {
+                const shopId = this.data.shop._id
+                var _openid = wx.getStorageSync('openid') || await app.getOpenid()
+                wx.cloud.callFunction({
+                    name: 'quickstartFunctions',
+                    data: {
+                        type: 'updateOrder',
+                        data: {
+                            _openid,
+                            createDate: new Date(),
+                            isDelete: false,
+                            goodsList: this.data.orderList,
+                            shopId,
+                            // 下单成功，待支付
+                            state: 0
+                        },
+                    },
+                }).then((res) => {
+                    if (res.result.success) {
+                        wx.navigateTo({
+                            url: '/pages/pay-car/index',
+                            success: (result) => {
+                                this.setData({
+                                    goodsList: [],
+                                    orderTotalPrice: null,
+                                    orderTotalVipPrice: null,
+                                    orderTotalNumber: null,
+                                    orderList: []
+                                });
+                            }
+                        })
+                    } else {
+                        wx.showToast({
+                            icon: 'error',
+                            title: '下单失败！',
+                        })
+                    }
+                })
+            } else {
+                wx.navigateTo({
+                    url: '/pages/pay-car/index',
+                    success: (result) => {
+
+                    }
+                })
+            }
         },
         tabSelect(e) {
             // console.log(e.currentTarget.dataset.id);

@@ -32,12 +32,22 @@
     text-align: center;
 }
 
-.order-pay {
-    line-height: 56rpx;
+.order-unpay-number {
     position: absolute;
+    color: white;
+    background-color: #b15f02a4;
+    left: -240rpx;
+    top: -6rpx;
+    border-radius: 20rpx;
+    border: 1rpx solid white;
+    width: 150rpx;
+    height: 36rpx;
+    line-height: 36rpx;
+    text-align: center;
+}
+
+.order-pay {
     font-size: 14px;
-    right: 0;
-    height: 100%;
     color: white;
     background-color: #13227a;
     border-radius: 0 90px 90px 0;
@@ -51,7 +61,6 @@
 
 .order-list {
     font-size: 28rpx;
-    padding: 0 30rpx;
     bottom: 150rpx;
     align-items: center;
     background-color: #dadadac0;
@@ -63,7 +72,7 @@
     height: 90rpx;
     display: flex;
     position: fixed;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .goods-item {
@@ -293,4 +302,3 @@ button {
 .VerticalMain {
     background-color: #f1f1f1;
 }
-

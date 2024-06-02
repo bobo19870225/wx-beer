@@ -15,7 +15,6 @@
 
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-
     <!-- 有数据 -->
     <view wx:if="{{ goodsList.length >= 1 }}">
         <!-- 底部结算 -->
@@ -39,9 +38,13 @@
             <view wx:else style="margin-left: 12px;">
                 请添加菜品
             </view>
-            <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1}}">
-                去结算
-            </button>
+            <view style="position: absolute;right: 0; top: -15rpx;height: 100%;background-color: red;">
+                <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1&&unPayList.length<1}}">
+                    去结算
+                </button>
+                <view class="order-unpay-number" style="right: 0;">{{unPayList.length}}单未结算</view>
+            </view>
+
         </view>
 
         <!-- 商品列表 -->

@@ -1,4 +1,5 @@
 <!--pages/pay-car/index.wxml-->
+<wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
     <view slot="backText">返回</view>
     <view slot="content">{{shop.name}}</view>
@@ -14,27 +15,42 @@
     <block wx:if="{{ !isLoading }}">
         <!-- 有数据 -->
         <scroll-view scroll-y="true" style="height: {{containerHeight}}rpx;" wx:if="{{ orderList.length >= 1 }}">
-            <view class="cu-list sm-border menu">
-                <block wx:for="{{ orderList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-                    <view class="cu-item">
-                        <view class="content flex align-center justify-between padding-tb">
-                            <image style="width: 100rpx;height: 100rpx; border-radius: 15rpx;" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
-                            <view class="goods-title">{{ goodsDetail.title }} x{{ goodsDetail.number}}</view>
-                            <view>
-                                <view class="text-orange">
-                                    会员价
-                                    ¥{{ goodsDetail.vipPrice / 100 }}
+            <checkbox-group bindchange="onSelectOrder">
+                <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
+                    <view class="cu-card">
+                        <view class="cu-item shadow">
+                            <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
+                            <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
+                            <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                                <view class="cu-list menu-avatar">
+                                    <view class="cu-item">
+                                        <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                                        <view class="content flex-sub">
+                                            <view class="text-grey">{{ goodsDetail.title }}</view>
+                                            <view class="text-gray text-sm flex justify-between">
+                                                <view style="color: gray;">原价： ¥ {{ goodsDetail.price / 100 }}</view>
+                                                <view style="color: gold;">会员价： ¥ {{ goodsDetail.vipPrice / 100 }}</view>
+                                                <view class="text-gray text-sm">
+                                                    x{{ goodsDetail.number}}
+                                                </view>
+                                            </view>
+                                        </view>
+                                    </view>
                                 </view>
-                                <view class="goods-price">
-                                    原价
-                                    <view class="price-symbol">¥</view>
-                                    <view style=" text-decoration: line-through;">{{ goodsDetail.price / 100 }}</view>
+                            </block>
+                            <view class="content padding flex align-center justify-between">
+                                <view>
+                                    {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
+                                </view>
+                                <view class="margin-left ">
+                                    <checkbox checked="{{index==0}}" value="{{orderDetail._id}}"></checkbox>
                                 </view>
                             </view>
                         </view>
                     </view>
                 </block>
-            </view>
+            </checkbox-group>
+
             <view style="position: fixed;bottom: 0;height: 160rpx;width: 100vw;background-color: white;display: flex;align-items: center;justify-content: space-between;">
                 <view style="margin-left: 16px;">
                     <view>
@@ -83,9 +99,6 @@
                         <textarea style="text-align: start;" name="remarks" maxlength="300" placeholder="可填写口味，偏好等..."></textarea>
                     </view>
                     <view class="cu-bar">
-                        <!-- <button class="cu-btn round bg-blue" formType="submit">提交审核</button>
-                <button class="cu-btn round bg-black" formType="reset">重置</button> -->
-                        <!-- bindtap="vipPay" -->
                         <button class="cu-btn round bg-blue text-orange" data-type="vipPay" formType="submit">
                             <text class="cuIcon-vip"></text>会员支付
                         </button>
