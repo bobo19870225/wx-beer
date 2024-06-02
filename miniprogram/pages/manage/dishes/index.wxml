@@ -42,7 +42,7 @@
                     </view>
                 </view>
                 <view class="action">
-                    <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteShop" data-id="{{item._id}}">
+                    <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteDishes" data-id="{{item._id}}">
                         <text class="cuIcon-delete">
                         </text>
                     </button>

@@ -1,4 +1,3 @@
-// pages/manage/dishes/index.js
 const app = getApp()
 const db = wx.cloud.database({
     env: 'beer-1g75udik38f745cf'
@@ -10,7 +9,7 @@ Page({
      */
     data: {
         isLoading: false,
-        goodsList: null,
+        tablesList: null,
         shop: null,
         showDialog: false,
         dialogData: {},
@@ -32,24 +31,28 @@ Page({
         this.setData({
             shop
         })
-        this.fetchGoodsList();
+        this.getTablesList();
     },
 
-    async fetchGoodsList() {
+    async getTablesList() {
         this.setData({
             isLoading: true
         });
-        const res = await wx.cloud.callFunction({
-            name: 'quickstartFunctions',
-            data: {
-                type: 'fetchGoodsList',
-                shopId: this.data.shop._id
-            },
-        });
-        const goodsList = res?.result?.data || [];
+        if (!this.data.shop) {
+            this.setData({
+                isLoading: false
+            });
+            return
+        }
+        const res = await db.collection('tableSeats').where({
+            isDelete: false,
+            shopId: this.data.shop._id
+        }).get()
+        // console.log(res);
+        const tablesList = res?.data || [];
         this.setData({
             isLoading: false,
-            goodsList
+            tablesList
         });
     },
     deleteDishes(e) {
@@ -61,23 +64,47 @@ Page({
         })
     },
     async onDelete(e) {
-        // console.log(e);
         const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
-                type: 'deleteGoods',
+                type: 'deleteTableSeats',
                 shopId: e.detail.id
             },
         });
         // console.log(res)
         if (res.result.errMsg == 'document.remove:ok') {
-            this.fetchGoodsList()
+            this.getTablesList()
         }
     },
+    changeState(e) {
+        this.setData({
+            isLoading: true
+        });
+        let data = e.currentTarget.dataset.tableseats
+        const id = data._id
+        delete data._id
+        data.isIdle = e.detail.value
+        wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'updateTableSeats',
+                id,
+                data
+            },
+        }).then((res) => {
+            console.log(res);
+            if (res.result.success) {
+               
+            }
+            this.setData({
+                isLoading: false
+            });
+        });
+    },
     edit(e) {
-        console.log(e);
+        // console.log(e);
         wx.navigateTo({
-            url: '/pages/manage/dishes-edit/index',
+            url: '/pages/manage/tables-edit/index',
             events: {
                 // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
                 acceptDataFromOpenedPage: function (data) {
@@ -101,7 +128,7 @@ Page({
     },
     addGoods() {
         wx.navigateTo({
-            url: '/pages/manage/dishes-edit/index',
+            url: '/pages/manage/tables-edit/index',
             success: (res) => {
                 res.eventChannel.emit('acceptDataFromOpenerPage', {
                     shop: this.data.shop
@@ -120,7 +147,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        this.fetchGoodsList();
+        this.getTablesList();
     },
 
     /**
@@ -150,12 +177,4 @@ Page({
     onReachBottom() {
 
     },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    },
-
 })

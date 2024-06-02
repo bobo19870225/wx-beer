@@ -1,0 +1,32 @@
+<!--pages/manage/dishes-edit/index.wxml-->
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">新增桌位</view>
+</cu-custom>
+<form catchsubmit="formSubmit" catchreset="formReset">
+  <view class="cu-form-group margin-top">
+    <view class="title">所属店铺</view>
+    <input value="{{shop.name}}" disabled></input>
+  </view>
+  <view class="cu-form-group margin-top">
+    <view class="title">桌位名称</view>
+    <input name="name" placeholder="请输入..." value="{{tableSeats.name}}"></input>
+  </view>
+
+  <view class="cu-form-group">
+    <view class="title">规格</view>
+    <input name="guiGe" type="number" placeholder="请输入数字..." value="{{tableSeats.guiGe}}"></input>
+    <view class="title">人座</view>
+  </view>
+
+  <upLoadFile count="1" directory="tables" label="请上桌位图片" imgs="{{tableSeats.img?[tableSeats.img]:[]}}" bind:onUploadOk="onUploadOk"></upLoadFile>
+
+  <view class="cu-form-group align-start">
+    <view class="title">备注</view>
+    <textarea name="remarks" maxlength="300" bindinput="textareaBInput" value="{{tableSeats.remarks}}" placeholder="请输入备注..."></textarea>
+  </view>
+  <view class="flex padding" style="gap: 8px">
+    <button class="cu-btn round bg-blue" formType="submit">提交</button>
+    <button class="cu-btn round bg-black" formType="reset">重置</button>
+  </view>
+</form>

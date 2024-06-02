@@ -15,7 +15,9 @@
         "pages/manage/application/index",
         "pages/manage/operation/index",
         "pages/test/index",
-        "pages/map/index"
+        "pages/map/index",
+        "pages/manage/tables/index",
+        "pages/manage/tables-edit/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",

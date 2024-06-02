@@ -12,6 +12,7 @@ Component({
         orderTotalVipPrice: null,
         orderTotalNumber: null,
         goodsList: [],
+        tableSeatsList: [],
         orderList: [],
         showOrder: false,
         isLoading: false,
@@ -49,6 +50,10 @@ Component({
                         title: '人气Top5',
                         value: 0
                     })
+                    // res.data.push({
+                    //     title: '选桌位',
+                    //     value: res.data[res.data.length - 1].value + 1
+                    // })
                     this.setData({
                         isLoading: false,
                         goodsTypeList: res.data
@@ -79,11 +84,19 @@ Component({
                 },
             });
             const goodsList = res?.result?.data || [];
+            const tableRes = await db.collection('tableSeats').where({
+                isDelete: false,
+                shopId
+            }).get()
+            const tableSeatsList = tableRes?.data || []
             this.setData({
-                // isLoading: false,
-                isRefreshing: false,
-                goodsList
+                goodsList,
+                tableSeatsList,
+                isRefreshing: false
             });
+        },
+        tableChange(e) {
+            console.log(e);
         },
 
         addGoods(e) {
@@ -155,7 +168,7 @@ Component({
             })
         },
         VerticalMain(e) {
-            console.log(e);
+            // console.log(e);
             let that = this;
             let list = this.data.goodsTypeList;
             let tabHeight = 0;

@@ -1,0 +1,49 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">桌位管理</view>
+</cu-custom>
+<!-- 对话框 -->
+<dialog showDialogProps="{{showDialog}}" postDataProps="{{dialogData}}" bind:onOk="onDelete"> </dialog>
+<!-- 数据加载，显示loading态 -->
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+    <view class='gray-text text-xs'>加载中...</view>
+</view>
+<!-- 店铺 -->
+<shopBar bind:onShopChange="onShopChange"></shopBar>
+<!-- 数据加载完毕 -->
+
+<scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
+    <view class="cu-list menu margin-top-sm">
+        <view class="cu-item " wx:for="{{ tablesList }}" wx:key="_id">
+            <image class="cu-avatar radius lg" src="{{item.img||'../../../images/default-goods-image.png'}}">
+            </image>
+            <view class="content padding-left">
+                <text class="text-cut"> {{item.name}}</text>
+                <view class="text-gray text-sm flex">
+                    <text wx:if="{{item.guiGe}}" class="text-cut round bg-blue cu-tag"> {{item.guiGe}}人座</text>
+                </view>
+                <view class="text-gray text-sm flex">
+                    <text class="text-cut"> 备注：{{item.remarks}}</text>
+                </view>
+            </view>
+            <view class="action">
+                <view>
+                    <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="deleteDishes" data-id="{{item._id}}">
+                        <text class="cuIcon-delete">
+                        </text>
+                    </button>
+                    <button class="cu-btn bg-blue shadow sm" style="width: 50rpx;border-radius: 50%;margin-left: 9rpx;" bind:tap="edit" data-id="{{item._id}}">
+                        <text class="cuIcon-edit">
+                        </text>
+                    </button>
+                    <view class="flex align-center margin-top text-df" style="gap: 12rpx;">
+                        是否空闲
+                        <switch checked="{{item.isIdle}}" bindchange="changeState" data-tableSeats="{{item}}"></switch>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>
+<button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addGoods">新增桌位</button>

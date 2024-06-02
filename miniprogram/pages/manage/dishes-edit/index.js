@@ -46,7 +46,9 @@ Page({
         })
     },
     async getGoodsTypeList() {
-        const res = await db.collection('goodsType').get()
+        const res = await db.collection('goodsType').where({
+            isDelete: false
+        }).get()
         if (res.data) {
             const arr = res.data
             let g0 = arr.filter((value) => {

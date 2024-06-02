@@ -77,5 +77,10 @@ Component({
                 url: '/pages/manage/operation/index',
             })
         },
+        goTopManageTables() {
+            wx.navigateTo({
+                url: '/pages/manage/tables/index',
+            })
+        },
     }
 })

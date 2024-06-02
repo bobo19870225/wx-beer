@@ -60,6 +60,7 @@
                     </view>
                     <view class="cu-list menu-avatar bg-white" style="min-height: 900rpx;position: relative;">
                         <image style="width: 100%; position: absolute;top: 20%;opacity: 0.1;" src="../../images/no-goods.svg" mode=""></image>
+                        <!-- 人气Top5 -->
                         <view wx:if="{{item.value==0&&index<5}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
                             <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
                             <view class="content">
@@ -82,8 +83,8 @@
                             </view>
                         </view>
 
+                        <!-- 商品分类 -->
                         <view wx:if="{{m1.isShow(item,goodsDetail)}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
-
                             <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
                             <view class="content">
                                 <view>
