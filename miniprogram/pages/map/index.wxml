@@ -1,5 +1,5 @@
 <!--pages/manage/shop-map/index.wxml-->
-<cu-custom bgColor="bg-white" isBack="{{true}}">
+<cu-custom bgColor="bg-white" isBack="{{false}}">
   <view slot="backText">返回</view>
   <view slot="content">选择店铺</view>
 </cu-custom>

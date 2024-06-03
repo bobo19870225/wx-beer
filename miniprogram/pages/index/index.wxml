@@ -1,16 +1,16 @@
 <!--index.wxml-->
-<home wx:if="{{PageCur=='home'}}"></home>
+<start wx:if="{{PageCur=='start'}}"></start>
 <order wx:if="{{PageCur=='order'}}"></order>
 <watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
 <user-center wx:if="{{PageCur=='user-center'}}"></user-center>
 <manage wx:if="{{PageCur=='manage'}}"></manage>
 
 <view class="cu-bar tabbar bg-white shadow foot">
-  <view class="action" bindtap="NavChange" data-cur="home">
+  <view class="action" bindtap="NavChange" data-cur="start">
     <view class='cuIcon-cu-image'>
-      <image src="/images/tabbar/home{{PageCur=='home'?'_cur':''}}.png"></image>
+      <image src="/images/tabbar/home{{PageCur=='start'?'_cur':''}}.png"></image>
     </view>
-    <view class="{{PageCur=='home'?'text-blue':'text-gray'}}">菜品</view>
+    <view class="{{PageCur=='start'?'text-blue':'text-gray'}}">首页</view>
   </view>
 
   <view class="action" bindtap="NavChange" data-cur="order">

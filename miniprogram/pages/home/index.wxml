@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{false}}">
     <view slot="backText">返回</view>
-    <view slot="content">千人吃鸡</view>
+    <view slot="content">慧管店</view>
 </cu-custom>
 
 <!-- 数据加载，显示loading态 -->
