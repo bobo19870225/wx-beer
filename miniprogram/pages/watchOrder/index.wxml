@@ -71,7 +71,7 @@
                                 </view>
                             </view>
                             <view class="flex">
-                                <button class="cu-btn round bg-blue" data-id="{{orderDetail._id}}" bind:tap="setOrderFinish">设为已完成</button>
+                                <button class="cu-btn round bg-blue" data-data="{{orderDetail}}" bind:tap="setOrderFinish">设为已完成</button>
                             </view>
                         </view>
                     </view>

@@ -21,6 +21,7 @@
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card">
                         <view class="cu-item shadow">
+                            <view wx:if="{{orderDetail.state==0}}" class="cu-tag bg-purple">待支付</view>
                             <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
                             <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
                             <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
@@ -44,7 +45,7 @@
                                 <view>
                                     {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
                                 </view>
-                                <view class="margin-left ">
+                                <view wx:if="{{orderDetail.state != 0}}" class="margin-left ">
                                     {{orderDetail.type==0?'原价支付：':'会员支付：'}} <span style="color: red;font-size: large;">¥ {{orderDetail.total}}</span>
                                 </view>
                             </view>

@@ -1,5 +1,8 @@
 // pages/order/index.js
 const app = getApp()
+const db = wx.cloud.database({
+    env: 'beer-1g75udik38f745cf'
+})
 Component({
     options: {
         addGlobalClass: true,
@@ -43,15 +46,13 @@ Component({
                 isRefreshing: true
             });
             var _openid = wx.getStorageSync('openid') || await app.getOpenid()
-            const res = await wx.cloud.callFunction({
-                name: 'quickstartFunctions',
-                data: {
-                    type: 'getOrderList',
-                    shopId,
-                    _openid
-                },
-            });
-            const orderList = res?.result?.data || [];
+            // const _ = db.command
+            const res = await db.collection("order").where({
+                isDelete: false,
+                _openid,
+                shopId,
+            }).orderBy('createDate','desc').get()
+            const orderList = res?.data || [];
             console.log(res);
             this.setData({
                 isRefreshing: false,

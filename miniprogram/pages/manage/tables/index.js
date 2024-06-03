@@ -48,7 +48,6 @@ Page({
             isDelete: false,
             shopId: this.data.shop._id
         }).get()
-        // console.log(res);
         const tablesList = res?.data || [];
         this.setData({
             isLoading: false,

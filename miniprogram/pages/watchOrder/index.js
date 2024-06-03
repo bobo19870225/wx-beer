@@ -41,7 +41,7 @@ Component({
             });
         },
         watchOrder() {
-           let that = this
+            let that = this
             db.collection('order').where({
                     shopId: this.data.shop._id,
                     state: 1
@@ -90,16 +90,14 @@ Component({
             });
         },
         setOrderFinish(e) {
-            const id = e.currentTarget.dataset.id
-            console.log(id);
+            const data = e.currentTarget.dataset.data
+            console.log(data);
+            data.state = 2
             wx.cloud.callFunction({
                 name: 'quickstartFunctions',
                 data: {
                     type: 'updateOrder',
-                    id,
-                    data: {
-                        state: 2
-                    },
+                    data
                 },
             }).then((res) => {
                 if (res.result.success) {

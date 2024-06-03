@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<cu-custom bgColor="bg-white" isBack="{{false}}">
+<cu-custom bgColor="bg-white" isBack="{{false}}" isCustom="{{true}}">
     <view slot="backText">返回</view>
     <view slot="content">慧管店</view>
 </cu-custom>
@@ -11,15 +11,19 @@
 </view>
 
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange"></shopBar>
-
+<!-- <shopBar bind:onShopChange="onShopChange"></shopBar> -->
+<view class="flex align-center bg-white solid-top" style="padding: 18rpx;width: 100vw;gap: 18rpx;">
+    <image style="width: 45rpx;height: 60rpx;" src="../../images/icons/shop.svg">
+    </image>
+    <view>{{shop.name}}</view>
+</view>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
     <!-- 有数据 -->
     <view wx:if="{{ goodsList.length >= 1 }}">
         <!-- 底部结算 -->
         <view class="order-list" bindtap="openPopup">
-            <view>
+            <view class="margin-left">
                 <image style="width: 60rpx;" src="../../images/icons/car.png" mode="widthFix" />
                 <view wx:if="{{ orderList.length >= 1 }}" class="order-number">{{orderTotalNumber}}</view>
             </view>
@@ -38,23 +42,23 @@
             <view wx:else style="margin-left: 12px;">
                 请添加菜品
             </view>
-            <view style="position: absolute;right: 0; top: -15rpx;height: 100%;background-color: red;">
+            <view style="position: absolute;right: 0; top: -15rpx;height: 100%;">
                 <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1&&unPayList.length<1}}">
                     去结算
                 </button>
-                <view class="order-unpay-number" style="right: 0;">{{unPayList.length}}单未结算</view>
+                <view wx:if="{{unPayList.length>0}}" class="order-unpay-number" style="right: 0;">{{unPayList.length}}单未结算</view>
             </view>
 
         </view>
 
         <!-- 商品列表 -->
         <view class="VerticalBox">
-            <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx)">
+            <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx);">
                 <view class="cu-item {{index==TabCur?'text-blue cur':''}}" wx:for="{{goodsTypeList}}" wx:key="index" bindtap='tabSelect' data-id="{{item.value}}">
                     {{item.title}}
                 </view>
             </scroll-view>
-            <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 150}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain" refresher-enabled="true" bindrefresherrefresh="fetchGoodsList" refresher-triggered="{{isRefreshing}}">
+            <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 50}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain" refresher-enabled="true" bindrefresherrefresh="fetchGoodsList" refresher-triggered="{{isRefreshing}}">
                 <view class=" padding-top padding-lr" wx:for="{{goodsTypeList}}" wx:key="index" id="main-{{item.value}}">
                     <view class='cu-bar solid-bottom bg-white'>
                         <view class='action'>

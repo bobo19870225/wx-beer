@@ -15,9 +15,9 @@
     <block wx:if="{{ !isLoading }}">
         <!-- 有数据 -->
         <scroll-view scroll-y="true" style="height: {{containerHeight}}rpx;" wx:if="{{ orderList.length >= 1 }}">
-            <checkbox-group bindchange="onSelectOrder">
+            <radio-group bindchange="onSelectOrder">
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
-                    <view class="cu-card">
+                    <view class="cu-card" style="width: 100vw;">
                         <view class="cu-item shadow">
                             <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
                             <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
@@ -43,31 +43,34 @@
                                     {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
                                 </view>
                                 <view class="margin-left ">
-                                    <checkbox checked="{{index==0}}" value="{{orderDetail._id}}"></checkbox>
+                                    <radio value="{{orderDetail._id}}"></radio>
                                 </view>
                             </view>
                         </view>
                     </view>
                 </block>
-            </checkbox-group>
+            </radio-group>
 
             <view style="position: fixed;bottom: 0;height: 160rpx;width: 100vw;background-color: white;display: flex;align-items: center;justify-content: space-between;">
                 <view style="margin-left: 16px;">
-                    <view>
+                    <view wx:if="{{vipTotal}}">
                         会员支付
                         <span class="padding-left text-orange">
                             ¥{{vipTotal}}
                         </span>
                     </view>
-                    <view>
+                    <view wx:if="{{total}}">
                         普通应付
                         <span class="padding-left">
                             ¥{{total}}
                         </span>
                     </view>
+                    <view wx:else>
+                        请先选择订单
+                    </view>
                 </view>
                 <view style="margin-right: 16px;">
-                    <button class="cu-btn  round bg-orange" bind:tap="pay">
+                    <button class="cu-btn  round bg-orange" bind:tap="pay" disabled="{{total*vipTotal==0}}">
                         去支付
                     </button>
                 </view>
@@ -80,27 +83,46 @@
         </block>
     </block>
 
-    <view class="cu-modal {{showDialogPay?'show':''}}">
+    <view class="cu-modal bottom-modal {{showDialogPay?'show':''}}">
         <view class="cu-dialog">
-            <view class="cu-bar bg-white justify-end">
-                <view class="content">会员钜惠</view>
+            <view class="cu-bar bg-white justify-end align-center">
+                <view class="content">
+                    应付 ¥{{total}}
+                </view>
                 <view class="action" bindtap="closeDialogPay">
                     <text class="cuIcon-close text-red"></text>
                 </view>
             </view>
+            <view style="text-align: start;padding-left: 60rpx;background-color: white;font-size: 30rpx;"> 请选座位(就餐人数 {{dinersNumb}}) </view>
             <view class="padding bg-white">
-                使用会员支付本单立省
-                <span class="text-red">
-                    ¥{{preferential}}
-                </span>
+                <radio-group bindchange="onTableSelecte">
+                    <view class="cu-list menu" style="width: 90vw;">
+                        <view class="cu-item" wx:for="{{tablesList}}" wx:key="index">
+                            <view class="content">
+                                <view class="flex">
+                                    <view>{{item.name}}</view>
+                                    <view class="cu-tag round margin-left bg-blue sm">{{item.guiGe}}人座</view>
+                                    <view class="text-green" style="flex: 1;" wx:if="{{item.isIdle}}">空闲</view>
+                                    <view class="text-gray" style="text-decoration: line-through;flex: 1;" wx:if="{{!item.isIdle}}">已占用</view>
+                                </view>
+                                <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
+                            </view>
+                            <view class="action">
+                                <radio class="radio" disabled="{{!item.isIdle}}" value="{{item._id}}"></radio>
+                            </view>
+                        </view>
+                    </view>
+                </radio-group>
+
                 <form catchsubmit="formSubmit" catchreset="formReset">
                     <view class="cu-form-group align-start">
                         <view class="title">备注</view>
                         <textarea style="text-align: start;" name="remarks" maxlength="300" placeholder="可填写口味，偏好等..."></textarea>
                     </view>
+
                     <view class="cu-bar">
                         <button class="cu-btn round bg-blue text-orange" data-type="vipPay" formType="submit">
-                            <text class="cuIcon-vip"></text>会员支付
+                            <text class="cuIcon-vip"></text>会员支付(立省 ¥{{preferential}})
                         </button>
                         <!-- bindtap="nonmemberPay" -->
                         <button class="cu-btn round bg-gray" style="margin-left: 9rpx;" data-type="nonmemberPay" formType="submit">

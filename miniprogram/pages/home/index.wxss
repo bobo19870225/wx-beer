@@ -23,12 +23,13 @@
 .order-number {
     position: absolute;
     color: white;
-    top: 3px;
+    top: 3rpx;
     background-color: #b15f02a4;
-    left: 15px;
+    left: 65rpx;    
     border-radius: 50%;
-    width: 15px;
-    height: 15px;
+    border: 1rpx solid white;
+    width: 35rpx;
+    height: 35rpx;
     text-align: center;
 }
 
@@ -47,7 +48,11 @@
 }
 
 .order-pay {
+    line-height: 56rpx;
+    position: absolute;
     font-size: 14px;
+    right: 0;
+    height: 100%;
     color: white;
     background-color: #13227a;
     border-radius: 0 90px 90px 0;
@@ -61,7 +66,7 @@
 
 .order-list {
     font-size: 28rpx;
-    bottom: 150rpx;
+    bottom: 50rpx;
     align-items: center;
     background-color: #dadadac0;
     border: 1px solid #dadadac0;

@@ -1,41 +1,39 @@
 <wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
-  <view slot="backText">返回</view>
-  <view slot="content">慧管店</view>
+    <view slot="backText">返回</view>
+    <view slot="content">慧管店</view>
 </cu-custom>
 <view wx:if="{{step==0}}" style="width: 100vw;height: {{containerHeight}}rpx;text-align: center;background-color: white;">
-  <image style="margin-top: 30rpx;" src="cloud://beer-1g75udik38f745cf.6265-beer-1g75udik38f745cf-1326620965/start-bg.png" mode="widthFix"></image>
-  <button style="position: fixed;bottom: 180rpx;left: 10vw; width: 80vw;" class="cu-btn round bg-blue lg" bind:tap="orderNow">
-    <image style="width: 72rpx;left: -24rpx;" src="../../images/icons/diancan.svg" mode="widthFix"></image>
-    <view>
-      <view style="font-size: 25rpx;">
-        开始点餐
-      </view>
-      <view style="font-size: 15rpx;">
-        order now
-      </view>
-    </view>
-  </button>
+    <image style="margin-top: 30rpx;" src="cloud://beer-1g75udik38f745cf.6265-beer-1g75udik38f745cf-1326620965/start-bg.png" mode="widthFix"></image>
+    <button style="position: fixed;bottom: 180rpx;left: 10vw; width: 80vw;" class="cu-btn round bg-blue lg" bind:tap="orderNow">
+        <image style="width: 72rpx;left: -24rpx;" src="../../images/icons/diancan.svg" mode="widthFix"></image>
+        <view>
+            <view style="font-size: 25rpx;">
+                开始点餐
+            </view>
+            <view style="font-size: 15rpx;">
+                order now
+            </view>
+        </view>
+    </button>
 </view>
 <!-- 选人数 -->
 <view wx:if="{{step==1}}" style="width: 100vw;height: {{containerHeight}}rpx;text-align: center;background-color: white;">
-  <view>
-    就餐人数
-  </view>
-  <view class="bg-white padding">
-    <view class="grid col-4 margin-bottom text-center">
-      <view style="background-color: rgb(230, 230, 230); border-radius: 56rpx;width: 18vw;margin: 2vw;padding: 1vw;"  wx:for="{{30}}" wx:key>{{index+1}}</view>
+    <view class="flex align-center" style="padding: 18rpx;margin-top: 24rpx;width: 100vw;text-align: start;gap: 18rpx;">
+        <image style="width: 45rpx;height: 45rpx;" src="../../images/icons/shop.svg">
+        </image>
+        <view>{{shop.name}}</view>
     </view>
-  </view>
-  <button style="position: fixed;bottom: 180rpx;left: 10vw; width: 80vw;" class="cu-btn round bg-blue lg" bind:tap="orderNow">
-    <image style="width: 72rpx;left: -24rpx;" src="../../images/icons/diancan.svg" mode="widthFix"></image>
-    <view>
-      <view style="font-size: 25rpx;">
-        开始点餐
-      </view>
-      <view style="font-size: 15rpx;">
-        order now
-      </view>
+
+    <view class="text-gray" style="padding-left: 18rpx;margin-top: 24rpx;width: 100vw;text-align: start;">
+        请选择就餐人数
     </view>
-  </button>
+    <view class="bg-white padding">
+        <view class="grid col-4 margin-bottom text-center">
+            <view style="background-color: rgb(230, 230, 230); border-radius: 56rpx;width: 18vw;margin: 2vw;padding: 1vw;color: {{selecteIndex==index+1?'orange':''}};" wx:for="{{30}}" wx:key="index" bind:tap="onSelecte" data-value="{{index+1}}">{{index+1}}</view>
+        </view>
+    </view>
+    <button style="position: fixed;bottom: 180rpx;left: 5vw; width: 90vw;" class="cu-btn round bg-blue " bind:tap="gotoGoodsPage">
+        确定
+    </button>
 </view>

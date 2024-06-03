@@ -2,6 +2,7 @@
     "entryPagePath": "pages/index/index",
     "pages": [
         "pages/index/index",
+        "pages/home/index",
         "pages/web/index",
         "pages/pay-car/index",
         "pages/application/index",
