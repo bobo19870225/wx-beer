@@ -12,5 +12,5 @@
     </view>
     <view wx:if="{{index==indexShop}}" class="cu-tag round bg-blue sm">当前店铺</view>
   </view>
-  <button class="cu-btn round bg-blue margin-tb" style="width: 90vw;left: 5vw;" bind:tap="onSure">确定选择</button>
+  <button class="cu-btn round bg-blue margin-tb lg" style="width: 90vw;left: 5vw;" bind:tap="onSure">确定选择</button>
 </view>

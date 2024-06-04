@@ -31,7 +31,7 @@ Page({
    * 初始化商店
    */
   async initShopList() {
-    const shopList = app.globalData.shopList || await app.getShopList()
+    const shopList = await app.getShopList()
     let shop = app.globalData.shop
     let index = 0
     if (shop) {

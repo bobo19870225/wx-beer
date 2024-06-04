@@ -33,7 +33,7 @@
             <view style="background-color: rgb(230, 230, 230); border-radius: 56rpx;width: 18vw;margin: 2vw;padding: 1vw;color: {{selecteIndex==index+1?'orange':''}};" wx:for="{{30}}" wx:key="index" bind:tap="onSelecte" data-value="{{index+1}}">{{index+1}}</view>
         </view>
     </view>
-    <button style="position: fixed;bottom: 180rpx;left: 5vw; width: 90vw;" class="cu-btn round bg-blue " bind:tap="gotoGoodsPage">
+    <button style="position: fixed;bottom: 180rpx;left: 5vw; width: 90vw;" class="cu-btn round bg-blue lg" bind:tap="gotoGoodsPage">
         确定
     </button>
 </view>

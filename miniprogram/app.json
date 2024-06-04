@@ -18,7 +18,8 @@
         "pages/test/index",
         "pages/map/index",
         "pages/manage/tables/index",
-        "pages/manage/tables-edit/index"
+        "pages/manage/tables-edit/index",
+        "pages/user-center/setting/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",

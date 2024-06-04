@@ -64,10 +64,10 @@
     </block>
     <!-- SETTING -->
     <view class="settings_container">
-        <view class="setting_item">
+        <view class="setting_item" bind:tap="gotoSettingPage">
             <view class="left">
                 <image class="setting_icon" src="../../images/icons/setting.svg" />
-                <view class="setting_text">个人信息设置</view>
+                <view class="setting_text">我的信息</view>
             </view>
             <image class="arrow_icon" src="../../images/arrow.svg" />
         </view>
