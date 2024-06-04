@@ -34,7 +34,6 @@ Page({
         })
         db.collection('vipPackage').doc(id).get().then((res) => {
             console.log(res);
-           
             this.setData({
                 vip: res.data,
                 isLoading: false
@@ -46,7 +45,9 @@ Page({
             name,
             remarks,
             price,
-            rate
+            entry,
+            beer,
+            rate,
         } = e.detail.value
         if (!name) {
             wx.showToast({
@@ -62,30 +63,48 @@ Page({
             })
             return
         }
+        if (!entry) {
+            wx.showToast({
+                title: '实际到账必填',
+                icon: 'error'
+            })
+            return
+        }
+        if (!beer) {
+            wx.showToast({
+                title: '赠送啤酒数必填',
+                icon: 'error'
+            })
+            return
+        }
+        if (!rate) {
+            wx.showToast({
+                title: '折扣率必填',
+                icon: 'error'
+            })
+            return
+        }
 
-        // if (!rate) {
-        //     wx.showToast({
-        //         title: '折扣率必填',
-        //         icon: 'error'
-        //     })
-        //     return
-        // }
-       
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
-                type: 'updateVip',
+                type: 'updateVipPackage',
                 id: this.data.id,
                 data: {
                     name,
-                    remarks,
                     price,
-                    // rate,
+                    entry,
+                    beer,
+                    rate,
+                    remarks,
                     isDelete: false
                 },
             },
         }).then((res) => {
-            this.finishAdd()
+            console.log(res.result.success);
+            if (res.result.success) {
+                this.finishAdd()
+            }
         });
     },
     async finishAdd() {

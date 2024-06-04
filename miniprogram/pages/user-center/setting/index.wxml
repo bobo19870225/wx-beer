@@ -1,40 +1,38 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">我的信息</view>
+    <view slot="backText">返回</view>
+    <view slot="content">我的信息</view>
 </cu-custom>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-  <view class='gray-text text-xs'>加载中...</view>
+    <view class='gray-text text-xs'>加载中...</view>
 </view>
 
 <image style="position: absolute;width: 100vw;margin-top: 30rpx;" src="../../../images/icons/setting-bg.png" mode="widthFix">
 </image>
 <button class="cu-avatar xl round margin-left" style="position: absolute; left: calc(50vw - 64rpx);margin-top: 60rpx;" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-  <image class="cu-avatar xl round " src="{{avatarUrl}}"></image>
+    <image class="cu-avatar xl round " src="{{userInfo.avatarUrl||'../../../images/avatar.svg'}}"></image>
 </button>
 <form catchsubmit="formSubmit" catchreset="formReset">
 
-  <view class="cu-form-group" style="margin-top: 180rpx;">
-    <view class="title">姓名</view>
-    <input name="name" type="nickname" placeholder="请输入昵称" />
-  </view>
-  <view class="cu-form-group">
-    <view class="title">手机号码</view>
-    <input name="phone" placeholder="请填写手机号..."></input>
-    <view class="cu-capsule radius">
-      <button class="cu-btn round" style="width: 190rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 快捷获取</button>
+    <view class="cu-form-group" style="margin-top: 180rpx;">
+        <view class="title">姓名</view>
+        <input name="name" type="nickname" placeholder="请输入昵称" value="{{userInfo.name}}" />
     </view>
-  </view>
-  <upLoadFile count="2" directory="application" label="请上传身份证正反面" bind:onUploadOk="onUploadOk">
-  </upLoadFile>
-  <view class="cu-form-group align-start">
-    <view class="title">生日</view>
-    <picker name="birthday" mode="date" value="{{birthday}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-      <view class="picker" style="text-align: start;">
-        {{birthday}}
-      </view>
-    </picker>
-  </view>
-  <view class="flex padding" style="width: 100vw;">
-    <button class="cu-btn round bg-blue" style="flex: 1;" formType="submit">保存</button>
-  </view>
+    <view class="cu-form-group">
+        <view class="title">手机号码</view>
+        <input name="phone" placeholder="请填写手机号..." value="{{userInfo.phone}}"></input>
+        <view class="cu-capsule radius">
+            <button class="cu-btn round" style="width: 190rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 快捷获取</button>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">生日</view>
+        <picker name="birthday" mode="date" value="{{userInfo.birthday}}" start="1949-10-01" bindchange="bindDateChange">
+            <view class="picker" style="text-align: start;">
+                {{userInfo.birthday}}
+            </view>
+        </picker>
+    </view>
+    <view class="flex padding" style="width: 100vw;">
+        <button class="cu-btn round bg-blue" style="flex: 1;" formType="submit">保存</button>
+    </view>
 </form>

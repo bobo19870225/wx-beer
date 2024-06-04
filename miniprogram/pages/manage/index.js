@@ -29,7 +29,7 @@ Component({
    */
   methods: {
     async initData() {
-      const shop = app.globalData.shop
+      let shop = app.globalData.shop
       let indexShop = 0
       const shopList = await app.getShopList()
       this.setData({

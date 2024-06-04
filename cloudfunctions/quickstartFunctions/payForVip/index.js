@@ -10,46 +10,58 @@ exports.main = async (event, context) => {
     const _openid = event._openid
     const name = event.name
     const shopId = event.shopId
-    const balance = event.balance
-    const points = event.points
-
-    const user = await db.collection('user').where({
+    // const vipPackageId = event.vipPackageId
+    const entry = event.entry
+    const beer = event.beer
+    if (!_openid || !shopId || !entry || !beer) {
+        return {
+            success: false,
+            errMsg: '参数不完整'
+        };
+    }
+    const vip = await db.collection('vip').where({
         _openid,
         shopId
     }).get();
-
-    if (user && user.length > 0) {
-        // return user
-        return await db.collection('user').where({
+    const vipData = vip.data
+    let res = null
+    if (vipData && vipData.length > 0) {
+        res = await db.collection('vip').where({
             _openid,
             shopId
         }).update({
             data: {
-                _openid,
-                name,
-                shopId,
-                roleId: 'e8da080866481e7401183a545ac1b592',
+                // vipPackageId,
                 account: {
-                    balance: _.inc(balance),
-                    points: _.inc(points),
-                }
+                    recharge: _.inc(entry),
+                    balance: _.inc(entry),
+                    beer: _.inc(beer),
+                },
+                updateDate: new Date(),
+                isDelete: false
             }
         })
     } else {
-        return await db.collection('user').add({
+        res = await db.collection('vip').add({
             data: {
                 _openid,
                 name,
                 shopId,
                 roleId: 'e8da080866481e7401183a545ac1b592',
                 account: {
-                    balance: balance,
-                    points: points,
-                }
+                    recharge: entry,
+                    balance: entry,
+                    beer: beer,
+                },
+                createDate: new Date(),
+                isDelete: false
             }
         })
     }
-
+    return {
+        success: true,
+        result: res
+    };
 
 
 

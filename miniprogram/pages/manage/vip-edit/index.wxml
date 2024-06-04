@@ -5,23 +5,33 @@
 </cu-custom>
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class="cu-form-group margin-top">
-        <view class="title">套餐名称</view>
+        <view class="title lable-width">套餐名称</view>
         <input name="name" value="{{vip.name}}" placeholder="请输入..."></input>
     </view>
 
     <view class="cu-form-group" bind:tap="openMap">
-        <view class="title">套餐价格</view>
+        <view class="title lable-width">套餐价格</view>
         <input name="price" placeholder="请填写..." value="{{vip.price}}"></input>
-        <text class="text-orange">单位分</text>
+        <text class="text-orange">分</text>
+    </view>
+    <view class="cu-form-group" bind:tap="openMap">
+        <view class="title lable-width">实际到账</view>
+        <input name="entry" placeholder="请填写..." value="{{vip.entry}}"></input>
+        <text class="text-orange">分</text>
+    </view>
+    <view class="cu-form-group" bind:tap="openMap">
+        <view class="title lable-width">赠送啤酒数</view>
+        <input name="beer" placeholder="请填写..." value="{{vip.beer}}"></input>
+        <text class="text-orange">瓶</text>
     </view>
     <!-- rate -->
-    <!-- <view class="cu-form-group" bind:tap="openMap">
-        <view class="title">折扣率</view>
+    <view class="cu-form-group" bind:tap="openMap">
+        <view class="title lable-width">折扣率</view>
         <input name="rate" placeholder="请填写..." value="{{vip.rate}}"></input>
         <text class="text-orange">折</text>
-    </view> -->
+    </view>
     <view class="cu-form-group align-start">
-        <view class="title">备注</view>
+        <view class="title lable-width">备注</view>
         <textarea name="remarks" value="{{vip.remarks}}" maxlength="300" placeholder="请输入备注..."></textarea>
     </view>
     <view class="flex padding" style="gap: 8px">

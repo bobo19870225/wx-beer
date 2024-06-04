@@ -9,93 +9,70 @@
     <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
     <view class='gray-text text-xs'>加载中...</view>
 </view>
-<view class="main_content" style="height: {{containerHeight - 120}}rpx;">
-    <view class=" userinfo_container">
-        <view class='mytop-box '>
-            <view style="width: 160rpx;position: relative;">
-                <image wx:if="{{vipUserInfo}}" style="width: 60rpx;right: 10rpx;position: absolute;transform: rotate(45deg);" src="../../images/icons/vip.svg" mode="widthFix"></image>
-                <view class="mytop-avatar">
-                    <open-data type="userAvatarUrl"></open-data>
-                </view>
-            </view>
-            <view class='mytop-username'>
-                <open-data type="userNickName"></open-data>
-            </view>
-        </view>
-        <view wx:if="{{vipUserInfo&&vipUserInfo.vipPackage}}">
-            <!-- （消费{{vipUserInfo.vipPackage.rate==100?'不打':vipUserInfo.vipPackage.rate}}折） -->
-            <view>{{vipUserInfo.vipPackage.name}}</view>
-            <view class="text-gray text-sm">{{vipUserInfo.vipPackage.remarks}}</view>
-        </view>
-        <view wx:else>
-            非会员
-        </view>
-
+<view style="height: {{containerHeight - 120}}rpx;position: relative;">
+    <view class=' text-gray' bind:tap="gotoSettingPage">
+        <view class="margin"> {{userInfo.name?'欢迎您 '+ userInfo.name : '未设置昵称'}}</view>
     </view>
-    <!-- VIP -->
-    <block wx:if="{{!vipLoading}}">
-        <view class="vip_container">
-            <view class="vip_item">
-                <view class="flex align-center" style="width: 100%;  border-radius: 9rpx;background-color:white;border: 1px solid #f1f1f1;height: 160rpx;" wx:if="{{vipUserInfo==null}}">
-
-                    <button style="width: 120rpx;" class="cu-btn sm round bg-orange " bind:tap="toBeVip">加入会员</button>
+    <view class="cu-card">
+        <view style="position: absolute; text-align: center;right: 60rpx;top: 60rpx;z-index: 100;">
+            <!-- 小皇冠 -->
+            <image wx:if="{{vipUserInfo}}" style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/vip.svg" mode="widthFix"></image>
+            <!-- 头像 -->
+            <button class="cu-avatar xl round shadow-warp" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+                <image class="cu-avatar xl round " src="{{userInfo.avatarUrl||'../../images/avatar.svg'}}"></image>
+            </button>
+        </view>
+        <!-- VIP -->
+        <view class="cu-item shadow-warp padding" style="min-height: 240rpx;border-radius: 32rpx;">
+            <view wx:if="{{vipUserInfo&&vipUserInfo.vipPackage}}">
+                <!-- （消费{{vipUserInfo.vipPackage.rate==100?'不打':vipUserInfo.vipPackage.rate}}折） -->
+                <view>{{vipUserInfo.vipPackage.name}}</view>
+                <view class="text-gray text-sm">{{vipUserInfo.vipPackage.remarks}}</view>
+            </view>
+            <view wx:else class="text-gray text-sm">
+                普通会员
+            </view>
+            <view class="flex justify-around">
+                <view style="text-align: center;">
+                    <!-- <image></image> -->
+                    <view class="padding">余额</view>
+                    <view style="font-size: 35rpx;font-weight: bold;">
+                        ¥ {{vipUserInfo.account.balance/100||'0.00'}}
+                    </view>
                 </view>
-                <view class="padding" style="width: 100%;  border-radius: 9rpx;text-align: start;background-color:white;border: 1px solid #f1f1f1;" wx:else>
-                    <view class="flex align-center justify-between">
-                        LV1
-                        <view class="">
-                            可用余额：¥{{vipUserInfo.account.balance}}
-                        </view>
-                    </view>
-                    <view class="margin-top flex align-center">
-                        <view style="font-size: 40rpx;">
-                            {{vipUserInfo.account.points}}
-                        </view>
-                        <image wx:if="{{vipUserInfo}}" style="width: 30rpx;" src="../../images/icons/points.svg" mode="widthFix"></image>
-
-
-                    </view>
-                    <view class="cu-progress round xs striped active">
-                        <view class="bg-purple" style="width:61.8%;"></view>
+                <view style="text-align: center;">
+                    <!-- <image></image> -->
+                    <view class="padding">存酒</view>
+                    <view style="font-size: 35rpx;font-weight: bold;">
+                        {{vipUserInfo.account.beer||'0'}}
                     </view>
                 </view>
             </view>
         </view>
-    </block>
+    </view>
     <!-- SETTING -->
-    <view class="settings_container">
-        <view class="setting_item" bind:tap="gotoSettingPage">
-            <view class="left">
-                <image class="setting_icon" src="../../images/icons/setting.svg" />
-                <view class="setting_text">我的信息</view>
+    <view class="padding margin-top bg-white shadow" style="border-radius: 32rpx 32rpx 0 0 ">
+        <view style="font-weight: bold;">常用功能</view>
+        <view style="height: 90rpx;"></view>
+        <view class="settings_container margin-top-lg">
+            <view class="setting_item" bind:tap="toBeVip">
+                <image class="setting_icon" src="../../images/icons/zxcz.svg" />
+                <view class="text-gray text-xs">在线充值</view>
             </view>
-            <image class="arrow_icon" src="../../images/arrow.svg" />
-        </view>
-        <view class="setting_item">
-            <view class="left">
-                <image class="setting_icon" src="../../images/icons/question.svg" />
-                <view class="setting_text">常见问题</view>
-            </view>
-            <image class="arrow_icon" src="../../images/arrow.svg" />
-        </view>
 
-        <view class="setting_item" bind:tap="gotoApplicationPage">
-            <view class="left">
-                <image class="setting_icon" src="../../images/icons/share.svg" />
-                <view class="setting_text">申请成为店长</view>
+            <view class="setting_item" bind:tap="gotoSettingPage">
+                <image class="setting_icon" src="../../images/icons/wdxx.svg" />
+                <view class="text-gray text-xs">我的信息</view>
             </view>
-            <image class="arrow_icon" src="../../images/arrow.svg" />
-        </view>
-        <view class="setting_item" style=" border-bottom: 0rpx solid rgba(0, 0, 0, 0.08);">
-            <view class="left">
-                <image class="setting_icon" src="../../images/icons/customer-service.svg" />
-                <button open-type="contact" class="contact-button">
-                    联系客服
-                </button>
+
+            <view class="setting_item" bind:tap="gotoApplicationPage">
+                <image class="setting_icon" src="../../images/icons/dz.svg" />
+                <view class="text-gray text-xs">成为店长</view>
             </view>
-            <!-- <image class="arrow_icon" src="../../images/arrow.svg" /> -->
         </view>
+        <view style="height: 180rpx;"></view>
     </view>
+
 </view>
 <!-- <cloud-tip-modal showUploadTipProps="{{showUploadTip}}" /> -->
 <!-- 购买VIP -->
@@ -109,7 +86,7 @@
             <radio-group bindchange="radioChange">
                 <view style="width: 100vw;" class="flex padding align-center " wx:for="{{vips}}" wx:key="value">
                     <view class="margin-lr">
-                        <radio value="{{item.value}}" checked="true" />
+                        <radio value="{{item._id}}" checked="true" />
                     </view>
                     <view style="text-align: start;">
                         <view>{{item.name}} ¥{{item.price/100}}</view>

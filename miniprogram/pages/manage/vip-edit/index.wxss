@@ -1,1 +1,4 @@
 /* pages/manage/vip-edit/index.wxss */
+.lable-width {
+    width: 180rpx;
+}
