@@ -170,8 +170,17 @@ Component({
             })
         },
         gotoSettingPage(e) {
+          const that = this
             wx.navigateTo({
                 url: '/pages/user-center/setting/index',
+                events: {
+                  callbackData: (userInfo) => {
+                    console.log("callbackData",userInfo);
+                    that.setData({
+                      userInfo
+                    })
+                  },
+                },
             })
         }
     },

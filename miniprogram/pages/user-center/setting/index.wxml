@@ -28,7 +28,7 @@
         <view class="title">生日</view>
         <picker name="birthday" mode="date" value="{{userInfo.birthday}}" start="1949-10-01" bindchange="bindDateChange">
             <view class="picker" style="text-align: start;">
-                {{userInfo.birthday}}
+                {{birthday||'请选择'}}
             </view>
         </picker>
     </view>
