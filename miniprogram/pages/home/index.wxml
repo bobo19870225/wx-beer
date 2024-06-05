@@ -69,7 +69,7 @@
                         <image style="width: 100%; position: absolute;top: 20%;opacity: 0.1;" src="../../images/no-goods.svg" mode=""></image>
                         <!-- 人气Top5 -->
                         <view wx:if="{{item.value==0&&index<5}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
-                            <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                            <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
                             <view class="content">
                                 <view>
                                     <text class="text-cut">{{goodsDetail.title }}</text>
@@ -92,7 +92,7 @@
 
                         <!-- 商品分类 -->
                         <view wx:if="{{m1.isShow(item,goodsDetail)}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
-                            <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                            <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
                             <view class="content">
                                 <view>
                                     <text class="text-cut">{{goodsDetail.title }}</text>
@@ -139,7 +139,7 @@
             <scroll-view scroll-y="true" style="max-height: 200px;">
                 <block wx:for="{{ orderList }}" wx:for-item="ordersDetail" wx:key="_id" wx:for-index="index">
                     <view style="display: flex;align-items: center;">
-                        <image class="order-image" src="{{ordersDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                        <image class="order-image" src="{{ordersDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
                         <view class="goods-title" style="margin-left: 9px;">{{ ordersDetail.title }}</view>
                         <view class="goods-bottom-container">
                             <view class="goods-price">

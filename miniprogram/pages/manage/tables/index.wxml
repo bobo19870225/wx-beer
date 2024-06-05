@@ -16,7 +16,7 @@
 <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
     <view class="cu-list menu margin-top-sm">
         <view class="cu-item " wx:for="{{ tablesList }}" wx:key="_id">
-            <image class="cu-avatar radius lg" src="{{item.img||'../../../images/default-goods-image.png'}}">
+            <image class="cu-avatar radius lg" src="{{item.img||'../../images/icons/morentu.svg'}}">
             </image>
             <view class="content padding-left">
                 <text class="text-cut"> {{item.name}}</text>

@@ -19,10 +19,10 @@
             <view class="cu-item" style="align-items: flex-end;" wx:for="{{ list }}" wx:key="_id">
                 <view>
                     <view>
-                        <image class="cu-avatar radius lg" src="{{item.imgs[0]||'../../../images/default-goods-image.png'}}">
+                        <image class="cu-avatar radius lg" src="{{item.imgs[0]||'../../images/icons/morentu.svg'}}">
                         </image>
                     </view>
-                    <image class="cu-avatar radius lg margin-top-xs" src="{{item.imgs[1]||'../../../images/default-goods-image.png'}}">
+                    <image class="cu-avatar radius lg margin-top-xs" src="{{item.imgs[1]||'../../images/icons/morentu.svg'}}">
                     </image>
                 </view>
 

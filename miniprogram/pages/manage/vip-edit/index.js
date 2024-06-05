@@ -84,7 +84,10 @@ Page({
             })
             return
         }
-
+        price = Number.parseInt(price)
+        entry = Number.parseInt(entry)
+        beer = Number.parseInt(beer)
+        rate = Number.parseInt(rate)
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {

@@ -22,7 +22,7 @@
                     <view class="cu-tag bg-blue"> 最新订单</view>
                     <view class="cu-list menu-avatar">
                         <view wx:if="{{newOrder}}" class="cu-item">
-                            <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                            <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
                             <view class="content flex-sub">
                                 <view class="text-grey">{{ goodsDetail.title }}</view>
                                 <view class="text-gray text-sm flex justify-between">
@@ -49,7 +49,7 @@
                             <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
                                 <view class="cu-list menu-avatar">
                                     <view class="cu-item">
-                                        <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/default-goods-image.png'}}" mode="aspectFill" />
+                                        <image class="cu-avatar round lg" src="{{goodsDetail.img||'.../../images/icons/morentu.svg'}}" mode="aspectFill" />
                                         <view class="content flex-sub">
                                             <view class="text-grey">{{ goodsDetail.title }}</view>
                                             <view class="text-gray text-sm flex justify-between">

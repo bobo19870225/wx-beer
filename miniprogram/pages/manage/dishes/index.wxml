@@ -28,7 +28,7 @@
     <scroll-view>
         <view class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ goodsList }}" wx:key="_id">
-                <image class="cu-avatar radius lg" src="{{item.img||'../../../images/default-goods-image.png'}}">
+                <image class="cu-avatar radius lg" src="{{item.img||'../../images/icons/morentu.svg'}}">
                 </image>
                 <view class="content padding-left">
                     <text class="text-cut"> {{item.title}}</text>

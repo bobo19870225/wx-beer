@@ -22,12 +22,16 @@ Page({
 
     },
     async initData() {
-        db.collection("vipPackage").get().then((res)=>{
-          console.log(res);
-          const vipList = res.data
-          this.setData({
-            vipList
-          })
+        db.collection("vipPackage").where({
+            isDelete: false
+        }).where({
+            isDelete: false
+        }).orderBy('price','asc').get().then((res) => {
+            console.log(res);
+            const vipList = res.data
+            this.setData({
+                vipList
+            })
         })
     },
     delete(e) {
@@ -40,15 +44,14 @@ Page({
     },
     async onDelete(e) {
         // console.log(e);
-        await wx.cloud.callFunction({
-            name: 'quickstartFunctions',
-            data: {
-                type: 'deleteShop',
-                shopId: e.detail.shopId
-            },
-        });
-        // await app.getShopList();
-        this.initData()
+        // await wx.cloud.callFunction({
+        //     name: 'quickstartFunctions',
+        //     data: {
+        //         type: 'deleteShop',
+        //         shopId: e.detail.shopId
+        //     },
+        // });
+        // this.initData()
     },
     add() {
         wx.navigateTo({

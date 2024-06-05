@@ -12,8 +12,9 @@ exports.main = async (event, context) => {
     const shopId = event.shopId
     // const vipPackageId = event.vipPackageId
     const entry = event.entry
+    const price = event.price
     const beer = event.beer
-    if (!_openid || !shopId || !entry || !beer) {
+    if (!_openid || !shopId || !entry || !beer || !price) {
         return {
             success: false,
             errMsg: '参数不完整'
@@ -33,7 +34,7 @@ exports.main = async (event, context) => {
             data: {
                 // vipPackageId,
                 account: {
-                    recharge: _.inc(entry),
+                    recharge: _.inc(price),
                     balance: _.inc(entry),
                     beer: _.inc(beer),
                 },
@@ -49,7 +50,7 @@ exports.main = async (event, context) => {
                 shopId,
                 roleId: 'e8da080866481e7401183a545ac1b592',
                 account: {
-                    recharge: entry,
+                    recharge: price,
                     balance: entry,
                     beer: beer,
                 },
