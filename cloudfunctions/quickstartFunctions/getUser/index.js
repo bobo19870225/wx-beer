@@ -5,8 +5,24 @@ cloud.init({
 });
 const db = cloud.database();
 exports.main = async (event, context) => {
-  return await db.collection('user').where({
-    isDelete: false,
-    _openid: event._openid
-  }).get();
+  const _openid = event.data?._openid
+  if (!_openid) {
+    return {
+      success: false,
+      errMsg: "_openid is null"
+    }
+  }
+  return db.collection('user')
+    .aggregate()
+    .match({
+      isDelete: false,
+      _openid
+    })
+    .lookup({
+      from: 'vip',
+      localField: '_openid',
+      foreignField: '_openid',
+      as: 'vipList',
+    })
+    .end()
 };

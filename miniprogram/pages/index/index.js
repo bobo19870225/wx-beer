@@ -15,13 +15,15 @@ Page({
         _openid
       },
     }).then((res) => {
-      // console.log(res);
-      const user = res.result?.data
-      // console.log(user);
-      if (!user || user.length < 1) {
+      const userList = res.result.list
+      let userInfo = null
+      if (userList && userList.length > 0) {
+        userInfo = userList[0]
+      }
+      if (!userInfo) {
         this.addUser()
       } else {
-        app.globalData.user = user[0]
+        app.globalData.user = userInfo
       }
     })
   },
