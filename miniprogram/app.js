@@ -43,7 +43,7 @@ App({
             })
             this.globalData._openid = res.result.openid
         }
-        console.log("getOpenid", this.globalData._openid);
+        // console.log("getOpenid", this.globalData._openid);
         return this.globalData._openid
     },
     /**

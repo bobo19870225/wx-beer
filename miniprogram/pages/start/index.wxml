@@ -4,7 +4,7 @@
     <view slot="content">慧管店</view>
 </cu-custom>
 <view wx:if="{{step==0}}" style="width: 100vw;height: {{containerHeight}}rpx;text-align: center;background-color: white;">
-    <image style="margin-top: 30rpx;" src="../../images/home-bg.png" mode="widthFix"></image>
+    <image style="margin-top: 180rpx;" src="../../images/home-bg.png" mode="widthFix"></image>
     <button style="position: fixed;bottom: 180rpx;left: 10vw; width: 80vw;" class="cu-btn round bg-blue lg" bind:tap="orderNow">
         <image style="width: 72rpx;left: -24rpx;" src="../../images/icons/diancan.svg" mode="widthFix"></image>
         <view>
@@ -30,7 +30,7 @@
     </view>
     <view class="bg-white padding">
         <view class="grid col-4 margin-bottom text-center">
-            <view style="background-color: rgb(230, 230, 230); border-radius: 56rpx;width: 18vw;margin: 2vw;padding: 1vw;color: {{selecteIndex==index+1?'orange':''}};" wx:for="{{30}}" wx:key="index" bind:tap="onSelecte" data-value="{{index+1}}">{{index+1}}</view>
+            <view style="background-color: rgb(230, 230, 230); border-radius: 56rpx;width: 18vw;margin: 2vw;padding: 1vw;color: {{selecteIndex==index+1?'orange':''}};" wx:for="{{16}}" wx:key="index" bind:tap="onSelecte" data-value="{{index+1}}">{{index+1}}</view>
         </view>
     </view>
     <button style="position: fixed;bottom: 180rpx;left: 5vw; width: 90vw;" class="cu-btn round bg-blue lg" bind:tap="gotoGoodsPage">
