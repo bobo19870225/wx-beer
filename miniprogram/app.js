@@ -64,8 +64,8 @@ App({
     /**
      * 获取全量用户信息
      */
-    async getUserInfoAll() {
-        if (this.globalData.userInfoAll) {
+    async getUserInfoAll(forceupdates) {
+        if (!forceupdates && this.globalData.userInfoAll) {
             return this.globalData.userInfoAll
         }
         console.log("run getUser");
@@ -100,7 +100,7 @@ App({
                 const d = element.price - vipInfo.account.recharge
                 if (d == 0) {
                     vipInfo.vipLevel = element
-                    // vipInfo.vipLevel.next = d
+                    vipInfo.vipLevel.next = vipPackageInfo[index + 1].price - element.price || 0
                     break
                 }
                 if (d > 0) {
@@ -111,12 +111,14 @@ App({
             }
             if (!vipInfo.vipLevel) { //已经超过最高级别
                 vipInfo.vipLevel = vipPackageInfo[vipPackageInfo.length - 1]
+                vipInfo.vipLevel.next = 0
             }
         }
         this.globalData.userInfoAll = {
             userInfo,
             vipInfo
         }
+        console.log("APP", vipInfo);
         return this.globalData.userInfoAll
     },
     /**

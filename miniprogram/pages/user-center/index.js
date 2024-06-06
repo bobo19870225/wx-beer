@@ -32,11 +32,11 @@ Component({
      * 组件的方法列表
      */
     methods: {
-        async getUser() {
+        async getUser(forceupdates) {
             this.setData({
                 isRefreshing: true
             })
-            const res = await app.getUserInfoAll()
+            const res = await app.getUserInfoAll(forceupdates)
             const userInfo = res.userInfo
             const vipInfo = res.vipInfo
             this.setData({
@@ -74,7 +74,7 @@ Component({
                 vipLoading: true,
             })
             await this.getVipType();
-            await this.getUser();
+            await this.getUser(true);
             this.setData({
                 vipLoading: false,
             })
@@ -122,23 +122,28 @@ Component({
             })
             const shop = this.data.shop
             const vipPackageBuy = this.data.vipPackageBuy
+            const price = Number.parseInt(vipPackageBuy.price)
             const entry = Number.parseInt(vipPackageBuy.entry)
             const beer = Number.parseInt(vipPackageBuy.beer)
             const _openid = await app.getOpenid()
+            const vipPackageId = vipPackageBuy._id
             let res = await wx.cloud.callFunction({
                 name: 'quickstartFunctions',
                 data: {
                     type: 'payForVip',
-                    shopId: shop._id,
-                    _openid,
-                    name: this.data.userInfo.name,
-                    // vipPackageId: vipPackageBuy._id,
-                    entry,
-                    beer
+                    entity: {
+                        shopId: shop._id,
+                        _openid,
+                        name: this.data.userInfo.name,
+                        vipPackageId,
+                        price,
+                        entry,
+                        beer
+                    }
                 },
             });
             console.log(res);
-            await this.getVipUser()
+            await this.getUser(true)
             this.closePayDialog()
             this.setData({
                 isLoading: false

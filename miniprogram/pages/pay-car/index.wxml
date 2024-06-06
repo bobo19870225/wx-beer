@@ -56,13 +56,13 @@
                     <view wx:if="{{vipTotal}}">
                         会员支付
                         <span class="padding-left text-orange">
-                            ¥{{vipTotal}}
+                            ¥{{vipTotal/100}}
                         </span>
                     </view>
                     <view wx:if="{{total}}">
                         普通应付
                         <span class="padding-left">
-                            ¥{{total}}
+                            ¥{{total/100}}
                         </span>
                     </view>
                     <view wx:else>
@@ -87,7 +87,7 @@
         <view class="cu-dialog">
             <view class="cu-bar bg-white justify-end align-center">
                 <view class="content">
-                    应付 ¥{{total}}
+                    应付 ¥{{total/100}}
                 </view>
                 <view class="action" bindtap="closeDialogPay">
                     <text class="cuIcon-close text-red"></text>
@@ -122,7 +122,7 @@
 
                     <view class="cu-bar">
                         <button class="cu-btn round bg-blue text-orange" data-type="vipPay" formType="submit">
-                            <text class="cuIcon-vip"></text>会员支付(立省 ¥{{preferential}})
+                            <text class="cuIcon-vip"></text>会员支付(立省 ¥{{preferential/100}})
                         </button>
                         <!-- bindtap="nonmemberPay" -->
                         <button class="cu-btn round bg-gray" style="margin-left: 9rpx;" data-type="nonmemberPay" formType="submit">

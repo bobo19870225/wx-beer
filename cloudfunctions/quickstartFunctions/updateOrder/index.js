@@ -9,20 +9,23 @@ const db = cloud.database();
 // 聚合记录云函数入口函数
 exports.main = async (event, context) => {
     try {
-        const id = event.data._id
+        const entity = event.entity
+        const id = entity._id
+        let res = null
         if (id) {
-            delete event.data._id
-            await db.collection('order').doc(id).update({
-                data: event.data,
+            delete entity._id
+            res = await db.collection('order').doc(id).update({
+                data: entity,
             });
         } else {
-            await db.collection('order').add({
-                data: event.data,
+            res = await db.collection('order').add({
+                data: entity,
             });
         }
+        const data = res.data
         return {
             success: true,
-            data: event.data
+            data
         };
     } catch (e) {
         return {

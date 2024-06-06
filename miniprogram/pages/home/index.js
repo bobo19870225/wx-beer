@@ -208,7 +208,7 @@ Page({
         name: 'quickstartFunctions',
         data: {
           type: 'updateOrder',
-          data: {
+          entity: {
             _openid,
             createDate: new Date(),
             isDelete: false,
@@ -219,6 +219,7 @@ Page({
           },
         },
       }).then((res) => {
+        //   console.log(res);
         if (res.result.success) {
           wx.navigateTo({
             url: '/pages/pay-car/index',

@@ -40,9 +40,7 @@ Component({
                                 app.globalData.shop = shop
                             }
                             this.setData({
-                                shop
-                            })
-                            this.setData({
+                                shop,
                                 step: 1
                             })
                             // this.triggerEvent('onShopChange', shop)

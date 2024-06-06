@@ -16,6 +16,7 @@ const genMpQrcode = require('./genMpQrcode/index');
 const getVip = require('./getVip/index');
 const updateVipPackage = require('./updateVipPackage/index');
 const payForVip = require('./payForVip/index');
+const payForGoods = require('./payForGoods/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -74,7 +75,9 @@ exports.main = async (event, context) => {
             return await getOrderList.main(event, context);
         case 'updateOrder':
             return await updateOrder.main(event, context);
-
+            // payForGoods
+        case 'payForGoods':
+            return await payForGoods.main(event, context);
             /**
              * 会员
              */
