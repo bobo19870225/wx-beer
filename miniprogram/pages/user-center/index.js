@@ -94,9 +94,9 @@ Component({
             });
         },
         gotoBillPage() {
-            wx.showToast({
-                title: '开发中...',
-            })
+          wx.navigateTo({
+            url: `/pages/user-center/bill/index`,
+        });
         },
         radioChange(e) {
             let id = e.detail.value

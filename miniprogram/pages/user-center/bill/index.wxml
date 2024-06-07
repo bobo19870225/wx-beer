@@ -1,0 +1,37 @@
+<wxs src="../../format.wxs" module="filter" />
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">我的账单</view>
+</cu-custom>
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+  <view class='gray-text text-xs'>加载中...</view>
+</view>
+<!-- 有数据 -->
+<view wx:if="{{ billList.length >= 1 }}">
+  <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}">
+    <view class="cu-list menu">
+      <block wx:for="{{ billList }}" wx:key="_id" wx:for-index="index">
+        <view class="cu-item shadow arrow">
+          <view class="content ">
+            <view class="text-cut" style="gap: 21rpx;">
+              <view wx:if="{{item.type==0}}" class="cu-tag line-purple round">会员充值</view>
+              <view wx:if="{{item.type==1}}" class="cu-tag line-green round">店内消费</view>
+              <view wx:if="{{item.type==2}}" class="cu-tag line-orange round">购买原材料</view>
+              <view>交易金额 <span style="{{item.type==1?'color:red'}}"> ￥{{item.money/100}}</span></view>
+            </view>
+            <view>
+              {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>
+<!-- 无数据 -->
+<block wx:else>
+  <view style="text-align: center;margin-top: 20vh;">
+    <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+    <view style="top: -240rpx;">暂无数据</view>
+  </view>
+</block>
