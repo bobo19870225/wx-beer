@@ -20,7 +20,8 @@
         "pages/manage/tables/index",
         "pages/manage/tables-edit/index",
         "pages/user-center/setting/index",
-        "pages/user-center/bill/index"
+        "pages/user-center/bill/index",
+        "pages/user-center/bill/detail"
     ],
     "window": {
         "navigationBarBackgroundColor": "#39b54a",
