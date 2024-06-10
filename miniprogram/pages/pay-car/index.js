@@ -25,14 +25,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     async onLoad(options) {
-        var shop = app.globalData.shop
-        if (!shop) {
-            const shopList = await app.getShopList()
-            shop = shopList[0]
-        }
-        this.setData({
-            shop
-        })
+        const shop = await app.getShop()
+        const vipLevel = await app.getVipLevel()
         const _openid = await app.getOpenid()
         const res = await db.collection('order').where({
             isDelete: false,
@@ -42,6 +36,8 @@ Page({
         }).orderBy('createDate', 'desc').get()
         const orderList = res.data
         this.setData({
+            shop,
+            vipLevel,
             orderList,
         })
         this.getTablesList()
@@ -78,8 +74,9 @@ Page({
         const order = orderList[0]
         order.goodsList.forEach(elementg => {
             total += elementg.number * elementg.price
-            vipTotal += elementg.number * elementg.vipPrice
+            // vipTotal += elementg.number * elementg.vipPrice
         });
+        vipTotal = total * this.data.vipLevel.rate / 100
         preferential = total - vipTotal
         this.setData({
             order,

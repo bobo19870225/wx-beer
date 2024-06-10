@@ -63,7 +63,7 @@ Component({
                 url: '/pages/home/index',
                 success(result) {
                     app.globalData.dinersNumb = that.data.selecteIndex
-                    console.log(that.data.selecteIndex);
+                    // console.log(that.data.selecteIndex);
                 }
             })
         },

@@ -75,8 +75,16 @@
                                     <text class="text-cut">{{goodsDetail.title }}</text>
                                     <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
                                 </view>
-                                <view class="text-gray text-sm flex">
-                                    <text class="text-cut">￥<text style="text-decoration:line-through;">{{ goodsDetail.price / 100 }}</text> <text class="cuIcon-vip text-orange margin-left-xs"></text><text class="text-orange">￥{{ goodsDetail.vipPrice / 100 }}</text></text>
+                                <view class="text-gray text-sm ">
+                                    <view class="text-cut">原价：￥
+                                        <span style="text-decoration:line-through;">
+                                            {{ goodsDetail.price / 100 }}
+                                        </span>
+                                    </view>
+                                </view>
+                                <view wx:if="{{true}}" class=" text-cut text-xs">
+                                    <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
+                                    <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
                                 </view>
                             </view>
                             <view class="action">
@@ -98,8 +106,16 @@
                                     <text class="text-cut">{{goodsDetail.title }}</text>
                                     <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
                                 </view>
-                                <view class="text-gray text-sm flex">
-                                    <text class="text-cut">￥<text style="text-decoration:line-through;">{{ goodsDetail.price / 100 }}</text> <text class="cuIcon-vip text-orange margin-left-xs"></text><text class="text-orange">￥{{ goodsDetail.price / 100 }}</text></text>
+                                <view class="text-gray text-sm ">
+                                    <view class="text-cut">原价：￥
+                                        <span style="text-decoration:line-through;">
+                                            {{ goodsDetail.price / 100 }}
+                                        </span>
+                                    </view>
+                                </view>
+                                <view wx:if="{{true}}" class=" text-cut text-xs">
+                                    <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
+                                    <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
                                 </view>
                             </view>
                             <view class="action">

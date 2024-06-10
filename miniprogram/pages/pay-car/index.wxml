@@ -29,7 +29,7 @@
                                             <view class="text-grey">{{ goodsDetail.title }}</view>
                                             <view class="text-gray text-sm flex justify-between">
                                                 <view style="color: gray;">原价： ¥ {{ goodsDetail.price / 100 }}</view>
-                                                <view style="color: gold;">会员价： ¥ {{ goodsDetail.vipPrice / 100 }}</view>
+                                                <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
                                                 <view class="text-gray text-sm">
                                                     x{{ goodsDetail.number}}
                                                 </view>

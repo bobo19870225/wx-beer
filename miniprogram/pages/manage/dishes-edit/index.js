@@ -117,7 +117,7 @@ Page({
             title,
             remarks,
             price,
-            vipPrice,
+            // vipPrice,
             classify
         } = e.detail.value
         let img = this.data.imgList[0]
@@ -129,7 +129,7 @@ Page({
             })
             return
         }
-        if (!price || !vipPrice) {
+        if (!price ) {
             wx.showToast({
                 title: '价格必填',
                 icon: 'error'
@@ -137,7 +137,7 @@ Page({
             return
         }
         price = Number.parseInt(price)
-        vipPrice = Number.parseInt(vipPrice)
+        // vipPrice = Number.parseInt(vipPrice)
         if (!img) {
             wx.showToast({
                 title: '请上传一张商品图片',
@@ -173,7 +173,7 @@ Page({
                     title,
                     remarks,
                     price,
-                    vipPrice,
+                    // vipPrice,
                     shopId,
                     img,
                     classify,

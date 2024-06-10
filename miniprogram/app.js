@@ -121,16 +121,25 @@ App({
         console.log("APP", vipInfo);
         return this.globalData.userInfoAll
     },
+
+    /**
+     * 获取全量用户信息
+     */
+    async getVipLevel(forceupdates) {
+        const userInfoAll = await this.getUserInfoAll(forceupdates)
+        console.log("APP", userInfoAll.vipInfo.vipLevel);
+        return userInfoAll.vipInfo.vipLevel
+    },
     /**
      * 获取当前店铺
      */
-    // async getShop() {
-    //   let shop = this.globalData.shop
-    //   if (!shop) {
-    //     const shopList = await this.getShopList()
-    //     shop = shopList.length > 0 ? shopList[0] : null
-    //     this.getShopList.shop = shop
-    //   }
-    //   return this.globalData.shop;
-    // },
+    async getShop() {
+      let shop = this.globalData.shop
+      if (!shop) {
+        const shopList = await this.getShopList()
+        shop = shopList.length > 0 ? shopList[0] : null
+        this.globalData.shop = shop
+      }
+      return this.globalData.shop;
+    },
 });
