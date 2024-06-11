@@ -125,6 +125,7 @@
                                     <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
                                     <image wx:if="{{item.title=='我的存酒'?goodsDetail.number<vipAccount.beer:true}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
                                     </image>
+                                    <view class="btn-add" wx:else></view>
                                 </view>
                             </view>
                         </view>
