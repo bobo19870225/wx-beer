@@ -107,14 +107,14 @@
                                     <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
                                 </view>
                                 <view class="text-gray text-sm ">
-                                    <view class="text-cut">原价：￥
-                                        <span style="text-decoration:line-through;">
-                                            {{ goodsDetail.price / 100 }}
-                                        </span>
+                                    <view wx:if="{{item.title!='我的存酒'}}" class="text-cut">
+                                        原价：￥{{ goodsDetail.price / 100 }}
+                                    </view>
+                                    <view wx:else>
+                                        剩余：{{vipAccount.beer}} 瓶
                                     </view>
                                 </view>
-                                <view wx:if="{{true}}" class=" text-cut text-xs">
-                                    <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
+                                <view wx:if="{{vipLevel&&item.title!='我的存酒'}}" class=" text-cut text-xs">
                                     <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
                                 </view>
                             </view>
@@ -123,7 +123,7 @@
                                     <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
                                     </image>
                                     <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                                    <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                    <image wx:if="{{item.title=='我的存酒'?goodsDetail.number<vipAccount.beer:true}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
                                     </image>
                                 </view>
                             </view>

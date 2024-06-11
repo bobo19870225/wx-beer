@@ -84,7 +84,7 @@ Page({
       name: 'quickstartFunctions',
       data: {
         type: 'updateUser',
-        data: userInfo
+        entity: userInfo
       }
     }).then((res) => {
       if (res.result.success) {

@@ -29,7 +29,9 @@ Page({
             if (data.orderId) {
                 this.getOrderById(data.orderId)
             }
-           
+            if (data.vipPackageId) {
+                this.getVipPackageIdById(data.vipPackageId)
+            }
         })
     },
     getOrderById(orderId) {

@@ -23,6 +23,7 @@ Component({
         vipPackage: null,
         vipPackageBuy: null,
         shop: null,
+        isManage: false
     },
     attached() {
 
@@ -39,8 +40,10 @@ Component({
             const res = await app.getUserInfoAll(forceupdates)
             const userInfo = res.userInfo
             const vipInfo = res.vipInfo
+            const isManage = userInfo?.isSuperManage || userInfo?.isShopManage || false
             this.setData({
                 userInfo,
+                isManage,
                 vipInfo,
                 isRefreshing: false
             })
@@ -58,7 +61,7 @@ Component({
                 name: 'quickstartFunctions',
                 data: {
                     type: 'updateUser',
-                    data: userInfo
+                    entity: userInfo
                 }
             }).then((res) => {
                 console.log("TTT", res);
@@ -94,9 +97,9 @@ Component({
             });
         },
         gotoBillPage() {
-          wx.navigateTo({
-            url: `/pages/user-center/bill/index`,
-        });
+            wx.navigateTo({
+                url: `/pages/user-center/bill/index`,
+            });
         },
         radioChange(e) {
             let id = e.detail.value
@@ -169,6 +172,15 @@ Component({
             })
         },
         switchMode() {
+            // wx.getStorage({
+            //     key: 'role',
+            //     success(res) {
+            //         console.log(res.data)
+            //     },
+            //     complete(res) {
+            //         console.log("complete", res)
+            //     }
+            // })
             let PageCur = null
             if (app.globalData.mode == 'client') {
                 app.globalData.mode = 'manage'

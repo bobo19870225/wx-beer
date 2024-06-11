@@ -11,11 +11,14 @@ App({
         }
         this.globalData = {};
         this.initUI()
+        this.initStorage()
         console.log("APP_OnLaunch END")
     },
-
+    initStorage() {
+       
+    },
     initUI() {
-        this.globalData.mode = 'client' //默认客户端
+        this.globalData.mode = 'client' //默认客户端client manage:管理端
         const windowInfo = wx.getWindowInfo()
         // px转换到rpx的比例
         let pxToRpxScale = 750 / windowInfo.windowWidth;
@@ -123,23 +126,31 @@ App({
     },
 
     /**
-     * 获取全量用户信息
+     * 获取vip级别信息
      */
     async getVipLevel(forceupdates) {
         const userInfoAll = await this.getUserInfoAll(forceupdates)
         console.log("APP", userInfoAll.vipInfo.vipLevel);
-        return userInfoAll.vipInfo.vipLevel
+        return userInfoAll.vipInfo?.vipLevel
+    },
+    /**
+     * 获取vip账户信息
+     */
+    async getVipAccount(forceupdates) {
+        const userInfoAll = await this.getUserInfoAll(forceupdates)
+        console.log("APP", userInfoAll.vipInfo.account);
+        return userInfoAll.vipInfo?.account
     },
     /**
      * 获取当前店铺
      */
     async getShop() {
-      let shop = this.globalData.shop
-      if (!shop) {
-        const shopList = await this.getShopList()
-        shop = shopList.length > 0 ? shopList[0] : null
-        this.globalData.shop = shop
-      }
-      return this.globalData.shop;
+        let shop = this.globalData.shop
+        if (!shop) {
+            const shopList = await this.getShopList()
+            shop = shopList.length > 0 ? shopList[0] : null
+            this.globalData.shop = shop
+        }
+        return this.globalData.shop;
     },
 });

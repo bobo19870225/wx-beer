@@ -135,6 +135,7 @@ Page({
             entity.payType = payType
             entity.tableSeatsId = tableSeatsId //桌位
             entity.total = total
+            entity.rate = this.data.vipLevel.rate
             entity.remarks = remarks
             entity.dinersNumb = that.data.dinersNumb //用餐人数
             wx.cloud.callFunction({

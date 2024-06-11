@@ -22,14 +22,14 @@
                     <view>
                         价格：￥{{item.price/100}}
                     </view>
-                    <!-- <view>
+                    <view>
                         折扣率：{{item.rate==100?'不打':item.rate}}折
-                    </view> -->
+                    </view>
                     <view>
                         备注：{{item.remarks}}
                     </view>
                 </view>
-                <view class="action">
+                <!-- <view class="action">
                     <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="delete" data-shopid="{{item._id}}">
                         <text class="cuIcon-delete">
                         </text>
@@ -38,7 +38,7 @@
                         <text class="cuIcon-edit">
                         </text>
                     </button>
-                </view>
+                </view> -->
             </view>
         </view>
     </scroll-view>

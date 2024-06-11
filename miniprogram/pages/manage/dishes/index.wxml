@@ -33,7 +33,7 @@
                 <view class="content padding-left">
                     <text class="text-cut"> {{item.title}}</text>
                     <view class="cu-tag round bg-gray sm">¥ {{item.price/100}}</view>
-                    <view class="cu-tag round bg-orange sm">¥ {{item.vipPrice/100}}</view>
+                    <!-- <view class="cu-tag round bg-orange sm">¥ {{item.vipPrice/100}}</view> -->
                     <view class="text-gray text-sm flex">
                         <text wx:if="{{item.classifyTag}}" class="text-cut round bg-blue cu-tag"> {{item.classifyTag}}</text>
                     </view>

@@ -23,24 +23,30 @@ Page({
             this.addUser()
         } else {
             app.globalData.user = userInfo
+            if (userInfo.roleList) {
+                if (userInfo.roleList.includes('71fb15f966481f6c01133cc442e52654')) { //管理员
+
+                }
+                if (userInfo.roleList.includes('6e4509e966481f250116f98a68547370')) { //店长
+
+                }
+            }
         }
     },
-    
+
     async addUser() {
-        // console.log("addUser");
         const _openid = await app.getOpenid()
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'updateUser',
-                data: {
+                entity: {
                     _openid,
                     isDelete: false,
                     createDate: new Date()
                 }
             },
         }).then((res) => {
-            // console.log(res);
             if (res.result.success) {
                 app.globalData.user = res.result.data
             }

@@ -11,11 +11,11 @@ exports.main = async (event, context) => {
         let res = null
         if (id) {
             delete entity._id
-            res = await db.collection('user').doc(id).update({
+            res = await db.collection('task').doc(id).update({
                 data: entity
             });
         } else {
-            res = await db.collection('user').add({
+            res = await db.collection('task').add({
                 data: entity
             });
         }

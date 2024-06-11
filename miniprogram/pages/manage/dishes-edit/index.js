@@ -65,9 +65,11 @@ Page({
                 goodsTypeList: [g0, g1],
                 index: [0, 0]
             })
+            console.log(this.data.goodsTypeList);
         }
     },
     bindPickerChange(e) {
+        console.log(e);
         const index = e.detail.value
         this.setData({
             index

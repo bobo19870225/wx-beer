@@ -36,6 +36,9 @@ Page({
     },
 
     async fetchGoodsList() {
+        if (!this.data.shop) {
+            return
+        }
         this.setData({
             isLoading: true
         });

@@ -27,14 +27,15 @@ Page({
      * 切换店铺
      */
     onShopChange(e) {
+        console.log(e);
         let shop = e.detail
         this.setData({
             shop
         })
-        this.fetchGoodsList();
+        this.getApplicationList();
     },
 
-    async fetchGoodsList() {
+    async getApplicationList() {
         this.setData({
             isLoading: true
         });
@@ -42,31 +43,71 @@ Page({
             name: 'quickstartFunctions',
             data: {
                 type: 'getApplication',
-                shopId: this.data.shop._id
+                where: {
+                    shopId: this.data.shop._id,
+                    state: 0 //未处理
+                }
             },
         });
+        // console.log(res);
         const list = res?.result?.data || [];
         this.setData({
             isLoading: false,
             list
         });
     },
-    deleteShop(e) {
+    /**
+     * 审核通过
+     * @param {*} e 
+     */
+    async applicationPass(e) {
+        const task = e.currentTarget.dataset.item
+        console.log(task);
         this.setData({
-            showDialog: true,
-            dialogData: {
-                id: e.currentTarget.dataset.id
+            isLoading: true,
+        });
+        const res = await db.collection('user').where({
+            _openid: task._openid
+        }).get()
+        const userList = res.data
+        if (userList && userList.length > 0) {
+            const user = userList[0]
+            if (user.roleList) {
+                if (!user.roleList.includes('6e4509e966481f250116f98a68547370')) {
+                    user.roleList.push('6e4509e966481f250116f98a68547370')
+                }
+            } else {
+                user.roleList = ['6e4509e966481f250116f98a68547370']
             }
-        })
-    },
-    async onDelete(e) {
-        // const res = await wx.cloud.callFunction({
-        //     name: 'quickstartFunctions',
-        //     data: {
-        //         type: 'deleteShop',
-        //         shopId: e.detail.shopId
-        //     },
-        // });
+            const res = await wx.cloud.callFunction({
+                name: 'quickstartFunctions',
+                data: {
+                    type: 'updateUser',
+                    entity: user
+                }
+            })
+            if (res.result.success) {
+                task.state = 1
+                const resTask = await wx.cloud.callFunction({
+                    name: 'quickstartFunctions',
+                    data: {
+                        type: 'updateTask',
+                        entity: task
+                    }
+                })
+                console.log(resTask);
+                this.setData({
+                    isLoading: false,
+                });
+                if (resTask.result.success) {
+                    this.getApplicationList()
+                }
+            } else {
+                this.setData({
+                    isLoading: false,
+                });
+            }
+        }
     },
     edit(e) {
         console.log(e);
@@ -114,7 +155,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        this.fetchGoodsList();
+
     },
 
     /**

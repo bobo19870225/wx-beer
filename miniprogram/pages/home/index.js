@@ -23,7 +23,8 @@ Page({
         goodsTypeList: null,
         load: true,
         shop: null,
-        vipLevel: null
+        vipLevel: null,
+        vipAccount: null
     },
 
     /**
@@ -139,10 +140,13 @@ Page({
         }).get()
         const unPayList = unPayRes?.data || []
         const vipLevel = await app.getVipLevel()
+        const vipAccount = await app.getVipAccount()
+
         this.setData({
             goodsList,
             unPayList,
             vipLevel,
+            vipAccount,
             isRefreshing: false
         });
     },
