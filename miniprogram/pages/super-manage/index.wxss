@@ -1,0 +1,10 @@
+
+
+.setting_item {
+    text-align: center;
+}
+
+.setting_icon {
+    width: 50rpx;
+    height: 50rpx;
+}

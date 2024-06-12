@@ -105,7 +105,6 @@ Component({
                 shop,
                 vipLoading: true,
             })
-            await this.getVipType();
             await this.getUser(true);
             this.setData({
                 vipLoading: false,
@@ -122,10 +121,8 @@ Component({
             app.globalData.mode = mode
             if (mode == 'client') {
                 PageCur = 'start'
-            } else if (mode == 'superManage') {
-                PageCur = 'super-manage'
-            } else if (mode == 'shopManage') {
-                PageCur = 'manage'
+            } else {
+                PageCur = 'watchOrder'
             }
             this.triggerEvent('onSwitchMode', PageCur)
         },
@@ -134,78 +131,29 @@ Component({
                 showRoleDialog: false
             })
         },
-        async getVipType() {
-            const res = await db.collection('vipPackage').where({
-                isDelete: false
-            }).get()
-            this.setData({
-                vips: res.data
+        goToVipManage() {
+            wx.navigateTo({
+                url: '/pages/manage/vip/index',
             })
         },
-        gotoApplicationPage() {
+        goTopManageShop() {
             wx.navigateTo({
-                url: `/pages/application/index`,
-            });
+                url: '/pages/manage/shop/index',
+            })
         },
+        goToApplicationManage() {
+            wx.navigateTo({
+              url: '/pages/manage/application/index',
+            })
+          },
         gotoBillPage() {
             wx.navigateTo({
                 url: `/pages/user-center/bill/index`,
             });
         },
-        radioChange(e) {
-            let id = e.detail.value
-            console.log('radio发生change事件，携带value值为：', id)
-            let vipPackageBuy = null
-            this.data.vips.forEach(element => {
-                if (element._id == id) {
-                    vipPackageBuy = element
-                }
-            });
-            this.setData({
-                vipPackageBuy
-            })
-        },
-        toBeVip() {
-            this.setData({
-                showPayDialog: true
-            })
-        },
-        async payVip() {
-            this.setData({
-                isLoading: true
-            })
-            const shop = this.data.shop
-            const vipPackageBuy = this.data.vipPackageBuy
-            const price = Number.parseInt(vipPackageBuy.price)
-            const entry = Number.parseInt(vipPackageBuy.entry)
-            const beer = Number.parseInt(vipPackageBuy.beer)
-            const _openid = await app.getOpenid()
-            const vipPackageId = vipPackageBuy._id
-            let res = await wx.cloud.callFunction({
-                name: 'quickstartFunctions',
-                data: {
-                    type: 'payForVip',
-                    entity: {
-                        shopId: shop._id,
-                        _openid,
-                        name: this.data.userInfo.name,
-                        vipPackageId,
-                        price,
-                        entry,
-                        beer
-                    }
-                },
-            });
-            console.log(res);
-            await this.getUser(true)
-            this.closePayDialog()
-            this.setData({
-                isLoading: false
-            })
-        },
-        closePayDialog() {
-            this.setData({
-                showPayDialog: false
+        goToOperation() {
+            wx.navigateTo({
+                url: '/pages/manage/operation/index',
             })
         },
         gotoSettingPage(e) {
@@ -223,15 +171,6 @@ Component({
             })
         },
         switchMode() {
-            // wx.getStorage({
-            //     key: 'role',
-            //     success(res) {
-            //         console.log(res.data)
-            //     },
-            //     complete(res) {
-            //         console.log("complete", res)
-            //     }
-            // })
             this.setData({
                 showRoleDialog: true
             })

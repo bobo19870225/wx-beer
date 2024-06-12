@@ -1,7 +1,7 @@
 <!-- pages/me/index.wxml -->
 <cu-custom bgColor="bg-white" isBack="{{false}}">
     <view slot="backText">返回</view>
-    <view slot="content">我的</view>
+    <view slot="content">超级管理端</view>
 </cu-custom>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange"></shopBar>
@@ -11,39 +11,34 @@
 </view>
 <scroll-view refresher-enabled="true" bindrefresherrefresh="getUser" refresher-triggered="{{isRefreshing}}" style="height: {{containerHeight - 120}}rpx;position: relative;">
     <view class="flex justify-between">
-        <view class="margin text-gray" bind:tap="gotoSettingPage"> {{userInfo.name?'欢迎您 '+ userInfo.name : '未设置昵称'}}</view>
+        <view class="margin text-gray" bind:tap="gotoSettingPage"> {{userInfo.name?'欢迎您，超级管理员 '+ userInfo.name : '未设置昵称'}}</view>
     </view>
 
     <view class="cu-card">
         <view style="position: absolute; text-align: center;right: 60rpx;top: 60rpx;z-index: 100;">
             <!-- 小皇冠 -->
-            <image wx:if="{{vipInfo}}" style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/vip.svg" mode="widthFix"></image>
+            <image style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/manage.svg" mode="widthFix"></image>
             <!-- 头像 -->
             <button class="cu-avatar xl round shadow-warp" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
                 <image class="cu-avatar xl round " src="{{userInfo.avatarUrl||'../../images/avatar.svg'}}"></image>
             </button>
         </view>
-        <!-- VIP -->
+        <!-- 超级管理员 -->
         <view class="cu-item shadow-warp padding" style="min-height: 240rpx;border-radius: 32rpx;">
-            <view wx:if="{{vipInfo&&vipInfo.vipLevel}}">
-                <!-- （消费{{vipInfo.vipPackage.rate==100?'不打':vipInfo.vipPackage.rate}}折） -->
-                <view class="text-lg">{{vipInfo.vipLevel.name}}<span class="text-orange text-xs margin-left">再充{{vipInfo.vipLevel.next/100}}提升等级</span></view>
-                <view class="text-gray text-sm margin-top">{{vipInfo.vipLevel.remarks}}</view>
-            </view>
-            <view wx:else class="text-gray text-sm">
-                非会员
+            <view class="text-gray text-sm">
+                超级管理员
             </view>
             <view class="flex justify-around">
                 <view style="text-align: center;">
                     <!-- <image></image> -->
-                    <view class="padding">余额</view>
+                    <view class="padding">年度总收入</view>
                     <view style="font-size: 35rpx;font-weight: bold;">
                         ¥ {{vipInfo.account.balance/100||'0.00'}}
                     </view>
                 </view>
                 <view style="text-align: center;">
                     <!-- <image></image> -->
-                    <view class="padding">存酒</view>
+                    <view class="padding">店铺数</view>
                     <view style="font-size: 35rpx;font-weight: bold;">
                         {{vipInfo.account.beer||'0'}}
                     </view>
@@ -55,25 +50,30 @@
     <view class="padding margin-top bg-white shadow" style="border-radius: 32rpx 32rpx 0 0 ">
         <view style="font-weight: bold;">常用功能</view>
         <view style="height: 90rpx;"></view>
-        <view class="settings_container margin-top-lg">
-            <view class="setting_item" bind:tap="toBeVip">
-                <image class="setting_icon" src="../../images/icons/zxcz.svg" />
-                <view class="text-gray text-xs">在线充值</view>
+        <view class="grid col-4 margin-bottom text-center">
+            <view class="setting_item" bind:tap="goTopManageShop">
+                <image class="setting_icon" src="../../images/icons/shop.svg" />
+                <view class="text-gray text-xs">店铺管理</view>
             </view>
-
             <view class="setting_item" bind:tap="gotoBillPage">
-                <image class="setting_icon" src="../../images/icons/zdjl.svg" />
+                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/zdjl.svg" />
                 <view class="text-gray text-xs">账单记录</view>
             </view>
-
-            <view class="setting_item" bind:tap="gotoSettingPage">
-                <image class="setting_icon" src="../../images/icons/wdxx.svg" />
-                <view class="text-gray text-xs">我的信息</view>
+            <view class="setting_item" bind:tap="goToOperation">
+                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/yytj.svg" />
+                <view class="text-gray text-xs">运营统计</view>
             </view>
-
-            <view class="setting_item" bind:tap="gotoApplicationPage">
-                <image class="setting_icon" src="../../images/icons/dz.svg" />
-                <view class="text-gray text-xs">成为店长</view>
+            <view class="setting_item" bind:tap="goToVipManage">
+                <image class="setting_icon" style="padding: 3rpx;" src="../../images/icons/vip.svg" />
+                <view class="text-gray text-xs">会员套餐管理</view>
+            </view>
+            <view class="setting_item" bind:tap="goToApplicationManage">
+                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/sqgl.svg" />
+                <view class="text-gray text-xs">申请管理</view>
+            </view>
+            <view class="setting_item" bind:tap="gotoSettingPage">
+                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/wdxx.svg" />
+                <view class="text-gray text-xs">我的信息</view>
             </view>
         </view>
         <view style="height: 180rpx;"></view>
@@ -83,31 +83,6 @@
     </view>
 </scroll-view>
 
-
-<!-- 购买VIP -->
-<view class="cu-modal bottom-modal {{showPayDialog?'show':''}}">
-    <view class="cu-dialog">
-        <view class="cu-bar bg-white">
-            <view class="action text-blue" bind:tap="payVip">支付</view>
-            <view class="action text-gray" bindtap="closePayDialog">取消</view>
-        </view>
-        <view class="margin-bottom-lg">
-            <radio-group bindchange="radioChange">
-                <view style="width: 100vw;" class="flex padding align-center " wx:for="{{vips}}" wx:key="value">
-                    <view class="margin-lr">
-                        <radio value="{{item._id}}" checked="{{false}}" />
-                    </view>
-                    <view style="text-align: start;">
-                        <view>{{item.name}} ¥{{item.price/100}}</view>
-                        <view class="text-gray">
-                            {{item.remarks}}
-                        </view>
-                    </view>
-                </view>
-            </radio-group>
-        </view>
-    </view>
-</view>
 <!-- 切换角色 -->
 <view class="cu-modal {{showRoleDialog?'show':''}}" bindtap="closeRoleDialog">
     <view class="cu-dialog" catchtap>

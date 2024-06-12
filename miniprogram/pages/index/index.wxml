@@ -1,9 +1,14 @@
-<!--index.wxml-->
+<!--客户端-->
 <start wx:if="{{PageCur=='start'}}"></start>
 <order wx:if="{{PageCur=='order'}}"></order>
-<watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
 <user-center wx:if="{{PageCur=='user-center'}}" bind:onSwitchMode="onSwitchMode"></user-center>
-<manage wx:if="{{PageCur=='manage'}}"></manage>
+<!-- 店长端 -->
+<shop-manage wx:if="{{PageCur=='shop-manage'}}" bind:onSwitchMode="onSwitchMode"></shop-manage>
+<watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
+<!-- 超级管理员端 -->
+<!-- <manage wx:if="{{PageCur=='manage'}}"></manage> -->
+<super-manage wx:if="{{PageCur=='super-manage'}}" bind:onSwitchMode="onSwitchMode"></super-manage>
+
 
 <view class="cu-bar tabbar bg-white shadow foot">
     <view wx:if="{{mode=='client'}}" class="action" bindtap="NavChange" data-cur="start">
@@ -12,33 +17,37 @@
         </view>
         <view class="{{PageCur=='start'?'text-blue':'text-gray'}}">首页</view>
     </view>
-
     <view wx:if="{{mode=='client'}}" class="action" bindtap="NavChange" data-cur="order">
         <view class='cuIcon-cu-image'>
             <image src="/images/tabbar/order{{PageCur=='order'?'_cur':''}}.png"></image>
         </view>
         <view class="{{PageCur=='order'?'text-blue':'text-gray'}}">订单</view>
     </view>
-
-    <view wx:if="{{mode=='manage'}}" class="action" bindtap="NavChange" data-cur="watchOrder">
-        <view class='cuIcon-cu-image'>
-            <image src="/images/tabbar/watchOrder{{PageCur=='watchOrder'?'_cur':''}}.png"></image>
-        </view>
-        <view class="{{PageCur=='watchOrder'?'text-blue':'text-gray'}}">听单</view>
-    </view>
-
-    <view wx:if="{{mode=='manage'}}" class="action" bindtap="NavChange" data-cur="manage">
-        <view class='cuIcon-cu-image'>
-            <image src="/images/tabbar/manage{{PageCur=='manage'?'_cur':''}}.png"></image>
-        </view>
-        <view class="{{PageCur=='manage'?'text-blue':'text-gray'}}">管理</view>
-    </view>
-
-    <view class="action" bindtap="NavChange" data-cur="user-center">
+    <view wx:if="{{mode=='client'}}" class="action" bindtap="NavChange" data-cur="user-center">
         <view class='cuIcon-cu-image'>
             <image src="/images/tabbar/user-center{{PageCur=='user-center'?'_cur':''}}.png"></image>
         </view>
         <view class="{{PageCur=='user-center'?'text-blue':'text-gray'}}">我的</view>
     </view>
 
+    <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="watchOrder">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/watchOrder{{PageCur=='watchOrder'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='watchOrder'?'text-blue':'text-gray'}}">听单</view>
+    </view>
+
+    <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="shop-manage">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/shop-manage{{PageCur=='shop-manage'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='shop-manage'?'text-blue':'text-gray'}}">店长</view>
+    </view>
+
+    <view wx:if="{{mode=='superManage'}}" class="action" bindtap="NavChange" data-cur="super-manage">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/super-manage{{PageCur=='super-manage'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='manage'?'text-blue':'text-gray'}}">超级管理员</view>
+    </view>
 </view>

@@ -2,7 +2,8 @@ const app = getApp()
 Page({
     data: {
         PageCur: 'start',
-        mode: app.globalData.mode
+        // app.globalData.mode
+        mode: 'client'
     },
     onLoad() {
         this.getUser()
