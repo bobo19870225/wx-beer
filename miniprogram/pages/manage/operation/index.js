@@ -28,8 +28,13 @@ var chartData = {
 };
 Page({
     data: {
-        chartTitle: '总成交量',
-        isMainChartDisplay: true
+        chartTitle: '年收入',
+        isMainChartDisplay: true,
+        categories: [],
+        data: []
+    },
+    onShopChange(e) {
+        this.getBillStatistics()
     },
     backToMainChart: function () {
         this.setData({
@@ -48,6 +53,7 @@ Page({
         });
     },
     touchHandler: function (e) {
+        return
         var index = columnChart.getCurrentDataIndex(e);
         if (index > -1 && index < chartData.sub.length && this.data.isMainChartDisplay) {
             this.setData({
@@ -72,11 +78,52 @@ Page({
         lineChart.showToolTip(e, {
             // background: '#7cb5ec',
             format: function (item, category) {
-                return category + ' ' + item.name + ':' + item.data 
+                return category + ' ' + item.name + ':' + item.data
             }
         });
-    },  
+    },
     onReady: function (e) {
+
+    },
+    onLoad: function (e) {
+
+    },
+
+    async getBillStatistics() {
+        const shop = await app.getShop()
+        wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getBillStatistics',
+                entity: {
+                    type: 0,
+                    shopId: shop._id,
+                },
+            },
+        }).then((res) => {
+            const list = res.result.list
+            const data = list.map((item) => {
+                return item.money
+            })
+            const categories = list.map((item) => {
+                return item._id + '月'
+            })
+            this.setData({
+                data,
+                categories
+            })
+            console.log(data);
+            console.log(categories);
+            if (data.length < 1) {
+                return
+            }
+            if (categories.length < 1) {
+                return
+            }
+            this.setChat()
+        })
+    },
+    setChat() {
         var windowWidth = 320;
         try {
             var res = wx.getSystemInfoSync();
@@ -84,22 +131,29 @@ Page({
         } catch (e) {
             console.error('getSystemInfoSync failed!');
         }
-
         columnChart = new wxCharts({
             canvasId: 'columnCanvas',
             type: 'column',
             animation: true,
-            categories: chartData.main.categories,
+            categories: this.data.categories,
             series: [{
-                name: '成交量',
-                data: chartData.main.data,
-                format: function (val, name) {
-                    return val.toFixed(2) + '万';
+                    name: '会员充值',
+                    data: this.data.data,
+                    format: function (val, name) {
+                        return (val / 100).toFixed(2) + '元';
+                    }
+                },
+                {
+                    name: '微信支付',
+                    data: this.data.data,
+                    format: function (val, name) {
+                        return (val / 100).toFixed(2) + '元';
+                    }
                 }
-            }],
+            ],
             yAxis: {
                 format: function (val) {
-                    return val + '万';
+                    return val / 100 + '元';
                 },
                 title: 'hello',
                 min: 0
@@ -116,66 +170,5 @@ Page({
             width: windowWidth,
             height: 200,
         });
-    },
-    onLoad: function (e) {
-        var windowWidth = 320;
-        try {
-            var res = wx.getSystemInfoSync();
-            windowWidth = res.windowWidth;
-        } catch (e) {
-            console.error('getSystemInfoSync failed!');
-        }
-        
-        var simulationData = this.createSimulationData();
-        lineChart = new wxCharts({
-            canvasId: 'lineCanvas',
-            type: 'line',
-            categories: simulationData.categories,
-            animation: true,
-            // background: '#f5f5f5',
-            series: [{
-                name: '成交量1',
-                data: simulationData.data,
-                format: function (val, name) {
-                    return val.toFixed(2) + '万';
-                }
-            }, {
-                name: '成交量2',
-                data: [2, 0, 0, 3, null, 4, 0, 0, 2, 0],
-                format: function (val, name) {
-                    return val.toFixed(2) + '万';
-                }
-            }],
-            xAxis: {
-                disableGrid: true
-            },
-            yAxis: {
-                title: '成交金额 (万元)',
-                format: function (val) {
-                    return val.toFixed(2);
-                },
-                min: 0
-            },
-            width: windowWidth,
-            height: 200,
-            dataLabel: false,
-            dataPointShape: true,
-            extra: {
-                lineStyle: 'curve'
-            }
-        });
-    },
-    createSimulationData: function () {
-        var categories = [];
-        var data = [];
-        for (var i = 0; i < 10; i++) {
-            categories.push('2016-' + (i + 1));
-            data.push(Math.random()*(20-10)+10);
-        }
-        // data[4] = null;
-        return {
-            categories: categories,
-            data: data
-        }
-    },
+    }
 });

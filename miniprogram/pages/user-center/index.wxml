@@ -116,7 +116,7 @@
                 <view class="cu-item" wx:for="{{roleList}}" wx:key='index'>
                     <label class="flex justify-between align-center flex-sub">
                         <view class="flex-sub">{{item.text}}</view>
-                        <radio value="{{item.value}}" class="round" checked="{{false}}">
+                        <radio value="{{item.value}}" class="round" checked="{{item.checked}}">
                         </radio>
                     </label>
                 </view>

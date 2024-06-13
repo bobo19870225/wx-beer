@@ -19,6 +19,7 @@ const updateVipPackage = require('./updateVipPackage/index');
 const payForVip = require('./payForVip/index');
 const payForGoods = require('./payForGoods/index');
 const getBillList = require('./getBillList/index');
+const getBillStatistics = require('./getBillStatistics/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -95,5 +96,9 @@ exports.main = async (event, context) => {
              */
         case 'getBillList':
             return await getBillList.main(event, context);
+
+        case 'getBillStatistics':
+            return await getBillStatistics.main(event, context);
+
     }
 };

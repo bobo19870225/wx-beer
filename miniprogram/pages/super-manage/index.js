@@ -49,7 +49,8 @@ Component({
                 this.setData({
                     roleList: [{
                         text: '管理员',
-                        value: 'superManage'
+                        value: 'superManage',
+                        checked: true
                     }, {
                         text: '店长',
                         value: 'shopManage'
@@ -143,9 +144,9 @@ Component({
         },
         goToApplicationManage() {
             wx.navigateTo({
-              url: '/pages/manage/application/index',
+                url: '/pages/manage/application/index',
             })
-          },
+        },
         gotoBillPage() {
             wx.navigateTo({
                 url: `/pages/user-center/bill/index`,

@@ -1,4 +1,3 @@
-// pages/me/index.js
 const app = getApp()
 const db = wx.cloud.database({
     env: 'beer-1g75udik38f745cf'
@@ -55,7 +54,8 @@ Component({
                         value: 'shopManage'
                     }, {
                         text: '客户',
-                        value: 'client'
+                        value: 'client',
+                        checked: true
                     }]
                 })
             } else if (isShopManage) {
@@ -65,7 +65,8 @@ Component({
                         value: 'shopManage'
                     }, {
                         text: '客户',
-                        value: 'client'
+                        value: 'client',
+                        checked: true
                     }]
                 })
             }

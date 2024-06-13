@@ -52,7 +52,8 @@ Component({
                             value: 'superManage'
                         }, {
                             text: '店长',
-                            value: 'shopManage'
+                            value: 'shopManage',
+                            checked: true
                         },
                         {
                             text: '客户',
@@ -64,7 +65,8 @@ Component({
                 this.setData({
                     roleList: [{
                         text: '店长',
-                        value: 'shopManage'
+                        value: 'shopManage',
+                        checked: true
                     }, {
                         text: '客户',
                         value: 'client'
