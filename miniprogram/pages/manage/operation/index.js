@@ -1,97 +1,95 @@
 var wxCharts = require('../../../utils/wxcharts.js');
 var app = getApp();
-var columnChart = null;
-var lineChart = null;
-var chartData = {
-    main: {
-        title: '总成交量',
-        data: [15, 20, 45, 37],
-        categories: ['2012', '2013', '2014', '2015']
-    },
-    sub: [{
-        title: '2012年度成交量',
-        data: [70, 40, 65, 100, 34, 18],
-        categories: ['1', '2', '3', '4', '5', '6']
-    }, {
-        title: '2013年度成交量',
-        data: [55, 30, 45, 36, 56, 13],
-        categories: ['1', '2', '3', '4', '5', '6']
-    }, {
-        title: '2014年度成交量',
-        data: [76, 45, 32, 74, 54, 35],
-        categories: ['1', '2', '3', '4', '5', '6']
-    }, {
-        title: '2015年度成交量',
-        data: [76, 54, 23, 12, 45, 65],
-        categories: ['1', '2', '3', '4', '5', '6']
-    }]
-};
 Page({
     data: {
         chartTitle: '年收入',
         isMainChartDisplay: true,
-        categories: [],
-        data: []
+        categoriesWx: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+        series: [],
+        windowWidth: 320,
+        lineChart: null,
+        zcLineChart: null,
     },
     onShopChange(e) {
         this.getBillStatistics()
     },
-    backToMainChart: function () {
-        this.setData({
-            chartTitle: chartData.main.title,
-            isMainChartDisplay: true
-        });
-        columnChart.updateData({
-            categories: chartData.main.categories,
-            series: [{
-                name: '成交量',
-                data: chartData.main.data,
-                format: function (val, name) {
-                    return val.toFixed(2) + '万';
-                }
-            }]
-        });
-    },
-    touchHandler: function (e) {
-        return
-        var index = columnChart.getCurrentDataIndex(e);
-        if (index > -1 && index < chartData.sub.length && this.data.isMainChartDisplay) {
+    onLoad: function (e) {
+        try {
+            var res = wx.getSystemInfoSync();
+            const windowWidth = res.windowWidth;
             this.setData({
-                chartTitle: chartData.sub[index].title,
-                isMainChartDisplay: false
-            });
-            columnChart.updateData({
-                categories: chartData.sub[index].categories,
-                series: [{
-                    name: '成交量',
-                    data: chartData.sub[index].data,
-                    format: function (val, name) {
-                        return val.toFixed(2) + '万';
-                    }
-                }]
-            });
+                windowWidth
+            })
 
+        } catch (e) {
+            console.error('getSystemInfoSync failed!');
         }
-    },
-    touchHandlerLine: function (e) {
-        console.log(lineChart.getCurrentDataIndex(e));
-        lineChart.showToolTip(e, {
-            // background: '#7cb5ec',
-            format: function (item, category) {
-                return category + ' ' + item.name + ':' + item.data
-            }
-        });
     },
     onReady: function (e) {
 
     },
-    onLoad: function (e) {
-
-    },
-
     async getBillStatistics() {
         const shop = await app.getShop()
         wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getBillStatistics',
+                entity: {
+                    type: 3,
+                    shopId: shop._id,
+                },
+            },
+        }).then((res) => {
+            const list = res.result.list
+            const data = []
+            for (let index = 1; index < 13; index++) {
+                let value = 0
+                for (let i = 0; i < list.length; i++) {
+                    const element = list[i];
+                    if (index == element._id) {
+                        value = element.money / 100
+                        break
+                    }
+                }
+                data.push(value)
+            }
+            const series = [{
+                name: '支出',
+                data,
+                format: function (val, name) {
+                    return val.toFixed(2) + '元';
+                }
+            }]
+            const zcLineChart = new wxCharts({
+                canvasId: 'zcLineCanvas',
+                type: 'line',
+                categories: this.data.categoriesWx,
+                animation: true,
+                background: '#fff',
+                series,
+                xAxis: {
+                    disableGrid: true,
+                },
+                yAxis: {
+                    title: '成交金额 (元)',
+                    format: function (val) {
+                        return val.toFixed(2);
+                    },
+                    min: 0
+                },
+                width: this.data.windowWidth,
+                height: 200,
+                dataLabel: false,
+                dataPointShape: true,
+                extra: {
+                    lineStyle: 'curve'
+                }
+            });
+            this.setData({
+                zcLineChart
+            })
+        })
+        const resVip = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getBillStatistics',
@@ -100,75 +98,101 @@ Page({
                     shopId: shop._id,
                 },
             },
+        })
+        const list = resVip.result.list
+        const data = []
+        for (let index = 1; index < 13; index++) {
+            let value = 0
+            for (let i = 0; i < list.length; i++) {
+                const element = list[i];
+                if (index == element._id) {
+                    value = element.money / 100
+                    break
+                }
+            }
+            data.push(value)
+        }
+        this.setData({
+            series: [{
+                name: '会员充值',
+                data,
+                format: function (val, name) {
+                    return val.toFixed(2) + '元';
+                }
+            }]
+        })
+        wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getBillStatistics',
+                entity: {
+                    type: 2,
+                    shopId: shop._id,
+                },
+            },
         }).then((res) => {
             const list = res.result.list
-            const data = list.map((item) => {
-                return item.money
-            })
-            const categories = list.map((item) => {
-                return item._id + '月'
+            const data = []
+            for (let index = 1; index < 13; index++) {
+                if (list[index]) {
+                    data.push(list[index].money / 100)
+                } else {
+                    data.push(0)
+                }
+            }
+            const series = this.data.series
+            series.push({
+                name: '微信支付',
+                data,
+                format: function (val, name) {
+                    return val.toFixed(2) + '元';
+                }
             })
             this.setData({
-                data,
-                categories
+                series
             })
-            console.log(data);
-            console.log(categories);
-            if (data.length < 1) {
-                return
-            }
-            if (categories.length < 1) {
-                return
-            }
-            this.setChat()
+            const lineChart = new wxCharts({
+                canvasId: 'wxLineCanvas',
+                type: 'line',
+                categories: this.data.categoriesWx,
+                animation: true,
+                background: '#fff',
+                series: this.data.series,
+                xAxis: {
+                    disableGrid: true,
+                },
+                yAxis: {
+                    title: '成交金额 (元)',
+                    format: function (val) {
+                        return val.toFixed(2);
+                    },
+                    min: 0
+                },
+                width: this.data.windowWidth,
+                height: 200,
+                dataLabel: false,
+                dataPointShape: true,
+                extra: {
+                    lineStyle: 'curve'
+                }
+            });
+            this.setData({
+                lineChart
+            })
         })
     },
-    setChat() {
-        var windowWidth = 320;
-        try {
-            var res = wx.getSystemInfoSync();
-            windowWidth = res.windowWidth;
-        } catch (e) {
-            console.error('getSystemInfoSync failed!');
-        }
-        columnChart = new wxCharts({
-            canvasId: 'columnCanvas',
-            type: 'column',
-            animation: true,
-            categories: this.data.categories,
-            series: [{
-                    name: '会员充值',
-                    data: this.data.data,
-                    format: function (val, name) {
-                        return (val / 100).toFixed(2) + '元';
-                    }
-                },
-                {
-                    name: '微信支付',
-                    data: this.data.data,
-                    format: function (val, name) {
-                        return (val / 100).toFixed(2) + '元';
-                    }
-                }
-            ],
-            yAxis: {
-                format: function (val) {
-                    return val / 100 + '元';
-                },
-                title: 'hello',
-                min: 0
-            },
-            xAxis: {
-                disableGrid: false,
-                type: 'calibration'
-            },
-            extra: {
-                column: {
-                    width: 15
-                }
-            },
-            width: windowWidth,
-            height: 200,
+    touchHandler: function (e) {
+        this.data.lineChart.showToolTip(e, {
+            format: function (item, category) {
+                return category + ' ' + item.name + ':' + item.data
+            }
+        });
+    },
+    zcTouchHandler(e) {
+        this.data.zcLineChart.showToolTip(e, {
+            format: function (item, category) {
+                return category + ' ' + item.name + ':' + item.data
+            }
         });
     }
 });

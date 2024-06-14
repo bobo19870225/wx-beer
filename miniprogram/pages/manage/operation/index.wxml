@@ -9,21 +9,24 @@
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange"></shopBar>
 <block wx:if="{{!isLoading}}">
-    <view wx:if="{{categories&&categories.length>0}}" class="container">
+    <view class="container">
         <view class="title">
-            <view wx:if="{{!isMainChartDisplay}}" class="back-btn" bindtap="backToMainChart">返回</view>
-            {{chartTitle}}
+            年收入
         </view>
-        <canvas canvas-id="columnCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
-        <!-- <view style="text-align:center">点击数据每一项查看详情</view> -->
+        <canvas canvas-id="wxLineCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
     </view>
-
+    <view class="container">
+        <view class="title">
+            年支出
+        </view>
+        <canvas canvas-id="zcLineCanvas" class="canvas" bindtouchstart="zcTouchHandler"></canvas>
+    </view>
     <!-- 无数据 -->
-    <block wx:else>
+    <!-- <block wx:else>
         <view style="text-align: center;margin-top: 20vh;">
             <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
             <view style="top: -240rpx;">暂无数据</view>
         </view>
-    </block>
+    </block> -->
 
 </block>

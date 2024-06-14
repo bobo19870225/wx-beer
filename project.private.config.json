@@ -8,8 +8,10 @@
             "list": [
                 {
                     "name": "首页-快速开始",
-                    "pathName": "pages/index/index",
-                    "query": ""
+                    "pathName": "pages/manage/operation/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
                 },
                 {
                     "name": "商品列表",
