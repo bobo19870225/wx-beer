@@ -118,17 +118,7 @@ Component({
          */
         onSelecteRole(e) {
             const mode = e.detail.value
-            console.log(mode);
-            let PageCur = null
-            app.globalData.mode = mode
-            if (mode == 'client') {
-                PageCur = 'start'
-            } else if (mode == 'superManage') {
-                PageCur = 'super-manage'
-            } else if (mode == 'shopManage') {
-                PageCur = 'watchOrder'
-            }
-            this.triggerEvent('onSwitchMode', PageCur)
+            this.triggerEvent('onSwitchMode', mode)
         },
         closeRoleDialog() {
             this.setData({

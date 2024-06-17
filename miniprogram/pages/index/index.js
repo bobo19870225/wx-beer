@@ -2,16 +2,25 @@ const app = getApp()
 Page({
     data: {
         PageCur: 'start',
-        // app.globalData.mode
         mode: 'client'
     },
-    onLoad() {
+    onLoad(option) {
+        this.onSwitchMode({
+            detail: option.mode
+        })
         this.getUser()
     },
     onSwitchMode(e) {
-        console.log(e);
-        const mode = app.globalData.mode
-        const PageCur = e.detail
+        const mode = e.detail
+        console.log('onSwitchMode', mode);
+        let PageCur = null
+        if (mode == 'client') {
+            PageCur = 'start'
+        } else if (mode == 'superManage') {
+            PageCur = 'super-manage'
+        } else if (mode == 'shopManage') {
+            PageCur = 'watchOrder'
+        }
         this.setData({
             mode,
             PageCur

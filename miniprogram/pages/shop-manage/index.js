@@ -120,15 +120,7 @@ Component({
          */
         onSelecteRole(e) {
             const mode = e.detail.value
-            console.log(mode);
-            let PageCur = null
-            app.globalData.mode = mode
-            if (mode == 'client') {
-                PageCur = 'start'
-            } else {
-                PageCur = 'super-manage'
-            }
-            this.triggerEvent('onSwitchMode', PageCur)
+            this.triggerEvent('onSwitchMode', mode)
         },
         closeRoleDialog() {
             this.setData({
@@ -137,12 +129,9 @@ Component({
         },
 
         gotoBuyManage() {
-            wx.showToast({
-                title: '开发中...',
-            })
-            // wx.navigateTo({
-            //     url: `/pages/application/index`,
-            // });
+            wx.navigateTo({
+                url: `/pages/shop-manage/spend-management/index`,
+            });
         },
         goToOperation() {
             wx.navigateTo({

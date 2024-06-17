@@ -1,0 +1,10 @@
+/* pages/shop-manage/spend-management/index.wxss */
+.cu-form-group .title {
+  text-align: justify;
+  padding-right: 30rpx;
+  font-size: 30rpx;
+  position: relative;
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 180rpx;
+}

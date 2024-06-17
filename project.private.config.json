@@ -7,6 +7,13 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "店长",
+                    "pathName": "pages/index/index",
+                    "query": "mode=shopManage",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "支出管理",
                     "pathName": "pages/shop-manage/spend-management/index",
                     "query": "",

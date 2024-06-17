@@ -18,7 +18,6 @@ App({
        
     },
     initUI() {
-        this.globalData.mode = 'client' //默认客户端client manage:管理端
         const windowInfo = wx.getWindowInfo()
         // px转换到rpx的比例
         let pxToRpxScale = 750 / windowInfo.windowWidth;

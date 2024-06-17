@@ -1,0 +1,75 @@
+<!--pages/shop-manage/spend-management/index.wxml-->
+<cu-custom bgColor="bg-white" isBack="{{false}}">
+    <view slot="backText">返回</view>
+    <view slot="content">支出管理</view>
+</cu-custom>
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+    <view class='gray-text text-xs'>加载中...</view>
+</view>
+<scroll-view>
+    <view class="cu-list menu">
+        <view class="cu-item" wx:for="{{listSpend}}" wx:key="index">
+            <view class="content">
+                <view>
+                    支出项：{{item.name}}
+                </view>
+                <view class="flex text-gray text-sm" style="gap: 18rpx;">
+                    <view>
+                        单价：￥{{item.price}}
+                    </view>
+                    <view>
+                        数量：{{item.number}}
+                    </view>
+                    <view>
+                        金额：￥{{item.money}}
+                    </view>
+                </view>
+            </view>
+            <view class="action">
+                <text bind:tap="removeItem" data-index="{{index}}" class="cuIcon-move bg-blue" style="border-radius: 50%;"></text>
+            </view>
+        </view>
+    </view>
+</scroll-view>
+<view class="flex padding align-center" style="position: fixed;bottom: 30rpx;gap: 18rpx;width: 100vw;">
+    <button bind:tap="submit" class="cu-btn round bg-blue lg" style="width: 80%;">提交</button>
+    <button bind:tap="showAddDialog" class="cu-btn round bg-blue sm" style="width: 20%;">
+        <text class="cuIcon-add"></text>添加
+    </button>
+</view>
+<view class="cu-modal bottom-modal {{showDialogAdd?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white text-lg justify-center align-center">
+            添加支出项
+        </view>
+        <view class="padding bg-white">
+            <form catchsubmit="formSubmit" catchreset="formReset">
+                <view class="cu-form-group ">
+                    <view class="title">支出项</view>
+                    <input name="name" placeholder="请填写支出项目..."></input>
+                </view>
+                <view class="cu-form-group">
+                    <view class="title">数量</view>
+                    <input name="number" type="number" value="{{number}}" placeholder="请填写数量..." bindinput="numberInput"></input>
+                </view>
+                <view class="cu-form-group">
+                    <view class="title">单价</view>
+                    <input name="price" type="digit" value="{{price}}" bindinput="priceInput" placeholder="单价和金额只需填其一..."></input>
+                </view>
+                <view class="cu-form-group">
+                    <view class="title">金额</view>
+                    <input name="money" type="digit" value="{{money}}" bindinput="moneyInput" placeholder="单价和金额只需填其一..."></input>
+                </view>
+
+                <view class="cu-form-group align-start">
+                    <view class="title">备注</view>
+                    <textarea name="remarks" maxlength="300" placeholder="请输入备注..."></textarea>
+                </view>
+                <view class="flex padding" style="gap: 8px">
+                    <button class="cu-btn round bg-blue" formType="submit">添加</button>
+                    <button class="cu-btn round bg-black" formType="reset">取消</button>
+                </view>
+            </form>
+        </view>
+    </view>
+</view>

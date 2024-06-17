@@ -20,6 +20,8 @@ const payForVip = require('./payForVip/index');
 const payForGoods = require('./payForGoods/index');
 const getBillList = require('./getBillList/index');
 const getBillStatistics = require('./getBillStatistics/index');
+const updateSpend = require('./updateSpend/index');
+const getSpendList = require('./getSpendList/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -96,9 +98,15 @@ exports.main = async (event, context) => {
              */
         case 'getBillList':
             return await getBillList.main(event, context);
-
         case 'getBillStatistics':
             return await getBillStatistics.main(event, context);
+            /**
+             * 支出
+             */
+        case 'updateSpend':
+            return await updateSpend.main(event, context);
+        case 'getSpendList':
+            return await getSpendList.main(event, context);
 
     }
 };

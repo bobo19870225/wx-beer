@@ -23,7 +23,8 @@
         "pages/user-center/bill/index",
         "pages/user-center/bill/detail",
         "pages/lucky/index",
-        "pages/shop-manage/spend-management/index"
+        "pages/shop-manage/spend-management/index",
+        "pages/shop-manage/spend-management-edit/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#FD6C55",
