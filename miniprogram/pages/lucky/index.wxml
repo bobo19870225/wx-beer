@@ -1,0 +1,1 @@
+<web-view style="position: fixed;top: -110rpx;" src="{{src}}" bindmessage="bindmessage" full-screen></web-view>

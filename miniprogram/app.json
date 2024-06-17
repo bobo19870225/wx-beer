@@ -21,10 +21,12 @@
         "pages/manage/tables-edit/index",
         "pages/user-center/setting/index",
         "pages/user-center/bill/index",
-        "pages/user-center/bill/detail"
+        "pages/user-center/bill/detail",
+        "pages/lucky/index",
+        "pages/shop-manage/spend-management/index"
     ],
     "window": {
-        "navigationBarBackgroundColor": "#39b54a",
+        "navigationBarBackgroundColor": "#FD6C55",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black",
         "navigationBarTitleText": "慧管店"

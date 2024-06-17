@@ -8,7 +8,6 @@
     <view class='gray-text text-xs'>加载中...</view>
 </view>
 <block wx:else>
-
     <form catchsubmit="formSubmit" catchreset="formReset">
         <view class="cu-form-group margin-top">
             <view class="title">选择店铺</view>
