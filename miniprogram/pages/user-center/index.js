@@ -126,7 +126,7 @@ Component({
             } else if (mode == 'superManage') {
                 PageCur = 'super-manage'
             } else if (mode == 'shopManage') {
-                PageCur = 'manage'
+                PageCur = 'watchOrder'
             }
             this.triggerEvent('onSwitchMode', PageCur)
         },

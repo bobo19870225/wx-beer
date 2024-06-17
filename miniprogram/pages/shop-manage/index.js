@@ -126,7 +126,7 @@ Component({
             if (mode == 'client') {
                 PageCur = 'start'
             } else {
-                PageCur = 'watchOrder'
+                PageCur = 'super-manage'
             }
             this.triggerEvent('onSwitchMode', PageCur)
         },
