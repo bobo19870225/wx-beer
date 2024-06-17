@@ -2,13 +2,13 @@ var wxCharts = require('../../../utils/wxcharts.js');
 var app = getApp();
 Page({
     data: {
-        chartTitle: '年收入',
-        isMainChartDisplay: true,
         categoriesWx: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
         series: [],
         windowWidth: 320,
         lineChart: null,
         zcLineChart: null,
+        incom: 0,
+        out: 0,
     },
     onShopChange(e) {
         this.getBillStatistics()
@@ -42,6 +42,7 @@ Page({
         }).then((res) => {
             const list = res.result.list
             const data = []
+            let out = 0
             for (let index = 1; index < 13; index++) {
                 let value = 0
                 for (let i = 0; i < list.length; i++) {
@@ -51,6 +52,7 @@ Page({
                         break
                     }
                 }
+                out += value
                 data.push(value)
             }
             const series = [{
@@ -86,6 +88,7 @@ Page({
                 }
             });
             this.setData({
+                out,
                 zcLineChart
             })
         })
@@ -101,6 +104,7 @@ Page({
         })
         const list = resVip.result.list
         const data = []
+        let incom = 0
         for (let index = 1; index < 13; index++) {
             let value = 0
             for (let i = 0; i < list.length; i++) {
@@ -110,6 +114,7 @@ Page({
                     break
                 }
             }
+            incom += value
             data.push(value)
         }
         this.setData({
@@ -134,11 +139,16 @@ Page({
             const list = res.result.list
             const data = []
             for (let index = 1; index < 13; index++) {
-                if (list[index]) {
-                    data.push(list[index].money / 100)
-                } else {
-                    data.push(0)
+                let value = 0
+                for (let i = 0; i < list.length; i++) {
+                    const element = list[i];
+                    if (index == element._id) {
+                        value = element.money / 100
+                        break
+                    }
                 }
+                incom += value
+                data.push(value)
             }
             const series = this.data.series
             series.push({
@@ -149,6 +159,7 @@ Page({
                 }
             })
             this.setData({
+                incom,
                 series
             })
             const lineChart = new wxCharts({

@@ -11,15 +11,18 @@
 <block wx:if="{{!isLoading}}">
     <view class="container">
         <view class="title">
-            年收入
+            年收入( ¥{{incom}})
         </view>
         <canvas canvas-id="wxLineCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
     </view>
     <view class="container">
         <view class="title">
-            年支出
+            年支出( ¥{{out}})
         </view>
         <canvas canvas-id="zcLineCanvas" class="canvas" bindtouchstart="zcTouchHandler"></canvas>
+    </view>
+    <view class="padding">
+        年净利润: ¥{{incom-out}}
     </view>
     <!-- 无数据 -->
     <!-- <block wx:else>

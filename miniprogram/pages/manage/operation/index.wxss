@@ -6,7 +6,7 @@
     box-sizing: border-box;
     -webkit-text-size-adjust: none;
     -webkit-user-select: none;
-    font-size: 35rpx;
+    font-size: 30rpx;
     color: #333;
     font-family: Helvetica, Arial, "Helvetica Neue", "Droid Sans", "Microsoft YaHei", sans-serif;
 }
@@ -14,8 +14,8 @@
 .title {
     text-align: center;
     position: relative;
-    margin-top: 20rpx;
-    margin-bottom: 20rpx;
+    margin-top: 9rpx;
+    margin-bottom: 9rpx;
 }
 
 .back-btn {

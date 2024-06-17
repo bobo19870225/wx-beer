@@ -17,7 +17,7 @@
     <block wx:if="{{ !isLoading }}">
         <!-- 有数据 -->
         <view wx:if="{{ orderList.length >= 1 }}">
-            <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}">
+            <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card">
                         <view class="cu-item shadow">
