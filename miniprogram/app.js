@@ -88,9 +88,7 @@ App({
         if (userInfo && userInfo.vipList.length > 0) {
             vipInfo = userInfo.vipList[0]
         }
-        const db = wx.cloud.database({
-            env: 'beer-1g75udik38f745cf'
-        })
+        const db = wx.cloud.database()
         const resVipPackage = await db.collection('vipPackage').where({
             isDelete: false,
         }).orderBy('price', 'asc').get()

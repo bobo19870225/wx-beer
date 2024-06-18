@@ -1,8 +1,6 @@
 // pages/manage/shop/index.js
 const app = getApp()
-const db = wx.cloud.database({
-  env: 'beer-1g75udik38f745cf'
-})
+const db = wx.cloud.database()
 Page({
 
   /**
