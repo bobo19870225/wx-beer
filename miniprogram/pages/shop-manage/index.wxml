@@ -4,7 +4,7 @@
     <view slot="content">店长管理端</view>
 </cu-custom>
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange"></shopBar>
+<shopBar bind:onShopChange="onShopChange" selecteAble="{{false}}"></shopBar>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
     <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
     <view class='gray-text text-xs'>加载中...</view>
@@ -33,7 +33,7 @@
                     <!-- <image></image> -->
                     <view class="padding">年度总收入</view>
                     <view style="font-size: 35rpx;font-weight: bold;">
-                      <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
+                        <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
                     </view>
                 </view>
                 <view style="text-align: center;">

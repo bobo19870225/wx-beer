@@ -22,6 +22,7 @@ const getBillList = require('./getBillList/index');
 const getBillStatistics = require('./getBillStatistics/index');
 const updateSpend = require('./updateSpend/index');
 const getSpendList = require('./getSpendList/index');
+const getTotalIncom = require('./getTotalIncom/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -100,6 +101,8 @@ exports.main = async (event, context) => {
             return await getBillList.main(event, context);
         case 'getBillStatistics':
             return await getBillStatistics.main(event, context);
+        case 'getTotalIncom':
+            return await getTotalIncom.main(event, context);
             /**
              * 支出
              */

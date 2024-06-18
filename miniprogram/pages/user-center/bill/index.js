@@ -12,8 +12,14 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
-        this.loadData()
+    async onLoad(options) {
+        this.setData({
+            isLoading: true
+        })
+        await this.loadData()
+        this.setData({
+            isLoading: false
+        })
     },
     gotoDetail(e) {
         console.log(e);
@@ -29,7 +35,7 @@ Page({
      */
     async loadData() {
         this.setData({
-            isLoading: true
+            isRefreshing: true
         })
         const _openid = await app.getOpenid()
         wx.cloud.callFunction({
@@ -42,7 +48,7 @@ Page({
             }
         }).then((res) => {
             this.setData({
-                isLoading: false
+                isRefreshing: false
             })
             if (res.result.success) {
                 this.setData({

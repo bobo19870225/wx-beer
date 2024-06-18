@@ -13,7 +13,6 @@ Component({
     isRefreshing: false,
     userInfo: {},
     vipInfo: null,
-    vipLoading: true,
     containerHeight: app.globalData.containerHeight,
     showPayDialog: false,
     showRoleDialog: false,
@@ -102,13 +101,9 @@ Component({
       let shop = e.detail
       this.setData({
         shop,
-        vipLoading: true,
       })
       await this.getVipType();
       await this.getUser(true);
-      this.setData({
-        vipLoading: false,
-      })
     },
     /**
      * 切换角色

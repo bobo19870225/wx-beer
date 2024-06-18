@@ -39,7 +39,7 @@ exports.main = async (event, context) => {
                 return element
             });
             entity.listSpend = listSpend
-
+            entity.total = total
             if (id) {
                 delete entity._id
                 entity.updateOpenid = wxContext.OPENID

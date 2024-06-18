@@ -8,18 +8,23 @@
 </view>
 <!-- 有数据 -->
 <view wx:if="{{ billList.length >= 1 }}">
-    <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}">
+    <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="loadData" refresher-triggered="{{isRefreshing}}">
         <view class="cu-list menu">
             <block wx:for="{{ billList }}" wx:key="_id" wx:for-index="index">
                 <view class="cu-item shadow arrow" bind:tap="gotoDetail" data-item="{{item}}">
                     <view class="content ">
                         <view class="text-cut" style="gap: 21rpx;">
-                            <view wx:if="{{item.type==0}}" class="cu-tag line-purple round">会员充值</view>
-                            <view wx:if="{{item.type==1}}" class="cu-tag line-green round">店内消费</view>
-                            <view wx:if="{{item.type==2}}" class="cu-tag line-orange round">购买原材料</view>
-                            <view>交易金额 <span style="{{item.type==1?'color:red':'color:green'}}"> ￥{{item.money}}</span></view>
+                            <view>
+                                交易金额: <span class="text-price" style="{{item.money<0?'color:red':'color:green'}}">
+                                    {{filter.formatMoney(item.money)}}
+                                </span>
+                            </view>
+                            <view wx:if="{{item.type==0}}" class="cu-tag line-purple round sm">会员充值</view>
+                            <view wx:if="{{item.type==1}}" class="cu-tag line-green round sm">会员消费</view>
+                            <view wx:if="{{item.type==2}}" class="cu-tag line-green round sm">微信支付</view>
+                            <view wx:if="{{item.type==3}}" class="cu-tag line-red round sm">店铺支出</view>
                         </view>
-                        <view>
+                        <view class="text-gray text-sm">
                             {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
                         </view>
                     </view>

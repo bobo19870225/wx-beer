@@ -71,12 +71,10 @@ App({
             return this.globalData.userInfoAll
         }
         console.log("run getUser");
-        const _openid = await this.getOpenid()
         const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getUser',
-                _openid,
             }
         })
         const userList = res.result.list

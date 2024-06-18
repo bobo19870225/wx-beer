@@ -1,6 +1,6 @@
 <view class="cu-bar bg-white padding-lr flex justify-start" style="align-items: center;width: 100vw;height: 90rpx;" bind:tap="openMap">
-  <view style="font-size: 12px;line-height: 90rpx;">
-    {{shop.name}}
-  </view>
-  <image style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
+    <view style="font-size: 12px;line-height: 90rpx;">
+        {{shop.name}}
+    </view>
+    <image wx:if="{{selecteAble}}" style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
 </view>

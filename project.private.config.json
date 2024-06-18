@@ -7,6 +7,13 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "管理员",
+                    "pathName": "pages/index/index",
+                    "query": "mode=superManage",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "店长",
                     "pathName": "pages/index/index",
                     "query": "mode=shopManage",
