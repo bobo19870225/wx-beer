@@ -17,7 +17,7 @@
                             <view wx:if="{{item.type==0}}" class="cu-tag line-purple round">会员充值</view>
                             <view wx:if="{{item.type==1}}" class="cu-tag line-green round">店内消费</view>
                             <view wx:if="{{item.type==2}}" class="cu-tag line-orange round">购买原材料</view>
-                            <view>交易金额 <span style="{{item.type==1?'color:red':'color:green'}}"> ￥{{item.money/100}}</span></view>
+                            <view>交易金额 <span style="{{item.type==1?'color:red':'color:green'}}"> ￥{{item.money}}</span></view>
                         </view>
                         <view>
                             {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}

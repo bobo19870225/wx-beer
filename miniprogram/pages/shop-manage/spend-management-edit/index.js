@@ -136,6 +136,14 @@ Page({
     })
   },
   async submit(e) {
+    const listSpend = this.data.listSpend
+    if (listSpend.length < 1) {
+      wx.showToast({
+        title: '请添加支出项',
+        icon: 'error'
+      })
+      return
+    }
     this.setData({
       isLoading: true
     })
@@ -148,7 +156,7 @@ Page({
         entity: {
           _id,
           shopId: shop._id,
-          listSpend: this.data.listSpend
+          listSpend
         }
       }
     }).then((res) => {

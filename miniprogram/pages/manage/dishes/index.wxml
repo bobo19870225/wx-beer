@@ -1,4 +1,4 @@
-<!--pages/manage/dishes/index.wxml-->
+<wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
     <view slot="backText">返回</view>
     <view slot="content">菜品管理</view>
@@ -14,17 +14,6 @@
 <shopBar bind:onShopChange="onShopChange"></shopBar>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-    <!-- <view class="cu-bar search bg-white">
-    <view class="search-form round">
-      <text class="cuIcon-search"></text>
-      <input type="text" placeholder="输入店名搜索" confirm-type="search"></input>
-    </view>
-    <view class="action">
-      <text class="cuIcon-search">
-      </text>
-    </view>
-  </view> -->
-
     <scroll-view>
         <view class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ goodsList }}" wx:key="_id">
@@ -32,8 +21,9 @@
                 </image>
                 <view class="content padding-left">
                     <text class="text-cut"> {{item.title}}</text>
-                    <view class="cu-tag round bg-gray sm">¥ {{item.price/100}}</view>
-                    <!-- <view class="cu-tag round bg-orange sm">¥ {{item.vipPrice/100}}</view> -->
+                    <view class="cu-tag round bg-gray sm">
+                      <span class="text-price">{{filter.formatMoney(item.price)}}</span>
+                    </view>
                     <view class="text-gray text-sm flex">
                         <text wx:if="{{item.classifyTag}}" class="text-cut round bg-blue cu-tag"> {{item.classifyTag}}</text>
                     </view>

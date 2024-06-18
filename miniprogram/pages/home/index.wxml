@@ -1,4 +1,4 @@
-<!--index.wxml-->
+<wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}" isCustom="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">慧管店</view>
@@ -31,11 +31,13 @@
         <view class="flex">
           <view style="margin-left: 12px;">会员到手</view>
           <view class="order-total margin-left-xs">
-            {{'¥'+orderTotalVipPrice}}
+            <span class="text-price">{{filter.formatMoney(orderTotalVipPrice)}}</span>
           </view>
         </view>
         <view>
-          <view style="margin-left: 12px;font-size: 21rpx;text-decoration: line-through;color: gray;">原价 {{'¥'+orderTotalPrice}}</view>
+          <view style="margin-left: 12px;font-size: 21rpx;text-decoration: line-through;color: gray;">
+            <span class="text-price"> 原价 {{filter.formatMoney(orderTotalPrice)}}</span>
+          </view>
         </view>
       </view>
 
@@ -78,13 +80,13 @@
                 <view class="text-gray text-sm ">
                   <view class="text-cut">原价：￥
                     <span style="text-decoration:line-through;">
-                      {{ goodsDetail.price / 100 }}
+                      {{ goodsDetail.price }}
                     </span>
                   </view>
                 </view>
                 <view wx:if="{{true}}" class=" text-cut text-xs">
                   <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
-                  <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
+                  <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
                 </view>
               </view>
               <view class="action">
@@ -108,14 +110,14 @@
                 </view>
                 <view class="text-gray text-sm ">
                   <view wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class="text-cut">
-                    原价：￥{{ goodsDetail.price / 100 }}
+                    原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
                   </view>
                   <view wx:else>
                     剩余：{{vipAccount.beer}} 瓶
                   </view>
                 </view>
                 <view wx:if="{{vipLevel&&goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class=" text-cut text-xs">
-                  <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
+                  <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
                 </view>
               </view>
               <view class="action">
@@ -161,14 +163,14 @@
               <view>{{ ordersDetail.title }}</view>
               <view class="text-gray text-sm ">
                 <view wx:if="{{ordersDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class="text-cut">
-                  原价：￥{{ ordersDetail.price / 100 }}
+                  原价：￥{{ ordersDetail.price }}
                 </view>
                 <view wx:else>
                   剩余：{{vipAccount.beer}} 瓶
                 </view>
               </view>
               <view wx:if="{{vipLevel&&ordersDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class=" text-cut text-xs">
-                <text class="text-orange">{{vipLevel.name}}￥{{ ordersDetail.price*vipLevel.rate / 10000 }}（{{vipLevel.rate}}折）</text>
+                <text class="text-orange">{{vipLevel.name}}￥{{ ordersDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
               </view>
             </view>
             <view class="action">

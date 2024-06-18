@@ -1,4 +1,4 @@
-<!-- pages/me/index.wxml -->
+<wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
     <view slot="backText">返回</view>
     <view slot="content">店长管理端</view>
@@ -33,7 +33,7 @@
                     <!-- <image></image> -->
                     <view class="padding">年度总收入</view>
                     <view style="font-size: 35rpx;font-weight: bold;">
-                        ¥ {{vipInfo.account.balance/100||'0.00'}}
+                      <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
                     </view>
                 </view>
                 <view style="text-align: center;">

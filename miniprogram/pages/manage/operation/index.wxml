@@ -1,31 +1,32 @@
+<wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">运营统计</view>
+  <view slot="backText">返回</view>
+  <view slot="content">运营统计</view>
 </cu-custom>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text text-xs'>加载中...</view>
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange"></shopBar>
 <block wx:if="{{!isLoading}}">
-    <view class="container">
-        <view class="title">
-            年收入( ¥{{incom}})
-        </view>
-        <canvas canvas-id="wxLineCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+  <view class="container">
+    <view class="title">
+      年收入( <span class="text-price">{{filter.formatMoney(incom)}}</span> )
     </view>
-    <view class="container">
-        <view class="title">
-            年支出( ¥{{out}})
-        </view>
-        <canvas canvas-id="zcLineCanvas" class="canvas" bindtouchstart="zcTouchHandler"></canvas>
+    <canvas canvas-id="wxLineCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+  </view>
+  <view class="container">
+    <view class="title">
+      年支出( <span class="text-price">{{filter.formatMoney(out)}}</span> )
     </view>
-    <view class="padding">
-        年净利润: ¥{{incom-out}}
-    </view>
-    <!-- 无数据 -->
-    <!-- <block wx:else>
+    <canvas canvas-id="zcLineCanvas" class="canvas" bindtouchstart="zcTouchHandler"></canvas>
+  </view>
+  <view class="padding">
+    年净利润: <span class="text-price">{{filter.formatMoney(incom-out)}}</span>
+  </view>
+  <!-- 无数据 -->
+  <!-- <block wx:else>
         <view style="text-align: center;margin-top: 20vh;">
             <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
             <view style="top: -240rpx;">暂无数据</view>

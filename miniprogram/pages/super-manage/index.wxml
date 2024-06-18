@@ -1,101 +1,101 @@
-<!-- pages/me/index.wxml -->
+<wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
-    <view slot="backText">返回</view>
-    <view slot="content">超级管理端</view>
+  <view slot="backText">返回</view>
+  <view slot="content">超级管理端</view>
 </cu-custom>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange"></shopBar>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text text-xs'>加载中...</view>
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text text-xs'>加载中...</view>
 </view>
 <scroll-view refresher-enabled="true" bindrefresherrefresh="getUser" refresher-triggered="{{isRefreshing}}" style="height: {{containerHeight - 120}}rpx;position: relative;">
-    <view class="flex justify-between">
-        <view class="margin text-gray" bind:tap="gotoSettingPage"> {{userInfo.name?'欢迎您，超级管理员 '+ userInfo.name : '未设置昵称'}}</view>
-    </view>
+  <view class="flex justify-between">
+    <view class="margin text-gray" bind:tap="gotoSettingPage"> {{userInfo.name?'欢迎您，超级管理员 '+ userInfo.name : '未设置昵称'}}</view>
+  </view>
 
-    <view class="cu-card">
-        <view style="position: absolute; text-align: center;right: 60rpx;top: 60rpx;z-index: 100;">
-            <!-- 小皇冠 -->
-            <image style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/manage.svg" mode="widthFix"></image>
-            <!-- 头像 -->
-            <button class="cu-avatar xl round shadow-warp" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-                <image class="cu-avatar xl round " src="{{userInfo.avatarUrl||'../../images/avatar.svg'}}"></image>
-            </button>
-        </view>
-        <!-- 超级管理员 -->
-        <view class="cu-item shadow-warp padding" style="min-height: 240rpx;border-radius: 32rpx;">
-            <view class="text-gray text-sm">
-                超级管理员
-            </view>
-            <view class="flex justify-around">
-                <view style="text-align: center;">
-                    <!-- <image></image> -->
-                    <view class="padding">年度总收入</view>
-                    <view style="font-size: 35rpx;font-weight: bold;">
-                        ¥ {{vipInfo.account.balance/100||'0.00'}}
-                    </view>
-                </view>
-                <view style="text-align: center;">
-                    <!-- <image></image> -->
-                    <view class="padding">店铺数</view>
-                    <view style="font-size: 35rpx;font-weight: bold;">
-                        {{vipInfo.account.beer||'0'}}
-                    </view>
-                </view>
-            </view>
-        </view>
+  <view class="cu-card">
+    <view style="position: absolute; text-align: center;right: 60rpx;top: 60rpx;z-index: 100;">
+      <!-- 小皇冠 -->
+      <image style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/manage.svg" mode="widthFix"></image>
+      <!-- 头像 -->
+      <button class="cu-avatar xl round shadow-warp" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <image class="cu-avatar xl round " src="{{userInfo.avatarUrl||'../../images/avatar.svg'}}"></image>
+      </button>
     </view>
-    <!-- SETTING -->
-    <view class="padding margin-top bg-white shadow" style="border-radius: 32rpx 32rpx 0 0 ">
-        <view style="font-weight: bold;">常用功能</view>
-        <view style="height: 90rpx;"></view>
-        <view class="grid col-4 margin-bottom text-center">
-            <view class="setting_item" bind:tap="goTopManageShop">
-                <image class="setting_icon" src="../../images/icons/shop.svg" />
-                <view class="text-gray text-xs">店铺管理</view>
-            </view>
-            <view class="setting_item" bind:tap="gotoBillPage">
-                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/zdjl.svg" />
-                <view class="text-gray text-xs">账单记录</view>
-            </view>
-            <view class="setting_item" bind:tap="goToOperation">
-                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/yytj.svg" />
-                <view class="text-gray text-xs">运营统计</view>
-            </view>
-            <view class="setting_item" bind:tap="goToVipManage">
-                <image class="setting_icon" style="padding: 3rpx;" src="../../images/icons/vip.svg" />
-                <view class="text-gray text-xs">会员套餐管理</view>
-            </view>
-            <view class="setting_item" bind:tap="goToApplicationManage">
-                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/sqgl.svg" />
-                <view class="text-gray text-xs">申请管理</view>
-            </view>
-            <view class="setting_item" bind:tap="gotoSettingPage">
-                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/wdxx.svg" />
-                <view class="text-gray text-xs">我的信息</view>
-            </view>
+    <!-- 超级管理员 -->
+    <view class="cu-item shadow-warp padding" style="min-height: 240rpx;border-radius: 32rpx;">
+      <view class="text-gray text-sm">
+        超级管理员
+      </view>
+      <view class="flex justify-around">
+        <view style="text-align: center;">
+          <!-- <image></image> -->
+          <view class="padding">年度总收入</view>
+          <view style="font-size: 35rpx;font-weight: bold;">
+            <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
+          </view>
         </view>
-        <view style="height: 180rpx;"></view>
-        <view wx:if="{{isSuperManage||isShopManage}}" class="text-gray" style="width: 100%; text-align: center;" bind:tap="switchMode">
-            切换角色
+        <view style="text-align: center;">
+          <!-- <image></image> -->
+          <view class="padding">店铺数</view>
+          <view style="font-size: 35rpx;font-weight: bold;">
+            {{vipInfo.account.beer||'0'}}
+          </view>
         </view>
+      </view>
     </view>
+  </view>
+  <!-- SETTING -->
+  <view class="padding margin-top bg-white shadow" style="border-radius: 32rpx 32rpx 0 0 ">
+    <view style="font-weight: bold;">常用功能</view>
+    <view style="height: 90rpx;"></view>
+    <view class="grid col-4 margin-bottom text-center">
+      <view class="setting_item" bind:tap="goTopManageShop">
+        <image class="setting_icon" src="../../images/icons/shop.svg" />
+        <view class="text-gray text-xs">店铺管理</view>
+      </view>
+      <view class="setting_item" bind:tap="gotoBillPage">
+        <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/zdjl.svg" />
+        <view class="text-gray text-xs">账单记录</view>
+      </view>
+      <view class="setting_item" bind:tap="goToOperation">
+        <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/yytj.svg" />
+        <view class="text-gray text-xs">运营统计</view>
+      </view>
+      <view class="setting_item" bind:tap="goToVipManage">
+        <image class="setting_icon" style="padding: 3rpx;" src="../../images/icons/vip.svg" />
+        <view class="text-gray text-xs">会员套餐管理</view>
+      </view>
+      <view class="setting_item" bind:tap="goToApplicationManage">
+        <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/sqgl.svg" />
+        <view class="text-gray text-xs">申请管理</view>
+      </view>
+      <view class="setting_item" bind:tap="gotoSettingPage">
+        <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/wdxx.svg" />
+        <view class="text-gray text-xs">我的信息</view>
+      </view>
+    </view>
+    <view style="height: 180rpx;"></view>
+    <view wx:if="{{isSuperManage||isShopManage}}" class="text-gray" style="width: 100%; text-align: center;" bind:tap="switchMode">
+      切换角色
+    </view>
+  </view>
 </scroll-view>
 
 <!-- 切换角色 -->
 <view class="cu-modal {{showRoleDialog?'show':''}}" bindtap="closeRoleDialog">
-    <view class="cu-dialog" catchtap>
-        <radio-group class="block" bindchange="onSelecteRole">
-            <view class="cu-list menu text-left">
-                <view class="cu-item" wx:for="{{roleList}}" wx:key='index'>
-                    <label class="flex justify-between align-center flex-sub">
-                        <view class="flex-sub">{{item.text}}</view>
-                        <radio value="{{item.value}}" class="round" checked="{{item.checked}}">
-                        </radio>
-                    </label>
-                </view>
-            </view>
-        </radio-group>
-    </view>
+  <view class="cu-dialog" catchtap>
+    <radio-group class="block" bindchange="onSelecteRole">
+      <view class="cu-list menu text-left">
+        <view class="cu-item" wx:for="{{roleList}}" wx:key='index'>
+          <label class="flex justify-between align-center flex-sub">
+            <view class="flex-sub">{{item.text}}</view>
+            <radio value="{{item.value}}" class="round" checked="{{item.checked}}">
+            </radio>
+          </label>
+        </view>
+      </view>
+    </radio-group>
+  </view>
 </view>

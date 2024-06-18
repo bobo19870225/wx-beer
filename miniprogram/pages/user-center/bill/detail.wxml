@@ -1,59 +1,92 @@
 <wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">账单明细</view>
+  <view slot="backText">返回</view>
+  <view slot="content">账单明细</view>
 </cu-custom>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <view class='gray-text text-xs'>加载中...</view>
+  <view class='gray-text text-xs'>加载中...</view>
 </view>
 <block wx:if="{{bill.type==1}}">
-    <view>
-        <view class="padding">
-            消费店铺：{{shopDetail.name}}
-        </view>
-        <view class="padding">
-            消费金额：¥{{orderDetail.total/100}}
-        </view>
-        <view class="padding">
-            支付方式：{{orderDetail.payType==1?'会员账号支付':'普通支付'}}
-            <span wx:if="{{orderDetail.rate}}">{{orderDetail.payType==1?'('+orderDetail.rate+'折)':''}}</span>
-        </view>
+  <view>
+    <view class="padding">
+      消费店铺：{{shopDetail.name}}
     </view>
     <view class="padding">
-        订单详情
+      消费金额：<span class="text-price">{{filter.formatMoney(orderDetail.total)}}</span>
     </view>
-    <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-        <view class="cu-list menu-avatar">
-            <view class="cu-item">
-                <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
-                <view class="content">
-                    <view class="text-grey">{{ goodsDetail.title }}</view>
-                    <view class="text-gray text-sm flex" style="gap: 21rpx;">
-                        <view style="color: gray;">原价：¥ {{ goodsDetail.price / 100 }}</view>
-                        <view class="text-orange">实付：¥ {{ goodsDetail.price*orderDetail.rate / 10000 }}</view>
-                        <view class="text-gray text-sm">
-                            x{{ goodsDetail.number}}
-                        </view>
-                    </view>
-                </view>
+    <view class="padding">
+      支付方式：{{orderDetail.payType==1?'会员账号支付':'普通支付'}}
+      <span wx:if="{{orderDetail.rate}}">{{orderDetail.payType==1?'('+orderDetail.rate+'折)':''}}</span>
+    </view>
+  </view>
+  <view class="padding">
+    订单详情
+  </view>
+  <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+    <view class="cu-list menu-avatar">
+      <view class="cu-item">
+        <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+        <view class="content">
+          <view class="text-grey">{{ goodsDetail.title }}</view>
+          <view class="text-gray text-sm flex" style="gap: 21rpx;">
+            <view style="color: gray;">
+              原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
             </view>
+            <view class="text-orange">实付：<span class="text-price">{{filter.formatMoney(goodsDetail.price*orderDetail.rate / 100)}}</span></view>
+            <view class="text-gray text-sm">
+              x{{ goodsDetail.number}}
+            </view>
+          </view>
         </view>
-    </block>
-    <view class="padding">
-        支付时间：{{filter.format(bill.createDate,'YY-MM-DD hh:mm:ss')}}
+      </view>
     </view>
+  </block>
+  <view class="padding">
+    支付时间：{{filter.format(bill.createDate,'YY-MM-DD hh:mm:ss')}}
+  </view>
 </block>
 <!-- 会员充值 -->
 <block wx:if="{{bill.type==0}}">
-    <view>
-        <view class="padding">
-            充值店铺：{{shopDetail.name}}
-        </view>
-        <view class="padding">
-            充值金额：¥{{bill.money/100}}
-        </view>
-        <view class="padding">
-            支付方式：微信支付
-        </view>
+  <view>
+    <view class="padding">
+      充值店铺：{{shopDetail.name}}
     </view>
+    <view class="padding">
+      充值金额：<span class="text-price">{{filter.formatMoney(bill.money)}}</span>
+    </view>
+    <view class="padding">
+      支付方式：微信支付
+    </view>
+    <view class="cu-card article">
+      <view class="cu-item shadow">
+        <view class="title" style="text-align: center;">
+          <view class="text-cut">会员产品详情</view>
+        </view>
+        <view class="content">
+          <view class="text-sm flex  padding-tb-sm" style="width: 50%;">
+            产品名称：{{vipPackageDetail.name}}
+          </view>
+          <view class="text-sm flex  padding-tb-sm" style="width: 50%;">
+            产品价格：<span class="text-price">{{filter.formatMoney(vipPackageDetail.price)}}</span>
+          </view>
+        </view>
+        <view class="content">
+          <view class="text-sm flex  padding-tb-sm" style="width: 50%;">
+            实际到账：<span class="text-price">{{filter.formatMoney(vipPackageDetail.entry)}}</span>
+          </view>
+          <view class="text-sm flex  padding-tb-sm" style="width: 50%;">
+            赠送啤酒：{{vipPackageDetail.beer}}瓶
+          </view>
+        </view>
+        <view class="content">
+          <view class="text-sm flex  padding-tb-sm" style="width: 50%;">
+            会员折扣：{{vipPackageDetail.rate}} 折
+          </view>
+        </view>
+        <view class="content text-sm text-gray margin-top">
+          {{vipPackageDetail.remarks}}
+        </view>
+      </view>
+    </view>
+  </view>
 </block>

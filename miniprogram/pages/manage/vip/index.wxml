@@ -20,7 +20,7 @@
                         {{item.name}}
                     </view>
                     <view>
-                        价格：￥{{item.price/100}}
+                        价格：￥{{item.price}}
                     </view>
                     <view>
                         折扣率：{{item.rate==100?'不打':item.rate}}折

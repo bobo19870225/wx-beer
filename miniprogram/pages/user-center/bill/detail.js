@@ -8,7 +8,8 @@ Page({
     isLoading: false,
     bill: null,
     orderDetail: null,
-    shopDetail: null
+    shopDetail: null,
+    vipPackageDetail: null,
   },
 
   /**
@@ -40,7 +41,14 @@ Page({
       })
     })
   },
-
+  getVipPackageIdById(vipPackageId) {
+    db.collection('vipPackage').doc(vipPackageId).get().then((res) => {
+      console.log("vipPackage", res);
+      this.setData({
+        vipPackageDetail: res.data
+      })
+    })
+  },
   getShopById(shopId) {
     db.collection('shop').doc(shopId).get().then((res) => {
       console.log("shop", res);

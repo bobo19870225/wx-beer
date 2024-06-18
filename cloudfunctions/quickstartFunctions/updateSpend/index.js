@@ -18,28 +18,66 @@ exports.main = async (event, context) => {
       };
     }
     const wxContext = cloud.getWXContext();
-    entity._openid = wxContext.OPENID
-    entity.createDate = new Date()
+
+
     const isDelete = entity.isDelete
     if (isDelete == null || isDelete == undefined) {
       entity.isDelete = false
     }
-    const id = entity._id
-    let res = null
-    if (id) {
-      delete entity._id
-      res = await db.collection('spend').doc(id).update({
-        data: entity,
-      });
-    } else {
-      res = await db.collection('spend').add({
-        data: entity,
-      });
-    }
-    const data = res.data || res
+
+    const result = await db.runTransaction(async transaction => {
+      const id = entity._id
+      let res = null
+      if (id) {
+        delete entity._id
+        entity.updateOpenid = wxContext.OPENID
+        entity.updateDate = new Date()
+        res = await transaction.collection('spend').doc(id).update({
+          data: entity,
+        });
+        const billAdd = await transaction.collection('bill').add({
+          data: {
+            _openid: wxContext.OPENID,
+            createDate: new Date(),
+            remarks: '店铺支出',
+            money: -total,
+            shopId,
+            type: 3,
+          }
+        })
+        if (!billAdd) {
+          await transaction.rollback(-100)
+        }
+      } else {
+        const listSpend = entity.listSpend
+        let total = 0
+        listSpend.forEach(element => {
+          total += element.money
+        });
+        // 入账
+        const billAdd = await transaction.collection('bill').add({
+          data: {
+            _openid: wxContext.OPENID,
+            createDate: new Date(),
+            remarks: '店铺支出',
+            money: -total,
+            shopId,
+            type: 3,
+          }
+        })
+        if (!billAdd) {
+          await transaction.rollback(-100)
+        }
+        entity.createDate = new Date()
+        entity._openid = wxContext.OPENID
+        res = await transaction.collection('spend').add({
+          data: entity,
+        });
+      }
+    })
     return {
       success: true,
-      rusult: data
+      rusult
     };
   } catch (e) {
     return {

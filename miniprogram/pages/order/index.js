@@ -13,6 +13,7 @@ Component({
     isLoading: false,
     isRefreshing: false,
     containerHeight: app.globalData.containerHeight,
+    vipLevel: null
   },
   attached() {
 
@@ -25,8 +26,11 @@ Component({
      * 切换店铺
      */
     async onShopChange(e) {
+      const vipLevel = await app.getVipLevel()
+      console.log(vipLevel);
       let shop = e.detail
       this.setData({
+        vipLevel,
         shop
       })
       this.setData({

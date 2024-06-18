@@ -183,8 +183,8 @@ Page({
     vipTotal = total * this.data.vipLevel.rate / 100
     this.setData({
       goodsList: temp,
-      orderTotalPrice: total / 100,
-      orderTotalVipPrice: vipTotal / 100,
+      orderTotalPrice: total,
+      orderTotalVipPrice: vipTotal,
       orderTotalNumber: totalNumber,
       orderList: orderTemp
     });
