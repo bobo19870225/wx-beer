@@ -1,61 +1,61 @@
 <wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">支出管理</view>
+    <view slot="backText">返回</view>
+    <view slot="content">支出管理</view>
 </cu-custom>
 
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-  <view class='gray-text text-xs'>加载中...</view>
+    <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-  <!-- 有数据 -->
-  <view wx:if="{{ spend.length >= 1 }}">
-    <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getSpend" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
-      <block wx:for="{{ spend }}" wx:for-item="spendDetail" wx:key="_id" wx:for-index="index">
-        <view class="cu-card">
-          <view class="cu-item shadow">
-            <block wx:for="{{ spendDetail.listSpend }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-              <view class="cu-list menu">
-                <view class="cu-item">
-                  <view class="content">
-                    <view class="text-grey">{{ goodsDetail.name }}</view>
-                    <view class="text-gray text-sm flex" style="gap: 21rpx;">
-                      <view style="color: gray;">
-                        单价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
-                      </view>
-                      <view class="text-gray text-sm">
-                        数量：X{{ goodsDetail.number}}
-                      </view>
+    <!-- 有数据 -->
+    <view wx:if="{{ spend.length >= 1 }}">
+        <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getSpend" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
+            <block wx:for="{{ spend }}" wx:for-item="spendDetail" wx:key="_id" wx:for-index="index">
+                <view class="cu-card">
+                    <view class="cu-item shadow">
+                        <block wx:for="{{ spendDetail.listSpend }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                            <view class="cu-list menu">
+                                <view class="cu-item">
+                                    <view class="content">
+                                        <view class="text-grey">{{ goodsDetail.name }}</view>
+                                        <view class="text-gray text-sm flex" style="gap: 21rpx;">
+                                            <view style="color: gray;">
+                                                单价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
+                                            </view>
+                                            <view class="text-gray text-sm">
+                                                数量：X{{ goodsDetail.number}}
+                                            </view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                        <view class="content padding flex align-center justify-between">
+                            <view>
+                                {{filter.format(spendDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
+                            </view>
+                            <view class="flex" style="gap: 9rpx;">
+                                <button bind:tap="handleEdit" data-item="{{spendDetail}}" class="cu-btn sm  bg-blue" style="width: 50rpx;height: 50rpx;border-radius: 50%;">
+                                    <text class="cuIcon-edit"></text>
+                                </button>
+                                <button bind:tap="handleDelete" data-item="{{item}}" class="cu-btn sm  bg-red" style="width: 50rpx;height: 50rpx;border-radius: 50%;">
+                                    <text class="cuIcon-delete"></text>
+                                </button>
+                            </view>
+                        </view>
                     </view>
-                  </view>
                 </view>
-              </view>
             </block>
-            <view class="content padding flex align-center justify-between">
-              <view>
-                {{filter.format(spendDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
-              </view>
-              <view class="flex" style="gap: 9rpx;">
-                <button bind:tap="handleEdit" data-item="{{spendDetail}}" class="cu-btn sm  bg-blue" style="width: 50rpx;height: 50rpx;border-radius: 50%;">
-                  <text class="cuIcon-edit"></text>
-                </button>
-                <button bind:tap="handleDelete" data-item="{{item}}" class="cu-btn sm  bg-red" style="width: 50rpx;height: 50rpx;border-radius: 50%;">
-                  <text class="cuIcon-delete"></text>
-                </button>
-              </view>
-            </view>
-          </view>
-        </view>
-      </block>
-    </scroll-view>
-  </view>
-  <!-- 无数据 -->
-  <block wx:else>
-    <view style="text-align: center;margin-top: 20vh;">
-      <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
-      <view style="top: -240rpx;">暂无数据</view>
+        </scroll-view>
     </view>
-  </block>
-  <button bind:tap="handleAdd" class="cu-bin round bg-blue lg" style="width: 90vw;">新增</button>
+    <!-- 无数据 -->
+    <block wx:else>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
+    </block>
+    <button bind:tap="handleAdd" class="cu-bin round bg-blue lg" style="width: 90vw;position: fixed;bottom: 30rpx;margin-left: 5vw;">新增</button>
 </block>

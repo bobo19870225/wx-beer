@@ -26,12 +26,10 @@
     <view class="cu-form-group">
         <view class="title">原价</view>
         <input name="price" type="number" value="{{goods.price}}" placeholder="请输入..."></input>
-        <text class="text-orange">单位分</text>
     </view>
     <!-- <view class="cu-form-group" bind:tap="openMap">
     <view class="title">会员原价</view>
     <input name="vipPrice" type="number" value="{{goods.vipPrice}}" placeholder="请输入..."></input>
-    <text class="text-orange">单位分</text>
   </view> -->
 
     <upLoadFile count="1" directory="goods" label="请上传商品图片" imgs="{{goods.img?[goods.img]:[]}}" bind:onUploadOk="onUploadOk"></upLoadFile>

@@ -12,12 +12,10 @@
     <view class="cu-form-group" bind:tap="openMap">
         <view class="title lable-width">套餐价格</view>
         <input name="price" placeholder="请填写..." value="{{vip.price}}"></input>
-        <text class="text-orange">分</text>
     </view>
     <view class="cu-form-group" bind:tap="openMap">
         <view class="title lable-width">实际到账</view>
         <input name="entry" placeholder="请填写..." value="{{vip.entry}}"></input>
-        <text class="text-orange">分</text>
     </view>
     <view class="cu-form-group" bind:tap="openMap">
         <view class="title lable-width">赠送啤酒数</view>
