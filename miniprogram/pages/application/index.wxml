@@ -28,6 +28,10 @@
                 <input name="_openid" disabled="true" value="{{_openid}}"></input>
             </view>
             <view class="cu-form-group">
+                <view class="title">姓名</view>
+                <input name="name" placeholder="请填写姓名..."></input>
+            </view>
+            <view class="cu-form-group">
                 <view class="title">手机号码</view>
                 <input name="phone" placeholder="请填写手机号..."></input>
                 <view class="cu-capsule radius">
