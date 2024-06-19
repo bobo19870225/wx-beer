@@ -78,13 +78,11 @@
                   <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
                 </view>
                 <view class="text-gray text-sm ">
-                  <view class="text-cut">原价：￥
-                    <span style="text-decoration:line-through;">
-                      {{ goodsDetail.price }}
-                    </span>
+                  <view class="text-cut">
+                    原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
                   </view>
                 </view>
-                <view wx:if="{{true}}" class=" text-cut text-xs">
+                <view wx:if="{{vipLevel}}" class=" text-cut text-xs">
                   <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
                   <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
                 </view>

@@ -20,7 +20,7 @@
     <view class="cu-card">
       <view style="position: absolute; text-align: center;right: 60rpx;top: 60rpx;z-index: 100;">
         <!-- 小皇冠 -->
-        <image wx:if="{{vipInfo}}" style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/vip.svg" mode="widthFix"></image>
+        <image wx:if="{{vipInfo.shopId==shop._id}}" style="width: 60rpx;right: 6rpx; top: -30rpx; position: absolute;transform: rotate(35deg);z-index: 100;" src="../../images/icons/vip.svg" mode="widthFix"></image>
         <!-- 头像 -->
         <button class="cu-avatar xl round shadow-warp" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
           <image class="cu-avatar xl round " src="{{userInfo.avatarUrl||'../../images/avatar.svg'}}"></image>
@@ -28,27 +28,26 @@
       </view>
       <!-- VIP -->
       <view class="cu-item shadow-warp padding" style="min-height: 240rpx;border-radius: 32rpx;">
-        <view wx:if="{{vipInfo&&vipInfo.vipLevel}}">
+        <view wx:if="{{vipInfo.shopId==shop._id}}">
           <view class="text-lg">{{vipInfo.vipLevel.name}}<span class="text-orange text-xs margin-left">再充{{vipInfo.vipLevel.next}}提升等级</span></view>
           <view class="text-gray text-sm margin-top">{{vipInfo.vipLevel.remarks}}</view>
-        </view>
-        <view wx:else class="text-gray text-sm">
-          非会员
-        </view>
-        <view class="flex justify-around">
-          <view bind:tap="gotoBillPage" style="text-align: center;">
-            <view class="padding">余额</view>
-            <view style="font-size: 35rpx;font-weight: bold;">
-              <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
+          <view class="flex justify-around">
+            <view bind:tap="gotoBillPage" style="text-align: center;">
+              <view class="padding">余额</view>
+              <view style="font-size: 35rpx;font-weight: bold;">
+                <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
+              </view>
+            </view>
+            <view style="text-align: center;">
+              <view class="padding">存酒</view>
+              <view style="font-size: 35rpx;font-weight: bold;">
+                {{vipInfo.account.beer||'0'}}
+              </view>
             </view>
           </view>
-          <view style="text-align: center;">
-            <!-- <image></image> -->
-            <view class="padding">存酒</view>
-            <view style="font-size: 35rpx;font-weight: bold;">
-              {{vipInfo.account.beer||'0'}}
-            </view>
-          </view>
+        </view>
+        <view wx:else class="text-gray text-sm margin-top">
+          您还不是会员，通过 <span bind:tap="toBeVip" style="text-decoration: underline;color: var(--blue);">在线充值</span> 成为会员，可以享受商品折扣和赠送酒水等优惠
         </view>
       </view>
     </view>

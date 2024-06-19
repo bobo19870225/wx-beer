@@ -72,10 +72,14 @@ App({
       return this.globalData.userInfoAll
     }
     console.log("run getUser");
+    const shop = await this.getShop()
     const res = await wx.cloud.callFunction({
       name: 'quickstartFunctions',
       data: {
         type: 'getUser',
+        entity: {
+          shopId: shop._id
+        }
       }
     })
     const userList = res.result.list
@@ -91,7 +95,6 @@ App({
     const resVipPackage = await db.collection('vipPackage').where({
       isDelete: false,
     }).orderBy('price', 'asc').get()
-    console.log(resVipPackage);
     const vipPackageInfo = resVipPackage.data
     if (vipPackageInfo && vipInfo) {
       for (let index = 0; index < vipPackageInfo.length; index++) {
@@ -124,7 +127,7 @@ App({
    * 获取vip级别信息
    */
   async getVipLevel(forceupdates) {
-    console.log("APP getVipLevel");
+    console.log("APP getVipLevel", forceupdates);
     const userInfoAll = await this.getUserInfoAll(forceupdates)
     return userInfoAll.vipInfo?.vipLevel
   },

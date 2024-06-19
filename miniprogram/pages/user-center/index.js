@@ -34,8 +34,8 @@ Component({
    */
   methods: {
     async getUser(forceupdates) {
-      console.log("user-center getUser", forceupdates);
       const res = await app.getUserInfoAll(forceupdates)
+      console.log("user-center getUser", res);
       const userInfo = res.userInfo
       const vipInfo = res.vipInfo
       const isSuperManage = userInfo?.isSuperManage || false
