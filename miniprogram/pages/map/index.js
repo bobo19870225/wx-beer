@@ -61,7 +61,7 @@ Page({
           iconPath: '../../images/icons/shop-location.png',
           callout: {
             content: value.name,
-            color: '#13227a',
+            color: '#200e32',
             display: 'ALWAYS',
             padding: 6,
             borderRadius: 3

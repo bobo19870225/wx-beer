@@ -1,0 +1,131 @@
+<template name="skeleton">
+  <view class="sk-container">
+    <view is="pages/user-center/index">
+      <view is="colorui/components/cu-custom">
+        <view class="cu-custom custom--cu-custom" style="height:84px">
+          <view class="cu-bar custom--cu-bar fixed custom--fixed bg-white custom--bg-white" style="height:84px;padding-top:44px;">
+            <view class="content custom--content" style="top:44px">
+              <view class="sk-transparent sk-text-23-3333-732 sk-text" style="background-position-x: 50%;">我的</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="components/shopBar/index">
+        <view class="cu-bar shopBar-index--cu-bar bg-white shopBar-index--bg-white padding-lr shopBar-index--padding-lr flex shopBar-index--flex justify-start shopBar-index--justify-start" style="align-items: center;width: 100vw;height: 45px;">
+          <view style="font-size: 12px;line-height: 45px;" class="sk-transparent sk-text-36-6667-873 sk-text">
+            贵阳市数博万达店
+          </view>
+          <image mode="widthFix" style="width: 16px; height: 16px;" class="sk-image"></image>
+        </view>
+      </view>
+      <scroll-view refresher-enabled="true" style="height: 618px;position: relative;">
+        <view class="flex center-index--flex justify-between center-index--justify-between">
+          <view class="margin center-index--margin text-gray center-index--text-gray sk-transparent sk-text-14-2857-573 sk-text"> 欢迎您 摩诘110</view>
+        </view>
+        <view class="cu-card center-index--cu-card">
+          <view style="position: absolute; text-align: center;right: 30px;top: 30px;z-index: 100;">
+            <image mode="widthFix" style="width: 30px; right: 3px; top: -15px; position: absolute; transform: rotate(35deg); z-index: 100; height: 30px;" class="sk-image"></image>
+            <button class="cu-avatar center-index--cu-avatar xl center-index--xl round center-index--round shadow-warp center-index--shadow-warp sk-button sk-pseudo sk-pseudo-circle" open-type="chooseAvatar">
+              <image class="cu-avatar center-index--cu-avatar xl center-index--xl round center-index--round sk-image"></image>
+            </button>
+          </view>
+          <view class="cu-item center-index--cu-item shadow-warp center-index--shadow-warp padding center-index--padding sk-pseudo sk-pseudo-circle" style="min-height: 120px;border-radius: 16px;">
+            <view>
+              <view class="text-lg center-index--text-lg sk-transparent">粉丝会员
+                <span class="text-orange center-index--text-orange text-xs center-index--text-xs margin-left center-index--margin-left sk-transparent sk-text-14-2857-776 sk-text">再充500提升等级</span>
+              </view>
+              <view class="text-gray center-index--text-gray text-sm center-index--text-sm margin-top center-index--margin-top sk-transparent sk-text-14-2857-340 sk-text">充值499实得549，所有商品终身8.5折优惠，送价值24元的啤酒4瓶。</view>
+            </view>
+            <view class="flex center-index--flex justify-around center-index--justify-around">
+              <view style="text-align: center;">
+                <view class="padding center-index--padding sk-transparent sk-text-14-2857-652 sk-text" style="background-position-x: 50%;">余额</view>
+                <view style="font-size: 17px;font-weight: bold;">
+                  <span class="text-price center-index--text-price sk-transparent sk-text-14-2857-394 sk-text sk-pseudo sk-pseudo-circle" style="background-position-x: 50%;">333.08</span>
+                </view>
+              </view>
+              <view style="text-align: center;">
+                <view class="padding center-index--padding sk-transparent sk-text-14-2857-427 sk-text" style="background-position-x: 50%;">存酒</view>
+                <view style="font-size: 17px; font-weight: bold; background-position-x: 50%;" class="sk-transparent sk-text-14-2857-329 sk-text">
+                  5
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="padding center-index--padding margin-top center-index--margin-top bg-white center-index--bg-white shadow center-index--shadow" style="border-radius: 16px 16px 0 0">
+          <view style="font-weight: bold;" class="sk-transparent sk-text-14-2857-619 sk-text">常用功能</view>
+          <view style="height: 45px;"></view>
+          <view class="settings_container center-index--settings_container margin-top-lg center-index--margin-top-lg">
+            <view class="setting_item center-index--setting_item">
+              <image class="setting_icon center-index--setting_icon sk-image"></image>
+              <view class="text-gray center-index--text-gray text-xs center-index--text-xs sk-transparent sk-text-14-2857-610 sk-text" style="background-position-x: 50%;">在线充值</view>
+            </view>
+            <view class="setting_item center-index--setting_item">
+              <image class="setting_icon center-index--setting_icon sk-image"></image>
+              <view class="text-gray center-index--text-gray text-xs center-index--text-xs sk-transparent sk-text-14-2857-783 sk-text" style="background-position-x: 50%;">账单记录</view>
+            </view>
+            <view class="setting_item center-index--setting_item">
+              <image class="setting_icon center-index--setting_icon sk-image"></image>
+              <view class="text-gray center-index--text-gray text-xs center-index--text-xs sk-transparent sk-text-14-2857-733 sk-text" style="background-position-x: 50%;">我的信息</view>
+            </view>
+            <view class="setting_item center-index--setting_item">
+              <image class="setting_icon center-index--setting_icon sk-image"></image>
+              <view class="text-gray center-index--text-gray text-xs center-index--text-xs sk-transparent sk-text-14-2857-92 sk-text" style="background-position-x: 50%;">成为店长</view>
+            </view>
+          </view>
+          <view style="height: 90px;"></view>
+          <view class="text-gray center-index--text-gray sk-transparent sk-text-14-2857-257 sk-text" style="width: 100%; text-align: center; background-position-x: 50%;">
+            切换角色
+          </view>
+        </view>
+      </scroll-view>
+      <view class="cu-modal center-index--cu-modal bottom-modal center-index--bottom-modal sk-pseudo sk-pseudo-circle"></view>
+      <view class="cu-modal center-index--cu-modal sk-pseudo sk-pseudo-circle">
+        <view class="cu-dialog center-index--cu-dialog">
+          <radio-group class="block center-index--block">
+            <view class="cu-list center-index--cu-list menu center-index--menu text-left center-index--text-left">
+              <view class="cu-item center-index--cu-item sk-pseudo sk-pseudo-circle">
+                <label class="flex center-index--flex justify-between center-index--justify-between align-center center-index--align-center flex-sub center-index--flex-sub">
+                  <view class="flex-sub center-index--flex-sub sk-transparent sk-text-14-2857-242 sk-text">管理员</view>
+                  <radio class="round center-index--round sk-pseudo sk-pseudo-circle" value="superManage" color="#EFEFEF"></radio>
+                </label>
+              </view>
+              <view class="cu-item center-index--cu-item sk-pseudo sk-pseudo-circle">
+                <label class="flex center-index--flex justify-between center-index--justify-between align-center center-index--align-center flex-sub center-index--flex-sub">
+                  <view class="flex-sub center-index--flex-sub sk-transparent sk-text-14-2857-153 sk-text">店长</view>
+                  <radio class="round center-index--round sk-pseudo sk-pseudo-circle" value="shopManage" color="#EFEFEF"></radio>
+                </label>
+              </view>
+              <view class="cu-item center-index--cu-item sk-pseudo sk-pseudo-circle">
+                <label class="flex center-index--flex justify-between center-index--justify-between align-center center-index--align-center flex-sub center-index--flex-sub">
+                  <view class="flex-sub center-index--flex-sub sk-transparent sk-text-14-2857-185 sk-text">客户</view>
+                  <radio class="round center-index--round sk-pseudo sk-pseudo-circle" value="client" color="#EFEFEF"></radio>
+                </label>
+              </view>
+            </view>
+          </radio-group>
+        </view>
+      </view>
+    </view>
+    <view class="cu-bar tabbar bg-white shadow foot">
+      <view class="action" data-cur="start">
+        <view class="cuIcon-cu-image">
+          <image class="sk-image"></image>
+        </view>
+        <view class="text-gray sk-transparent sk-text-0-0000-578 sk-text" style="background-position-x: 50%;">首页</view>
+      </view>
+      <view class="action" data-cur="order">
+        <view class="cuIcon-cu-image">
+          <image class="sk-image"></image>
+        </view>
+        <view class="text-gray sk-transparent sk-text-0-0000-646 sk-text" style="background-position-x: 50%;">订单</view>
+      </view>
+      <view class="action" data-cur="user-center">
+        <view class="cuIcon-cu-image">
+          <image class="sk-image"></image>
+        </view>
+        <view class="text-blue sk-transparent sk-text-0-0000-389 sk-text" style="background-position-x: 50%;">我的</view>
+      </view>
+    </view>
+  </view>
+</template>

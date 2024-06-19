@@ -40,21 +40,15 @@ Component({
                 name: 'quickstartFunctions',
                 data: {
                     type: 'getTotalIncom',
-                    // entity: {
-                    //     shopId
-                    // }
                 }
             }).then((res) => {
-                console.log("TTT", res);
                 this.setData({
                     totalIncom: res.result?.list[0]?.total || 0
                 })
             })
         },
         async getUser(forceupdates) {
-            this.setData({
-                isRefreshing: true
-            })
+            console.log("super-manage getUser");
             const res = await app.getUserInfoAll(forceupdates)
             const userInfo = res.userInfo
             const isSuperManage = userInfo?.isSuperManage || false

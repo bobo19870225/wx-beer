@@ -13,18 +13,11 @@ Component({
     isLoading: false,
     isRefreshing: false,
     userInfo: {},
-    vipInfo: null,
-    vipLoading: true,
     containerHeight: app.globalData.containerHeight,
-    showPayDialog: false,
     showRoleDialog: false,
-    vips: null,
-    vipPackage: null,
-    vipPackageBuy: null,
     shop: null,
-    isSuperManage: false,
-    isShopManage: false,
-    roleList: []
+    roleList: [],
+    totalIncom: 0
   },
   attached() {
 
@@ -34,13 +27,29 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    async getUser(forceupdates) {
-      this.setData({
-        isRefreshing: true
+    loadData() {
+      this.getUser(true);
+      this.getTotalIncom();
+    },
+    getTotalIncom() {
+      wx.cloud.callFunction({
+        name: 'quickstartFunctions',
+        data: {
+          type: 'getTotalIncom',
+          entity: {
+            shopId: this.data.shop._id
+          }
+        }
+      }).then((res) => {
+        this.setData({
+          totalIncom: res.result?.list[0]?.total || 0
+        })
       })
+    },
+    async getUser(forceupdates) {
+      console.log("shop-manage getUser");
       const res = await app.getUserInfoAll(forceupdates)
       const userInfo = res.userInfo
-      const vipInfo = res.vipInfo
       const isSuperManage = userInfo?.isSuperManage || false
       const isShopManage = userInfo?.isShopManage || false
       if (isSuperManage) {
@@ -73,9 +82,6 @@ Component({
       }
       this.setData({
         userInfo,
-        isSuperManage,
-        isShopManage,
-        vipInfo,
         isRefreshing: false
       })
     },
@@ -105,12 +111,8 @@ Component({
       let shop = e.detail
       this.setData({
         shop,
-        vipLoading: true,
       })
-      await this.getUser(true);
-      this.setData({
-        vipLoading: false,
-      })
+      this.loadData();
     },
     /**
      * 切换角色

@@ -10,6 +10,7 @@ Component({
    */
   data: {
     isLoading: false,
+    loading: true,
     isRefreshing: false,
     userInfo: {},
     vipInfo: null,
@@ -33,9 +34,7 @@ Component({
    */
   methods: {
     async getUser(forceupdates) {
-      this.setData({
-        isRefreshing: true
-      })
+      console.log("user-center getUser", forceupdates);
       const res = await app.getUserInfoAll(forceupdates)
       const userInfo = res.userInfo
       const vipInfo = res.vipInfo
@@ -102,8 +101,15 @@ Component({
       this.setData({
         shop,
       })
-      await this.getVipType();
-      await this.getUser(true);
+      console.log("######");
+      this.getVipType();
+      this.setData({
+        loading: true
+      })
+      await this.getUser(true)
+      this.setData({
+        loading: false
+      })
     },
     /**
      * 切换角色
@@ -138,7 +144,6 @@ Component({
     },
     radioChange(e) {
       let id = e.detail.value
-      console.log('radio发生change事件，携带value值为：', id)
       let vipPackageBuy = null
       this.data.vips.forEach(element => {
         if (element._id == id) {

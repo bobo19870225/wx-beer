@@ -1,13 +1,15 @@
+@import "./index.skeleton.wxss";
+
 .settings_container {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .setting_item {
-    text-align: center;
+  text-align: center;
 }
 
 .setting_icon {
-    width: 50rpx;
-    height: 50rpx;
+  width: 50rpx;
+  height: 50rpx;
 }

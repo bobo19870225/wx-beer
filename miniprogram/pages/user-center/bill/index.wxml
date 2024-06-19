@@ -14,7 +14,7 @@
                 <view class="cu-item shadow arrow" bind:tap="gotoDetail" data-item="{{item}}">
                     <view class="content ">
                         <view class="text-cut" style="gap: 21rpx;">
-                            <view>
+                            <view class="text-df">
                                 交易金额: <span class="text-price" style="{{item.money<0?'color:red':'color:green'}}">
                                     {{filter.formatMoney(item.money)}}
                                 </span>

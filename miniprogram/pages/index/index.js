@@ -30,20 +30,13 @@ Page({
     })
   },
   async getUser() {
+    console.log("index getUser");
     const userInfoAll = await app.getUserInfoAll()
     const userInfo = userInfoAll.userInfo
     if (!userInfo) {
       this.addUser()
     } else {
       app.globalData.user = userInfo
-      if (userInfo.roleList) {
-        if (userInfo.roleList.includes('71fb15f966481f6c01133cc442e52654')) { //管理员
-
-        }
-        if (userInfo.roleList.includes('6e4509e966481f250116f98a68547370')) { //店长
-
-        }
-      }
     }
   },
 
