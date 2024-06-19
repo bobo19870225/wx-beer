@@ -9,11 +9,15 @@ Page({
     zcLineChart: null,
     incom: 0,
     out: 0,
+    isShopManage: false
   },
   onShopChange(e) {
     this.getBillStatistics()
   },
   onLoad: function (e) {
+    this.setData({
+      isShopManage: e.isShopManage == 'true'
+    })
     try {
       var res = wx.getSystemInfoSync();
       const windowWidth = res.windowWidth;

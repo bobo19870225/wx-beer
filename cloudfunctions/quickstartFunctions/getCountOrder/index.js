@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   try {
     let shopId = event?.entity?.shopId
     let match = {
-      type: _.neq(1)
+      type: _.or(_.eq(1), _.eq(2))
     }
     if (shopId) {
       match.shopId = shopId
@@ -19,7 +19,10 @@ exports.main = async (event, context) => {
       .match(match)
       .group({
         _id: null,
-        total: $.sum('$money')
+        count: $.sum(1)
+      })
+      .project({
+        _id: 0,
       })
       .end()
   } catch (error) {

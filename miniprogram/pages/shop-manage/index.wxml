@@ -29,18 +29,17 @@
         店长
       </view>
       <view class="flex justify-around">
-        <view style="text-align: center;">
+        <view bind:tap="goToOperation" style="text-align: center;">
           <!-- <image></image> -->
           <view class="padding">年度总收入</view>
           <view style="font-size: 35rpx;font-weight: bold;">
             <span class="text-price">{{filter.formatMoney(totalIncom)}}</span>
           </view>
         </view>
-        <view style="text-align: center;">
-          <!-- <image></image> -->
-          <view class="padding">年度订单数</view>
+        <view bind:tap="gotoBillPage" style="text-align: center;">
+          <view class="padding">年度成交订单数</view>
           <view style="font-size: 35rpx;font-weight: bold;">
-            {{vipInfo.account.beer||'0'}}
+            {{orderCound}}
           </view>
         </view>
       </view>

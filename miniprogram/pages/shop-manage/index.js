@@ -17,7 +17,8 @@ Component({
     showRoleDialog: false,
     shop: null,
     roleList: [],
-    totalIncom: 0
+    totalIncom: 0,
+    orderCound: 0
   },
   attached() {
 
@@ -27,9 +28,13 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    loadData() {
-      this.getUser(true);
+    async loadData() {
+      await this.getUser(true);
       this.getTotalIncom();
+      this.getCountOrder();
+      this.setData({
+        isRefreshing: false
+      })
     },
     getTotalIncom() {
       wx.cloud.callFunction({
@@ -41,8 +46,25 @@ Component({
           }
         }
       }).then((res) => {
+        console.log(res);
         this.setData({
           totalIncom: res.result?.list[0]?.total || 0
+        })
+      })
+    },
+    getCountOrder() {
+      wx.cloud.callFunction({
+        name: 'quickstartFunctions',
+        data: {
+          type: 'getCountOrder',
+          entity: {
+            shopId: this.data.shop._id
+          }
+        }
+      }).then((res) => {
+        console.log("getCountOrder", res);
+        this.setData({
+          orderCound: res.result?.list[0]?.count || 0
         })
       })
     },
@@ -81,8 +103,7 @@ Component({
         })
       }
       this.setData({
-        userInfo,
-        isRefreshing: false
+        userInfo
       })
     },
     onChooseAvatar(e) {
@@ -135,7 +156,7 @@ Component({
     },
     goToOperation() {
       wx.navigateTo({
-        url: '/pages/manage/operation/index',
+        url: '/pages/manage/operation/index?isShopManage=true',
       })
     },
     gotoBillPage() {
