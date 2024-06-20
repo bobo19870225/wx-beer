@@ -1,76 +1,81 @@
 <wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
-  <view slot="backText">返回</view>
-  <view slot="content">订单</view>
+    <view slot="backText">返回</view>
+    <view slot="content">订单</view>
 </cu-custom>
 <view>
-  <!-- 数据加载，显示loading态 -->
-  <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text text-xs'>加载中...</view>
-  </view>
-  <!-- 店铺 -->
-  <shopBar bind:onShopChange="onShopChange"></shopBar>
-
-  <!-- 数据加载完毕 -->
-  <block wx:if="{{ !isLoading }}">
-    <!-- 有数据 -->
-    <view wx:if="{{ orderList.length >= 1 }}">
-      <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
-        <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
-          <view class="cu-card">
-            <view class="cu-item shadow">
-              <view wx:if="{{orderDetail.state==0}}" class="cu-tag bg-purple">待支付</view>
-              <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
-              <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
-              <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-                <view class="cu-list menu-avatar">
-                  <view class="cu-item">
-                    <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
-                    <view class="content">
-                      <view class="text-grey">{{ goodsDetail.title }}</view>
-                      <view class="text-gray text-sm flex" style="gap: 21rpx;">
-                        <view style="color: gray;">
-                          原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
-                        </view>
-                        <view class="text-gray text-sm">
-                          x{{ goodsDetail.number}}
-                        </view>
-                      </view>
-                      <view class="text-sm" style="color: gold;">
-                        {{vipLevel.name}}价：
-                        <span class="text-price">{{filter.formatMoney(goodsDetail.price*vipLevel.rate / 100)}}</span>
-                        （{{vipLevel.rate}}折）
-                      </view>
-                    </view>
-                  </view>
-                </view>
-              </block>
-              <view class="content padding flex align-center justify-between">
-                <view>
-                  {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
-                </view>
-                <view wx:if="{{orderDetail.state != 0}}">
-                  {{orderDetail.type==0?'原价支付：':'会员支付：'}}
-                  <span style="color: red;font-size: large;" class="text-price">{{filter.formatMoney(orderDetail.total)}}</span>
-                </view>
-                <view wx:if="{{orderDetail.state==0}}">
-                  <button class="cu-btn bg-blue round sm" style="width: 100rpx;" bind:tap="gotoPayCar">
-                    去支付
-                  </button>
-                </view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </scroll-view>
+    <!-- 数据加载，显示loading态 -->
+    <view class='cu-load load-modal' wx:if="{{isLoading}}">
+        <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+        <view class='gray-text text-xs'>加载中...</view>
     </view>
-    <!-- 无数据 -->
-    <block wx:else>
-      <view style="text-align: center;margin-top: 20vh;">
-        <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
-        <view style="top: -240rpx;">暂无数据</view>
-      </view>
+    <!-- 店铺 -->
+    <shopBar bind:onShopChange="onShopChange"></shopBar>
+
+    <!-- 数据加载完毕 -->
+    <block wx:if="{{ !isLoading }}">
+        <!-- 有数据 -->
+        <view wx:if="{{ orderList.length >= 1 }}">
+            <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
+                <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
+                    <view class="cu-card">
+                        <view class="cu-item shadow">
+                            <view wx:if="{{orderDetail.state==0}}" class="cu-tag bg-purple">待支付</view>
+                            <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
+                            <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
+
+                           
+                            <view wx:if="{{orderDetail.tableSeats&&orderDetail.tableSeats[0]}}" class="cu-tag">{{orderDetail.tableSeats[0].name}}</view>
+                            <view wx:if="{{orderDetail.dinersNumb}}" class="cu-tag">{{orderDetail.dinersNumb}}人用餐</view>
+
+                            <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                                <view class="cu-list menu-avatar">
+                                    <view class="cu-item">
+                                        <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+                                        <view class="content">
+                                            <view class="text-grey">{{ goodsDetail.title }}</view>
+                                            <view class="text-gray text-sm flex" style="gap: 21rpx;">
+                                                <view style="color: gray;">
+                                                    原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
+                                                </view>
+                                                <view class="text-gray text-sm">
+                                                    x{{ goodsDetail.number}}
+                                                </view>
+                                            </view>
+                                            <view class="text-sm" style="color: gold;">
+                                                {{vipLevel.name}}价：
+                                                <span class="text-price">{{filter.formatMoney(goodsDetail.price*vipLevel.rate / 100)}}</span>
+                                                （{{vipLevel.rate}}折）
+                                            </view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </block>
+                            <view class="content padding flex align-center justify-between">
+                                <view>
+                                    {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
+                                </view>
+                                <view wx:if="{{orderDetail.state != 0}}">
+                                    {{orderDetail.type==0?'原价支付：':'会员支付：'}}
+                                    <span style="color: red;font-size: large;" class="text-price">{{filter.formatMoney(orderDetail.total)}}</span>
+                                </view>
+                                <view wx:if="{{orderDetail.state==0}}">
+                                    <button class="cu-btn bg-blue round sm" style="width: 100rpx;" bind:tap="gotoPayCar">
+                                        去支付
+                                    </button>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </scroll-view>
+        </view>
+        <!-- 无数据 -->
+        <block wx:else>
+            <view style="text-align: center;margin-top: 20vh;">
+                <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
+                <view style="top: -240rpx;">暂无数据</view>
+            </view>
+        </block>
     </block>
-  </block>
 </view>

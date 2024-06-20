@@ -73,7 +73,7 @@ Component({
       const res = await app.getUserInfoAll(forceupdates)
       const userInfo = res.userInfo
       const isSuperManage = userInfo?.isSuperManage || false
-      const isShopManage = userInfo?.isShopManage || false
+      const isShopManage = userInfo?.manageShopIds?.length > 0 || false
       if (isSuperManage) {
         this.setData({
           roleList: [{

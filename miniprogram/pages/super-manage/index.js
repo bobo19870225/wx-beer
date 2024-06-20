@@ -14,7 +14,17 @@ Component({
         userInfo: {},
         containerHeight: app.globalData.containerHeight,
         showRoleDialog: false,
-        roleList: [],
+        roleList: [{
+            text: '管理员',
+            value: 'superManage',
+            checked: true
+        }, {
+            text: '店长',
+            value: 'shopManage'
+        }, {
+            text: '客户',
+            value: 'client'
+        }],
         shopNumber: 0,
         totalIncom: 0
     },
@@ -51,33 +61,6 @@ Component({
             console.log("super-manage getUser");
             const res = await app.getUserInfoAll(forceupdates)
             const userInfo = res.userInfo
-            const isSuperManage = userInfo?.isSuperManage || false
-            const isShopManage = userInfo?.isShopManage || false
-            if (isSuperManage) {
-                this.setData({
-                    roleList: [{
-                        text: '管理员',
-                        value: 'superManage',
-                        checked: true
-                    }, {
-                        text: '店长',
-                        value: 'shopManage'
-                    }, {
-                        text: '客户',
-                        value: 'client'
-                    }]
-                })
-            } else if (isShopManage) {
-                this.setData({
-                    roleList: [{
-                        text: '店长',
-                        value: 'shopManage'
-                    }, {
-                        text: '客户',
-                        value: 'client'
-                    }]
-                })
-            }
             this.setData({
                 userInfo,
                 isRefreshing: false
