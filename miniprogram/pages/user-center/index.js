@@ -21,7 +21,6 @@ Component({
     vipPackage: null,
     vipPackageBuy: null,
     shop: null,
-    isSuperManage: false,
     isShopManage: false,
     roleList: []
   },
@@ -39,7 +38,7 @@ Component({
       const userInfo = res.userInfo
       const vipInfo = res.vipInfo
       const isSuperManage = userInfo?.isSuperManage || false
-      const isShopManage = userInfo?.isShopManage || false
+      const isShopManage = userInfo?.manageShopIds?.length > 0 || false
       if (isSuperManage) {
         this.setData({
           roleList: [{
@@ -68,7 +67,6 @@ Component({
       }
       this.setData({
         userInfo,
-        isSuperManage,
         isShopManage,
         vipInfo,
         isRefreshing: false

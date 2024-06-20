@@ -6,11 +6,10 @@
 <view>
   <!-- 数据加载，显示loading态 -->
   <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
     <view class='gray-text text-xs'>加载中...</view>
   </view>
   <!-- 店铺 -->
-  <!-- <shopBar bind:onShopChange="onShopChange"></shopBar> -->
+  <shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
 
   <!-- 数据加载完毕 -->
   <block wx:if="{{ !isLoading }}">
@@ -25,7 +24,12 @@
                   <view class="cu-item">
                     <image class="cu-avatar round lg" src="{{goodsDetail.img||'.../../images/icons/morentu.svg'}}" mode="aspectFill" />
                     <view class="content flex-sub">
-                      <view class="text-grey">{{ goodsDetail.title }}</view>
+                      <view class="flex justify-between ">
+                        <view class="text-grey">{{ goodsDetail.title }}</view>
+                        <view>
+                          <button style="width: 180rpx;" class="cu-btn round bg-blue sm" data-data="{{orderDetail}}" bind:tap="setOrderFinish">设为已完成</button>
+                        </view>
+                      </view>
                       <view class="text-gray text-sm flex justify-between">
                         <view style="color: gold;">
                           <span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
@@ -45,9 +49,6 @@
                 <view class="margin-left ">
                   备注：<span>{{orderDetail.remarks}}</span>
                 </view>
-              </view>
-              <view class="flex">
-                <button class="cu-btn round bg-blue" data-data="{{orderDetail}}" bind:tap="setOrderFinish">设为已完成</button>
               </view>
             </view>
           </view>

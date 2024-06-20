@@ -1,6 +1,16 @@
-<view class="cu-bar bg-white padding-lr flex justify-start" style="align-items: center;width: 100vw;height: 90rpx;" bind:tap="openMap">
-    <view style="font-size: 12px;line-height: 90rpx;">
-        {{shop.name}}
+<view wx:if="{{isShopManageUi}}" class="cu-form-group">
+  <picker wx:if="{{shopList.length > 1}}" bindchange="bindPickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
+    <view class="picker" style="text-align: start;font-size: 30rpx">
+      {{shopList[index].name?shopList[index].name:'请选择一家店铺...'}}
     </view>
-    <image wx:if="{{selecteAble}}" style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
+  </picker>
+  <view wx:else style="font-size: 30rpx;line-height: 90rpx;">
+    {{shop.name}}
+  </view>
+</view>
+<view wx:else class="cu-bar bg-white padding-lr flex justify-start" style="align-items: center;width: 100vw;height: 90rpx;" bind:tap="openMap">
+  <view style="font-size: 12px;line-height: 90rpx;">
+    {{shop.name}}
+  </view>
+  <image wx:if="{{selectableUi && shopList.length > 1}}" style="width: 16px;" src="../../images/icons/more.png" mode="widthFix" />
 </view>
