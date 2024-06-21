@@ -114,7 +114,6 @@ Page({
     this.setData({
       shop
     })
-    // this.fetchGoodsList();
   },
   async fetchGoodsList() {
     this.setData({
@@ -161,7 +160,6 @@ Page({
     let vipTotal = 0
     let totalNumber = 0
     let temp = this.data.goodsList.map((item) => {
-      // console.log(goodsId, item._id)
       if (item._id == goodsId + "") {
         let number = item.number
         if (isAdd) {
@@ -180,7 +178,9 @@ Page({
       }
       return false
     })
-    vipTotal = total * this.data.vipLevel.rate / 100
+    if (this.data.vipLevel) {
+      vipTotal = total * this.data.vipLevel.rate / 100
+    }
     this.setData({
       goodsList: temp,
       orderTotalPrice: total,
@@ -220,7 +220,6 @@ Page({
           },
         },
       }).then((res) => {
-        //   console.log(res);
         if (res.result.success) {
           wx.navigateTo({
             url: '/pages/pay-car/index',
@@ -251,7 +250,6 @@ Page({
     }
   },
   tabSelect(e) {
-    // console.log(e.currentTarget.dataset.id);
     this.setData({
       TabCur: e.currentTarget.dataset.id,
       MainCur: e.currentTarget.dataset.id,
@@ -259,7 +257,6 @@ Page({
     })
   },
   VerticalMain(e) {
-    // console.log(e);
     let that = this;
     let list = this.data.goodsTypeList;
     let tabHeight = 0;

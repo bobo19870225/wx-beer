@@ -10,8 +10,6 @@
   <view class='gray-text text-xs'>加载中...</view>
 </view>
 
-<!-- 店铺 -->
-<!-- <shopBar bind:onShopChange="onShopChange"></shopBar> -->
 <view class="flex align-center bg-white solid-top" style="padding: 18rpx;width: 100vw;gap: 18rpx;">
   <image style="width: 45rpx;height: 60rpx;" src="../../images/icons/shop.svg">
   </image>
@@ -28,7 +26,7 @@
         <view wx:if="{{ orderList.length >= 1 }}" class="order-number">{{orderTotalNumber}}</view>
       </view>
       <view class="margin-left" wx:if="{{orderTotalPrice}}">
-        <view class="flex">
+        <view wx:if="{{vipLevel}}" class="flex">
           <view style="margin-left: 12px;">会员到手</view>
           <view class="order-total margin-left-xs">
             <span class="text-price">{{filter.formatMoney(orderTotalVipPrice)}}</span>
@@ -160,14 +158,14 @@
             <view class="content">
               <view>{{ ordersDetail.title }}</view>
               <view class="text-gray text-sm ">
-                <view wx:if="{{ordersDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class="text-cut">
+                <view wx:if="{{ordersDetail._id!='880c33886655f29201dee62c75d9f134'}}" class="text-cut">
                   原价：￥{{ ordersDetail.price }}
                 </view>
                 <view wx:else>
                   剩余：{{vipAccount.beer}} 瓶
                 </view>
               </view>
-              <view wx:if="{{vipLevel&&ordersDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class=" text-cut text-xs">
+              <view wx:if="{{vipLevel&&ordersDetail._id!='880c33886655f29201dee62c75d9f134'}}" class=" text-cut text-xs">
                 <text class="text-orange">{{vipLevel.name}}￥{{ ordersDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
               </view>
             </view>
