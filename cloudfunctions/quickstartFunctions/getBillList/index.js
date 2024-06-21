@@ -7,8 +7,20 @@ exports.main = async (event, context) => {
   try {
     let {
       shopId,
-      _openid
+      _openid,
     } = event.entity
+
+    let {
+      pageNumber,
+      pageSize
+    } = event.page
+    if (!pageNumber || pageNumber < 1) {
+      pageNumber = 1
+    }
+    if (!pageSize || pageSize < 1 || pageSize > 100) {
+      pageSize = 100 //非法值设为最大值
+    }
+
     let where = {}
     if (shopId) {
       where.shopId = shopId
@@ -16,7 +28,12 @@ exports.main = async (event, context) => {
     if (_openid) {
       where._openid = _openid
     }
-    res = await db.collection('bill').where(where).orderBy('createDate', 'desc').get();
+    res = await db.collection('bill')
+      .where(where)
+      .orderBy('createDate', 'desc')
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize)
+      .get();
     const data = res.data
     return {
       success: true,
