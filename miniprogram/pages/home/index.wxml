@@ -1,211 +1,241 @@
 <wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}" isCustom="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">慧管店</view>
+    <view slot="backText">返回</view>
+    <view slot="content">慧管店</view>
 </cu-custom>
 
 <!-- 数据加载，显示loading态 -->
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-  <view class='gray-text text-xs'>加载中...</view>
+    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+    <view class='gray-text text-xs'>加载中...</view>
 </view>
 
 <view class="flex align-center bg-white solid-top" style="padding: 18rpx;width: 100vw;gap: 18rpx;">
-  <image style="width: 45rpx;height: 60rpx;" src="../../images/icons/shop.svg">
-  </image>
-  <view>{{shop.name}}</view>
+    <image style="width: 45rpx;height: 60rpx;" src="../../images/icons/shop.svg">
+    </image>
+    <view>{{shop.name}}</view>
 </view>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-  <!-- 有数据 -->
-  <view wx:if="{{ goodsList.length >= 1 }}">
-    <!-- 底部结算 -->
-    <view class="order-list" bindtap="openPopup">
-      <view class="margin-left">
-        <image style="width: 60rpx;" src="../../images/icons/car.png" mode="widthFix" />
-        <view wx:if="{{ orderList.length >= 1 }}" class="order-number">{{orderTotalNumber}}</view>
-      </view>
-      <view class="margin-left" wx:if="{{orderTotalPrice}}">
-        <view wx:if="{{vipLevel}}" class="flex">
-          <view style="margin-left: 12px;">会员到手</view>
-          <view class="order-total margin-left-xs">
-            <span class="text-price">{{filter.formatMoney(orderTotalVipPrice)}}</span>
-          </view>
-        </view>
-        <view>
-          <view style="margin-left: 12px;font-size: 21rpx;text-decoration: line-through;color: gray;">
-            <span class="text-price"> 原价 {{filter.formatMoney(orderTotalPrice)}}</span>
-          </view>
-        </view>
-      </view>
-
-      <view wx:else style="margin-left: 12px;">
-        请添加菜品
-      </view>
-      <view style="position: absolute;right: 0; top: -15rpx;height: 100%;">
-        <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1&&unPayList.length<1}}">
-          去结算
-        </button>
-        <view wx:if="{{unPayList.length>0}}" class="order-unpay-number" style="right: 0;">{{unPayList.length}}单未结算</view>
-      </view>
-
-    </view>
-
-    <!-- 商品列表 -->
-    <view class="VerticalBox">
-      <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx);">
-        <view class="cu-item {{index==TabCur?'text-blue cur':''}}" wx:for="{{goodsTypeList}}" wx:key="index" bindtap='tabSelect' data-id="{{item.value}}">
-          {{item.title}}
-        </view>
-      </scroll-view>
-      <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 50}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain" refresher-enabled="true" bindrefresherrefresh="fetchGoodsList" refresher-triggered="{{isRefreshing}}">
-        <view class=" padding-top padding-lr" wx:for="{{goodsTypeList}}" wx:key="index" id="main-{{item.value}}">
-          <view class='cu-bar solid-bottom bg-white'>
-            <view class='action'>
-              <text class='cuIcon-title text-blue'></text> {{item.title}}
+    <!-- 有数据 -->
+    <view wx:if="{{ goodsList.length >= 1 }}">
+        <!-- 底部结算 -->
+        <view class="order-list" bindtap="openPopup">
+            <view class="margin-left">
+                <image style="width: 60rpx;" src="../../images/icons/car.png" mode="widthFix" />
+                <view wx:if="{{ orderList.length >= 1 }}" class="order-number">{{orderTotalNumber}}</view>
             </view>
-          </view>
-          <view class="cu-list menu-avatar bg-white" style="min-height: 900rpx;position: relative;">
-            <image style="width: 100%; position: absolute;top: 20%;opacity: 0.1;" src="../../images/no-goods.svg" mode=""></image>
-            <!-- 人气Top5 -->
-            <view wx:if="{{item.value==0&&index<5}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
-              <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
-              <view class="content">
+            <view class="margin-left" wx:if="{{orderTotalPrice}}">
+                <view wx:if="{{vipLevel}}" class="flex">
+                    <view style="margin-left: 12px;">会员到手</view>
+                    <view class="order-total margin-left-xs">
+                        <span class="text-price">{{filter.formatMoney(orderTotalVipPrice)}}</span>
+                    </view>
+                </view>
                 <view>
-                  <text class="text-cut">{{goodsDetail.title }}</text>
-                  <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                    <view style="margin-left: 12px;font-size: 21rpx;text-decoration: line-through;color: gray;">
+                        <span class="text-price"> 原价 {{filter.formatMoney(orderTotalPrice)}}</span>
+                    </view>
                 </view>
-                <view class="text-gray text-sm ">
-                  <view class="text-cut">
-                    原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
-                  </view>
-                </view>
-                <view wx:if="{{vipLevel}}" class=" text-cut text-xs">
-                  <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
-                  <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
-                </view>
-              </view>
-              <view class="action">
-                <view class="goods-flex">
-                  <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
-                  </image>
-                  <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                  <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
-                  </image>
-                </view>
-              </view>
             </view>
 
-            <!-- 商品分类 -->
-            <view wx:if="{{m1.isShow(item,goodsDetail)}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
-              <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
-              <view class="content">
-                <view>
-                  <text class="text-cut">{{goodsDetail.title }}</text>
-                  <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
-                </view>
-                <view class="text-gray text-sm ">
-                  <view wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class="text-cut">
-                    原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
-                  </view>
-                  <view wx:else>
-                    剩余：{{vipAccount.beer}} 瓶
-                  </view>
-                </view>
-                <view wx:if="{{vipLevel&&goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}" class=" text-cut text-xs">
-                  <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
-                </view>
-              </view>
-              <view class="action">
-                <view class="goods-flex">
-                  <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
-                  </image>
-                  <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                  <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
-                  </image>
-                  <view class="btn-add" wx:else></view>
-                </view>
-              </view>
+            <view wx:else style="margin-left: 12px;">
+                请添加菜品
             </view>
-          </view>
+            <view style="position: absolute;right: 0; top: -15rpx;height: 100%;">
+                <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1&&unPayList.length<1}}">
+                    去结算
+                </button>
+                <view wx:if="{{unPayList.length>0}}" class="order-unpay-number" style="right: 0;">{{unPayList.length}}单未结算</view>
+            </view>
+
         </view>
-        <view style="height: 90rpx;"></view>
-      </scroll-view>
-    </view>
-  </view>
 
-  <!-- 无数据 -->
-  <block wx:else>
-    <view style="text-align: center;margin-top: 20vh;">
-      <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
-      <view style="top: -240rpx;">暂无数据</view>
-    </view>
-  </block>
+        <!-- 商品列表 -->
+        <view class="VerticalBox">
+            <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx);">
+                <view class="cu-item {{index==TabCur?'text-blue cur':''}}" wx:for="{{goodsTypeList}}" wx:key="index" bindtap='tabSelect' data-id="{{item.value}}">
+                    {{item.title}}
+                </view>
+            </scroll-view>
+            <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 50}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain" refresher-enabled="true" bindrefresherrefresh="fetchGoodsList" refresher-triggered="{{isRefreshing}}">
+                <view class=" padding-top padding-lr" wx:for="{{goodsTypeList}}" wx:key="index" id="main-{{item.value}}">
+                    <view class='cu-bar solid-bottom bg-white'>
+                        <text class='cuIcon-title text-blue'>{{item.title}}</text>
+                    </view>
+                    <view class="cu-list menu-avatar bg-white" style="min-height: 900rpx;position: relative;">
+                        <image style="width: 100%; position: absolute;top: 20%;opacity: 0.1;" src="../../images/no-goods.svg" mode=""></image>
+                        <!-- 人气Top5 -->
+                        <view wx:if="{{item.value==0&&index<5}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+                            <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+                            <view class="content">
+                                <view>
+                                    <text class="text-cut">{{goodsDetail.title }}</text>
+                                    <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                                </view>
+                                <view class="text-gray text-sm ">
+                                    <view class="text-cut">
+                                        原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
+                                    </view>
+                                </view>
+                                <view wx:if="{{vipLevel}}" class=" text-cut text-xs">
+                                    <!-- <text class="cuIcon-vip text-orange margin-left-xs"></text> -->
+                                    <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate/10}}折）</text>
+                                </view>
+                            </view>
+                            <view class="action">
+                                <view class="goods-flex">
+                                    <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                    </image>
+                                    <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                                    <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                    </image>
+                                </view>
+                            </view>
+                        </view>
 
-  <!-- 底部弹窗 -->
-  <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
-  <view class="info-bottom" wx:if="{{showOrder}}">
-    <view class="flex justify-center align-center padding" style="gap: 32rpx;">
-      <text class="line left-line"></text>
-      <text>购物车</text>
-      <text class="line right-line"></text>
+                        <!-- 商品分类 -->
+                        <view wx:if="{{m1.isShow(item,goodsDetail)}}" wx:for="{{goodsList}}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+                            <block wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}">
+                                <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+                                <view class="content">
+                                    <view>
+                                        <text class="text-cut">{{goodsDetail.title }}</text>
+                                        <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                                    </view>
+                                    <view class="text-gray text-sm ">
+                                        <view class="text-cut">
+                                            原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
+                                        </view>
+                                    </view>
+                                    <view wx:if="{{vipLevel}}" class=" text-cut text-xs">
+                                        <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate/10}}折）</text>
+                                    </view>
+                                </view>
+                                <view class="action">
+                                    <view class="goods-flex">
+                                        <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                        </image>
+                                        <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                                        <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                        </image>
+                                        <view class="btn-add" wx:else></view>
+                                    </view>
+                                </view>
+                            </block>
+                            <!-- 会员存酒 -->
+                            <block wx:else>
+                                <block wx:if="{{vipLevel}}">
+                                    <image class="cu-avatar lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+                                    <view class="content">
+                                        <view>
+                                            <text class="text-cut">{{goodsDetail.title }}</text>
+                                            <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                                        </view>
+                                        <!-- <view class="text-gray text-sm ">
+                                            <view class="text-cut">
+                                                原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
+                                            </view>
+                                        </view> -->
+                                        <view class=" text-cut text-xs">
+                                            剩余：{{vipAccount.beer}} 瓶
+                                        </view>
+                                    </view>
+                                    <view class="action">
+                                        <view class="goods-flex">
+                                            <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                            </image>
+                                            <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
+                                            <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                            </image>
+                                            <view class="btn-add" wx:else></view>
+                                        </view>
+                                    </view>
+                                </block>
+                                <view style="text-align: center;width: 100%;" class="text-gray" wx:else>
+                                    充值成为会员，获得赠酒
+                                </view>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+                <view style="height: 90rpx;"></view>
+            </scroll-view>
+        </view>
     </view>
-    <scroll-view scroll-y="true" style="max-height: 200px;">
-      <view class="cu-list menu-avatar">
-        <block wx:for="{{ orderList }}" wx:for-item="ordersDetail" wx:key="_id" wx:for-index="index">
-          <view class="cu-item">
-            <image class="cu-avatar lg" src="{{ordersDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
-            <view class="content">
-              <view>{{ ordersDetail.title }}</view>
-              <view class="text-gray text-sm ">
-                <view wx:if="{{ordersDetail._id!='880c33886655f29201dee62c75d9f134'}}" class="text-cut">
-                  原价：￥{{ ordersDetail.price }}
-                </view>
-                <view wx:else>
-                  剩余：{{vipAccount.beer}} 瓶
-                </view>
-              </view>
-              <view wx:if="{{vipLevel&&ordersDetail._id!='880c33886655f29201dee62c75d9f134'}}" class=" text-cut text-xs">
-                <text class="text-orange">{{vipLevel.name}}￥{{ ordersDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate}}折）</text>
-              </view>
+
+    <!-- 无数据 -->
+    <block wx:else>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
+    </block>
+
+    <!-- 底部弹窗 -->
+    <view class="popup-box" wx:if="{{showOrder}}" bindtap="closePopup"></view>
+    <view class="info-bottom" wx:if="{{showOrder}}">
+        <view class="flex justify-center align-center padding" style="gap: 32rpx;">
+            <text class="line left-line"></text>
+            <text>购物车</text>
+            <text class="line right-line"></text>
+        </view>
+        <scroll-view scroll-y="true" style="max-height: 200px;">
+            <view class="cu-list menu-avatar">
+                <block wx:for="{{ orderList }}" wx:for-item="ordersDetail" wx:key="_id" wx:for-index="index">
+                    <view class="cu-item">
+                        <image class="cu-avatar lg" src="{{ordersDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+                        <view class="content">
+                            <view>{{ ordersDetail.title }}</view>
+                            <view class="text-gray text-sm ">
+                                <view wx:if="{{ordersDetail._id!='880c33886655f29201dee62c75d9f134'}}" class="text-cut">
+                                    原价：￥{{ ordersDetail.price }}
+                                </view>
+                                <view wx:else>
+                                    剩余：{{vipAccount.beer}} 瓶
+                                </view>
+                            </view>
+                            <view wx:if="{{vipLevel&&ordersDetail._id!='880c33886655f29201dee62c75d9f134'}}" class=" text-cut text-xs">
+                                <text class="text-orange">{{vipLevel.name}}￥{{ ordersDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate/10}}折）</text>
+                            </view>
+                        </view>
+                        <view class="action">
+                            <view class="goods-flex">
+                                <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/reduce.png">
+                                </image>
+                                <view wx:if="{{ordersDetail.number > 0}}" class="price-symbol">{{ordersDetail.number}}</view>
+                                <image wx:if="{{m1.isShowAddBtn(ordersDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/add.png">
+                                </image>
+                                <view class="btn-add" wx:else></view>
+                            </view>
+                        </view>
+                    </view>
+                </block>
             </view>
-            <view class="action">
-              <view class="goods-flex">
-                <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/reduce.png">
-                </image>
-                <view wx:if="{{ordersDetail.number > 0}}" class="price-symbol">{{ordersDetail.number}}</view>
-                <image wx:if="{{m1.isShowAddBtn(ordersDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/add.png">
-                </image>
-                <view class="btn-add" wx:else></view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </view>
-    </scroll-view>
-    <view style="height: 320rpx;"></view>
-  </view>
+        </scroll-view>
+        <view style="height: 320rpx;"></view>
+    </view>
 </block>
 
 <wxs module="m1">
-  var isShow = function (item, goods) {
-    var tag = goods.classifyTag
-    if (tag) {
-      return tag.indexOf(item.title) > -1
+    var isShow = function (item, goods) {
+        var tag = goods.classifyTag
+        if (tag) {
+            return tag.indexOf(item.title) > -1
+        }
+        return false
     }
-    return false
-  }
 
-  var isShowAddBtn = function (goods, vipAccount) {
-    var number = goods.number
-    if (goods._id == '8d1a732f6668632f02bffddc546aef20') {
-      if (!number) {
+    var isShowAddBtn = function (goods, vipAccount) {
+        var number = goods.number
+        if (goods._id == '8d1a732f6668632f02bffddc546aef20') {
+            if (!number) {
+                return true
+            }
+            return number < vipAccount.beer
+        }
         return true
-      }
-      return number <= vipAccount.beer
     }
-    return true
-  }
-  module.exports.isShow = isShow;
-  module.exports.isShowAddBtn = isShowAddBtn;
+    module.exports.isShow = isShow;
+    module.exports.isShowAddBtn = isShowAddBtn;
 </wxs>

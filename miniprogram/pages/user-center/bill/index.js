@@ -35,9 +35,6 @@ Page({
    * 加载账单
    */
   async loadData() {
-    this.setData({
-      isRefreshing: true
-    })
     const _openid = await app.getOpenid()
     wx.cloud.callFunction({
       name: 'quickstartFunctions',
