@@ -87,7 +87,7 @@
                     </view>
                 </view>
                 <view style="margin-right: 16px;">
-                    <button class="cu-btn  round bg-orange" bind:tap="pay" disabled="{{total*vipTotal==0}}">
+                    <button class="cu-btn  round bg-blue" bind:tap="pay" disabled="{{total==0}}">
                         去支付
                     </button>
                 </view>
@@ -137,13 +137,12 @@
                         <textarea style="text-align: start;" name="remarks" maxlength="300" placeholder="可填写口味，偏好等..."></textarea>
                     </view>
 
-                    <view class="cu-bar">
-                        <button class="cu-btn round bg-blue text-orange" style="flex: 1;" data-type="vipPay" formType="submit">
+                    <view class="flex justify-between" style="gap: 18rpx;">
+                        <button wx:if="{{preferential}}" class="cu-btn round bg-blue text-orange" style="flex: 1;" data-type="vipPay" formType="submit">
                             <text class="cuIcon-vip"></text>会员支付（立省<span class="text-price">{{filter.formatMoney(preferential)}}</span>）
                         </button>
-                        <!-- bindtap="nonmemberPay" -->
-                        <button class="cu-btn round bg-gray" style="margin-left: 9rpx;width: 210rpx;" data-type="nonmemberPay" formType="submit">
-                            <text class="cuIcon-pay"></text> 普通支付
+                        <button class="cu-btn round bg-gray" style="{{preferential?'width: 210rpx;':'width: 90%;'}}" data-type="wxPay" formType="submit">
+                            <text class="cuIcon-pay"></text> 微信支付
                         </button>
                     </view>
                 </form>

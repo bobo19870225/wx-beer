@@ -33,7 +33,7 @@
                     </view>
                 </view>
                 <view>
-                    <view style="margin-left: 12px;font-size: 21rpx;text-decoration: line-through;color: gray;">
+                    <view style="margin-left: 12px;font-size: 21rpx;color: gray;">
                         <span class="text-price"> 原价 {{filter.formatMoney(orderTotalPrice)}}</span>
                     </view>
                 </view>
@@ -42,13 +42,12 @@
             <view wx:else style="margin-left: 12px;">
                 请添加菜品
             </view>
-            <view style="position: absolute;right: 0; top: -15rpx;height: 100%;">
-                <button style="width:90px" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1&&unPayList.length<1}}">
+            <view style="position: absolute;right: 0; top: -16rpx;height: 90rpx;">
+                <button style="width:210rpx" class="order-pay" catchtap="goToPay" disabled="{{orderTotalNumber<1&&unPayList.length<1}}">
                     去结算
                 </button>
                 <view wx:if="{{unPayList.length>0}}" class="order-unpay-number" style="right: 0;">{{unPayList.length}}单未结算</view>
             </view>
-
         </view>
 
         <!-- 商品列表 -->
@@ -59,7 +58,7 @@
                 </view>
             </scroll-view>
             <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 50}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain" refresher-enabled="true" bindrefresherrefresh="fetchGoodsList" refresher-triggered="{{isRefreshing}}">
-                <view class=" padding-top padding-lr" wx:for="{{goodsTypeList}}" wx:key="index" id="main-{{item.value}}">
+                <view class=" padding-top padding-lr-sm" wx:for="{{goodsTypeList}}" wx:key="index" id="main-{{item.value}}">
                     <view class='cu-bar solid-bottom bg-white'>
                         <text class='cuIcon-title text-blue'>{{item.title}}</text>
                     </view>
@@ -83,7 +82,7 @@
                                     <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate/10}}折）</text>
                                 </view>
                             </view>
-                            <view class="action">
+                            <view style="width: 100% ;text-align: center;">
                                 <view class="goods-flex">
                                     <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
                                     </image>
@@ -112,7 +111,7 @@
                                         <text class="text-orange">{{vipLevel.name}}￥{{ goodsDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate/10}}折）</text>
                                     </view>
                                 </view>
-                                <view class="action">
+                                <view style="width: 100% ;text-align: center;">
                                     <view class="goods-flex">
                                         <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
                                         </image>
@@ -141,7 +140,7 @@
                                             剩余：{{vipAccount.beer}} 瓶
                                         </view>
                                     </view>
-                                    <view class="action">
+                                    <view style="width: 100% ;text-align: center;">
                                         <view class="goods-flex">
                                             <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
                                             </image>
@@ -199,7 +198,7 @@
                                 <text class="text-orange">{{vipLevel.name}}￥{{ ordersDetail.price*vipLevel.rate / 100 }}（{{vipLevel.rate/10}}折）</text>
                             </view>
                         </view>
-                        <view class="action">
+                        <view style="width: 100% ;text-align: center;">
                             <view class="goods-flex">
                                 <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/reduce.png">
                                 </image>

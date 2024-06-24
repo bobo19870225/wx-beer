@@ -67,7 +67,7 @@ Page({
         const orderList = this.data.orderList.filter((value) => {
             return orderId == value._id
         })
-        let preferential = total - vipTotal
+        let preferential = null
         let total = 0;
         let vipTotal = 0;
         let beer = 0;
@@ -79,8 +79,10 @@ Page({
                 total += elementg.number * elementg.price
             }
         });
-        vipTotal = total * this.data.vipLevel.rate / 100
-        preferential = total - vipTotal
+        if (this.data.vipLevel) {
+            vipTotal = total * this.data.vipLevel.rate / 100
+            preferential = total - vipTotal
+        }
         this.setData({
             order,
             total: total,
@@ -125,44 +127,15 @@ Page({
             total = this.data.total
             payType = 0
         }
-        const tableSeatsId = this.data.tableSeatsId
         this.closeDialogPay()
-        const that = this
         wx.showLoading({
             title: '正在支付...',
             mask: true
         })
         if (payType == 1) { //会员支付
-            let entity = that.data.order
-            entity.payType = payType
-            entity.tableSeatsId = tableSeatsId //桌位
-            entity.total = total
-            entity.beer = this.data.beer
-            entity.rate = this.data.vipLevel.rate
-            entity.remarks = remarks
-            entity.dinersNumb = that.data.dinersNumb //用餐人数
-            wx.cloud.callFunction({
-                name: 'quickstartFunctions',
-                data: {
-                    type: 'payForGoods',
-                    entity
-                },
-            }).then((res) => {
-                wx.hideLoading()
-                console.log("updateOrder", res);
-                if (res.result.success) {
-                    app.globalData.PageCur = "order"
-                    wx.reLaunch({
-                        url: '/pages/index/index',
-                    })
-                } else {
-                    wx.showToast({
-                        icon: 'error',
-                        title: '下单失败！',
-                    })
-                }
-            })
-        } else { //普通支付
+            this.callPayForGoods(1, total, remarks)
+        } else { //微信支付
+            let that = this
             wx.cloud.callFunction({
                 name: 'wxpayFunctions',
                 data: {
@@ -187,13 +160,46 @@ Page({
                             console.error('唤起支付组件失败：', err);
                         },
                         complete() {
-
+                            wx.hideLoading()
+                            // 模拟支付成功
+                            that.callPayForGoods(0, total, remarks)
                         }
                     });
                 },
             });
         }
-
+    },
+    callPayForGoods(payType, total, remarks) {
+        let entity = this.data.order
+        entity.payType = payType
+        entity.tableSeatsId = this.data.tableSeatsId
+        //桌位
+        entity.total = total
+        entity.beer = this.data.beer
+        entity.rate = this.data.vipLevel?.rate || 100
+        entity.remarks = remarks
+        entity.dinersNumb = this.data.dinersNumb //用餐人数
+        wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'payForGoods',
+                entity
+            },
+        }).then((res) => {
+            console.log("updateOrder", res);
+            wx.hideLoading()
+            if (res.result.success) {
+                app.globalData.PageCur = "order"
+                wx.reLaunch({
+                    url: '/pages/index/index',
+                })
+            } else {
+                wx.showToast({
+                    icon: 'error',
+                    title: '下单失败！' + res.errMsg,
+                })
+            }
+        })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
