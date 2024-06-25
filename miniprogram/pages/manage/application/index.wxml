@@ -1,46 +1,55 @@
 <wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">申请管理</view>
+  <view slot="backText">返回</view>
+  <view slot="content">申请管理</view>
 </cu-custom>
 <!-- 对话框 -->
 <dialog showDialogProps="{{showDialog}}" postDataProps="{{dialogData}}" bind:onOk="onDelete"> </dialog>
 <!-- 数据加载，显示loading态 -->
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text text-xs'>加载中...</view>
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange"></shopBar>
-<!-- 数据加载完毕 -->
-<block wx:if="{{ !isLoading }}">
-    <scroll-view>
-        <view class="cu-list menu margin-top-sm">
-            <view class="cu-item" style="align-items: flex-end;" wx:for="{{ list }}" wx:key="_id">
-                <view>
-                    <view>
-                        <image class="cu-avatar radius lg" src="{{item.imgs[0]||'../../images/icons/morentu.svg'}}">
-                        </image>
-                    </view>
-                    <image class="cu-avatar radius lg margin-top-xs" src="{{item.imgs[1]||'../../images/icons/morentu.svg'}}">
-                    </image>
-                </view>
-
-                <view class="content padding-left">
-                    <view class="text-cut text-sm"> 姓名：{{item.name}}</view>
-                    <view class="text-cut text-sm"> 电话：{{item.phone}}</view>
-                    <view class="text-cut text-sm"> 备注：{{item.remarks}}</view>
-                    <view class="text-cut text-sm"> {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}</view>
-                </view>
-                <view class="action padding-bottom-xs">
-                    <button class="cu-btn bg-red shadow sm" style="width: 90rpx;" bind:tap="applicationDispass" data-item="{{item}}">
-                        驳回
-                    </button>
-                    <button class="cu-btn bg-blue shadow sm" style="margin-left: 9rpx;width: 120rpx;" bind:tap="applicationPass" data-item="{{item}}">
-                        审核通过
-                    </button>
-                </view>
-            </view>
+<scroll-view wx:if="{{ list.length >= 1 }}" refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getApplicationList" refresher-triggered="{{isRefreshing}}">
+  <view class="cu-list menu margin-top-sm">
+    <view class="cu-item" style="align-items: flex-end;" wx:for="{{ list }}" wx:key="_id">
+      <view>
+        <view>
+          <image class="cu-avatar radius lg" src="{{item.imgs[0]||'../../images/icons/morentu.svg'}}">
+          </image>
         </view>
-    </scroll-view>
+        <image class="cu-avatar radius lg margin-top-xs" src="{{item.imgs[1]||'../../images/icons/morentu.svg'}}">
+        </image>
+      </view>
+
+      <view class="content padding-left">
+        <view class="text-cut text-sm">
+          姓名：{{item.name}}
+          <view wx:if="{{item.state==0}}" class="cu-tag line-orange round sm " style="margin-left: 24rpx;">待审核</view>
+          <view wx:if="{{item.state==1}}" class="cu-tag line-green round sm " style="margin-left: 24rpx;">已通过</view>
+          <view wx:if="{{item.state==2}}" class="cu-tag line-green round sm " style="margin-left: 24rpx;">已驳回</view>
+        </view>
+        <view class="text-cut text-sm"> 电话：{{item.phone}}</view>
+        <view class="text-cut text-sm"> 备注：{{item.remarks}}</view>
+        <view class="text-cut text-sm"> {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}</view>
+      </view>
+      <view wx:if="{{item.state==0}}" class="action padding-bottom-xs">
+        <button class="cu-btn bg-red shadow sm" style="width: 90rpx;" bind:tap="applicationDispass" data-item="{{item}}">
+          驳回
+        </button>
+        <button class="cu-btn bg-blue shadow sm" style="margin-left: 9rpx;width: 120rpx;" bind:tap="applicationPass" data-item="{{item}}">
+          审核通过
+        </button>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<!-- 无数据 -->
+<block wx:else>
+  <view style="text-align: center;margin-top: 20vh;">
+    <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+    <view style="top: -240rpx;">暂无数据</view>
+  </view>
 </block>

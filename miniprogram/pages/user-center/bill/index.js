@@ -8,6 +8,7 @@ Page({
     isRefreshing: false,
     billList: [],
     containerHeight: app.globalData.containerHeight,
+    isManager: false
   },
 
   /**
@@ -15,6 +16,7 @@ Page({
    */
   async onLoad(options) {
     this.setData({
+      isManager: options.isShopManage == 'true' || options.isSuperManage == 'true',
       isLoading: true
     })
     await this.loadData()
@@ -35,14 +37,15 @@ Page({
    * 加载账单
    */
   async loadData() {
-    const _openid = await app.getOpenid()
+    const entity = {}
+    if (!this.data.isManager) {
+      entity['_openid'] = await app.getOpenid()
+    }
     wx.cloud.callFunction({
       name: 'quickstartFunctions',
       data: {
         type: 'getBillList',
-        entity: {
-          _openid
-        }
+        entity: entity
       }
     }).then((res) => {
       this.setData({

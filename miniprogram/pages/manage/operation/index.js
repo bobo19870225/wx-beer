@@ -15,6 +15,7 @@ Page({
     this.getBillStatistics()
   },
   onLoad: function (e) {
+    console.log(e);
     this.setData({
       isShopManage: e.isShopManage == 'true'
     })

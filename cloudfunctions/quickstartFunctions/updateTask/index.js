@@ -11,10 +11,15 @@ exports.main = async (event, context) => {
     let res = null
     if (id) {
       delete entity._id
+      entity.updateDate = new Date()
+      entity.updateOpenId = wxContext.OPENID
       res = await db.collection('task').doc(id).update({
         data: entity
       });
     } else {
+      entity.createDate = new Date()
+      entity._openid = wxContext.OPENID
+      entity.isDelete = false
       res = await db.collection('task').add({
         data: entity
       });

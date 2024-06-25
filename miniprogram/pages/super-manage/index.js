@@ -121,7 +121,7 @@ Component({
         },
         goToOperation() {
             wx.navigateTo({
-                url: '/pages/manage/operation/index',
+                url: '/pages/manage/operation/index?isSuperManage=true',
             })
         },
         gotoSettingPage(e) {

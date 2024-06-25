@@ -8,7 +8,7 @@
   <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange" selectable="{{isShopManage}}"></shopBar>
+<shopBar bind:onShopChange="onShopChange" isShopManage="{{isShopManage}}"></shopBar>
 <block wx:if="{{!isLoading}}">
   <view class="container">
     <view class="title">

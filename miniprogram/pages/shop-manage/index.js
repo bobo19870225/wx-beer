@@ -161,7 +161,7 @@ Component({
     },
     gotoBillPage() {
       wx.navigateTo({
-        url: `/pages/user-center/bill/index`,
+        url: `/pages/user-center/bill/index?isShopManage=true`,
       });
     },
     goTopManageDishes() {

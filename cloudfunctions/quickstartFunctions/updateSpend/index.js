@@ -42,7 +42,7 @@ exports.main = async (event, context) => {
             entity.total = total
             if (id) {
                 delete entity._id
-                entity.updateOpenid = wxContext.OPENID
+                entity.updateOpenId = wxContext.OPENID
                 entity.updateDate = new Date()
                 res = await transaction.collection('spend').doc(id).update({
                     data: entity,

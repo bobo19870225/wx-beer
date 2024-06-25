@@ -1,59 +1,53 @@
-<!--pages/application/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">申请表</view>
+  <view slot="content">申请记录</view>
 </cu-custom>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
   <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
   <view class='gray-text text-xs'>加载中...</view>
 </view>
-<block wx:else>
-  <form catchsubmit="formSubmit" catchreset="formReset">
-    <view class="cu-form-group margin-top">
-      <view class="title">选择店铺</view>
-      <picker name="shopIndex" bindchange="PickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
-        <view class="picker">
-          {{shopList[index].name?shopList[index].name:'请选择一家店铺...'}}
-        </view>
-      </picker>
-    </view>
-    <block wx:if="{{hadApplication}}">
-      <view style="text-align: center;width: 100vw;margin-top: 30vh; font-size: 34rpx;">
-        您在该店的申请已提交，审核中，请耐心等待...
-      </view>
-    </block>
-    <block wx:else>
-      <view class="cu-form-group margin-top">
-        <view class="title">ID</view>
-        <input name="_openid" disabled="true" value="{{_openid}}"></input>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">姓名</view>
-        <input name="name" type="nickname" placeholder="请填写姓名..."></input>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">手机号码</view>
-        <input name="phone" type="number" placeholder="请填写手机号..."></input>
-        <view class="cu-capsule radius">
-          <view class="cu-tag bg-blue">
-            +86
-          </view>
-          <view class="cu-tag line-blue">
-            中国大陆
-          </view>
-        </view>
-      </view>
-      <upLoadFile count="2" directory="application" label="请上传身份证正反面" bind:onUploadOk="onUploadOk">
-      </upLoadFile>
-      <view class="cu-form-group align-start">
-        <view class="title">备注</view>
-        <textarea name="remarks" maxlength="300" bindinput="textareaBInput" placeholder="请输入备注..."></textarea>
-      </view>
-      <view class="flex padding" style="gap: 8px">
-        <button class="cu-btn round bg-blue" formType="submit">提交审核</button>
-        <button class="cu-btn round bg-black" formType="reset">重置</button>
-      </view>
-    </block>
+<!-- 店铺 -->
+<shopBar bind:onShopChange="onShopChange"></shopBar>
 
-  </form>
-</block>
+<!-- 有数据 -->
+<view wx:if="{{ applicationList.length >= 1 }}">
+  <scroll-view scroll-y="true" style="height: {{containerHeight-150}}rpx;" refresher-enabled="true" bindrefresherrefresh="loadData" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMoreData">
+    <view class="cu-list menu margin-top-sm">
+      <view class="cu-item" style="align-items: flex-end;" wx:for="{{ applicationList }}" wx:key="_id">
+        <view>
+          <view>
+            <image class="cu-avatar radius lg" src="{{item.imgs[0]||'../../images/icons/morentu.svg'}}">
+            </image>
+          </view>
+          <image class="cu-avatar radius lg margin-top-xs" src="{{item.imgs[1]||'../../images/icons/morentu.svg'}}">
+          </image>
+        </view>
+        <view class="content padding-left">
+          <view class="text-cut text-sm">
+            姓名：{{item.name}}
+            <view wx:if="{{item.state==0}}" class="cu-tag line-orange round sm " style="margin-left: 24rpx;">待审核</view>
+            <view wx:if="{{item.state==1}}" class="cu-tag line-green round sm " style="margin-left: 24rpx;">已通过</view>
+            <view wx:if="{{item.state==2}}" class="cu-tag line-green round sm " style="margin-left: 24rpx;">已驳回</view>
+          </view>
+          <view class="text-cut text-sm"> 电话：{{item.phone}}</view>
+          <view class="text-cut text-sm"> 备注：{{item.remarks}}</view>
+          <view class="text-cut text-sm"> {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}</view>
+        </view>
+        <view wx:if="{{item.state==0}}" class="action padding-bottom-xs">
+          <button class="cu-btn bg-red shadow sm" style="width: 90rpx;" bind:tap="applicationDispass" data-item="{{item}}">
+            驳回
+          </button>
+          <button class="cu-btn bg-blue shadow sm" style="margin-left: 9rpx;width: 120rpx;" bind:tap="applicationPass" data-item="{{item}}">
+            审核通过
+          </button>
+        </view>
+      </view>
+    </view>
+    <view class="cu-load bg-white {{isLoadMore?'loading':''}} {{!hasMore&&!isLoadMore?'over':''}}"></view>
+  </scroll-view>
+</view>
+<view wx:else>
+  <view class="flex" style="position: fixed;bottom: 90rpx;width: 100vw;">
+    <button bind:tap="gotoEdit" class="cu-btn bg-blue round">新增申请</button>
+  </view>
+</view>
