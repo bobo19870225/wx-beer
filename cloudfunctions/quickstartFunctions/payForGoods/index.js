@@ -67,7 +67,7 @@ exports.main = async (event, context) => {
                             createDate: new Date(),
                             remarks: '微信支付',
                             orderId,
-                            money: -total,
+                            money: total,
                             shopId,
                             type: 2,
                         }
@@ -106,7 +106,7 @@ exports.main = async (event, context) => {
                         createDate: new Date(),
                         remarks: '店内消费',
                         orderId,
-                        money: -total,
+                        money: total,
                         shopId,
                         type: 1,
                     }

@@ -1,3 +1,5 @@
 {
-    "usingComponents": {}
+    "usingComponents": {
+        "shopBar": "/components/shopBar/index"
+    }
 }
