@@ -22,7 +22,7 @@ exports.main = async (event, context) => {
         const total = entity.total
         const beer = entity.beer || 0
         const payType = entity.payType
-        if (!orderId || !shopId || !total || !payType) {
+        if (!orderId || !shopId || !total || payType == null || payType == undefined) {
             return {
                 success: false,
                 errMsg: '参数不完整'
@@ -42,7 +42,6 @@ exports.main = async (event, context) => {
                 vipId = vip._id
                 account = vip.account
             }
-
             // 余额不足
             if (account.balance - total < 0) {
                 return {
@@ -54,7 +53,31 @@ exports.main = async (event, context) => {
         const result = await db.runTransaction(async transaction => {
             let accountRes = null
             if (payType == 0) { //普通支付
-
+                entity.updateDate = new Date()
+                entity.state = 1 // 付款成功
+                delete entity._id
+                delete entity.goodsList
+                const resOrder = await transaction.collection('order').doc(orderId).update({
+                    data: entity
+                })
+                if (resOrder) {
+                    const billAdd = await transaction.collection('bill').add({
+                        data: {
+                            _openid,
+                            createDate: new Date(),
+                            remarks: '微信支付',
+                            orderId,
+                            money: -total,
+                            shopId,
+                            type: 2,
+                        }
+                    })
+                    if (!billAdd) {
+                        await transaction.rollback(-200)
+                    }
+                } else {
+                    await transaction.rollback(-100)
+                }
             } else if (payType == 1) { //VIP支付
                 accountRes = await transaction.collection('vip').doc(vipId).update({
                     data: {
@@ -65,8 +88,10 @@ exports.main = async (event, context) => {
                         updateDate: new Date(),
                     }
                 })
+                if (!accountRes) {
+                    await transaction.rollback(-100)
+                }
             }
-
             entity.updateDate = new Date()
             entity.state = 1 // 付款成功
             delete entity._id
@@ -74,7 +99,7 @@ exports.main = async (event, context) => {
             const resOrder = await transaction.collection('order').doc(orderId).update({
                 data: entity
             })
-            if (resOrder && accountRes) {
+            if (resOrder) {
                 const billAdd = await transaction.collection('bill').add({
                     data: {
                         _openid,
@@ -87,10 +112,10 @@ exports.main = async (event, context) => {
                     }
                 })
                 if (!billAdd) {
-                    await transaction.rollback(-100)
+                    await transaction.rollback(-300)
                 }
             } else {
-                await transaction.rollback(-100)
+                await transaction.rollback(-200)
             }
         })
         return {

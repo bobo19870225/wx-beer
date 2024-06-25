@@ -35,16 +35,16 @@
                                         <block wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}">
                                             <view class="text-gray text-sm flex justify-between">
                                                 <view style="color: gray;">
-                                                    原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
+                                                    原价：<span class="text-price" style="{{orderDetail.payType==1?'text-decoration: line-through;':''}}">{{filter.formatMoney(goodsDetail.price)}}</span>
                                                 </view>
                                                 <view class="text-gray text-sm">
                                                     x{{ goodsDetail.number}}
                                                 </view>
                                             </view>
-                                            <view wx:if="{{vipLevel}}" class="text-orange">
-                                                {{vipLevel.name}}价：
-                                                <span class="text-price">{{filter.formatMoney(goodsDetail.price*vipLevel.rate / 100)}}</span>
-                                                （{{vipLevel.rate/10}}折）
+                                            <view wx:if="{{orderDetail.payType==1}}" class="text-orange">
+                                                会员折扣价：
+                                                <span class="text-price">{{filter.formatMoney(goodsDetail.price*orderDetail.rate / 100)}}</span>
+                                                （{{orderDetail.rate/10}}折）
                                             </view>
                                         </block>
                                         <block wx:else>
@@ -66,7 +66,7 @@
                                 {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
                             </view>
                             <view wx:if="{{orderDetail.state != 0}}">
-                                {{orderDetail.type==0?'原价支付：':'会员支付：'}}
+                                {{orderDetail.payType==0?'微信支付：':'会员支付：'}}
                                 <span style="color: red;font-size: large;" class="text-price">{{filter.formatMoney(orderDetail.total)}}</span>
                             </view>
                             <view wx:if="{{orderDetail.state==0}}">
