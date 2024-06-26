@@ -169,9 +169,14 @@ Component({
         url: '/pages/manage/dishes/index',
       })
     },
-    goTopManageTables() {
+    goTopManageTables(e) {
       wx.navigateTo({
         url: '/pages/manage/tables/index',
+      })
+    },
+    gotoVipManagePage(e) {
+      wx.navigateTo({
+        url: '/pages/shop-manage/vip-manage/index',
       })
     },
     gotoSettingPage(e) {

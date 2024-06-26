@@ -22,11 +22,11 @@ Page({
         id
       })
       if (id) {
-        this.getVip(id)
+        this.getVipPackage(id)
       }
     })
   },
-  getVip(id) {
+  getVipPackage(id) {
     this.setData({
       isLoading: true
     })

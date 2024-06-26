@@ -70,10 +70,10 @@
         <image class="setting_icon" style="padding: 3rpx;" src="../../images/icons/zwgl.svg" />
         <view class="text-gray text-xs">桌位管理</view>
       </view>
-      <!-- <view class="setting_item" bind:tap="gotoApplicationPage">
-                <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/sqgl.svg" />
-                <view class="text-gray text-xs">申请管理</view>
-            </view> -->
+      <view class="setting_item" bind:tap="gotoVipManagePage">
+        <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/vip-manage.svg" />
+        <view class="text-gray text-xs">会员管理</view>
+      </view>
       <view class="setting_item" bind:tap="gotoSettingPage">
         <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/wdxx.svg" />
         <view class="text-gray text-xs">我的信息</view>

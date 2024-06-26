@@ -23,7 +23,8 @@
         "pages/lucky/index",
         "pages/shop-manage/spend-management/index",
         "pages/shop-manage/spend-management-edit/index",
-        "pages/application/edit"
+        "pages/application/edit",
+        "pages/shop-manage/vip-manage/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#FD6C55",
