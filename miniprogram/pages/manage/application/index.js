@@ -8,7 +8,7 @@ Page({
   data: {
     isLoading: false,
     list: null,
-    shop: null,
+    shopList: null,
     showDialog: false,
     dialogData: {},
     isRefreshing: false,
@@ -21,36 +21,26 @@ Page({
   onLoad(options) {
 
   },
-
-  /**
-   * 切换店铺
-   */
-  async onShopChange(e) {
-    console.log(e);
-    let shop = e.detail
-    this.setData({
-      shop,
-      isLoading: true
-    })
-    await this.getApplicationList();
-    this.setData({
-      isLoading: false
-    })
-  },
-
   async getApplicationList() {
     const res = await wx.cloud.callFunction({
       name: 'quickstartFunctions',
       data: {
         type: 'getApplication',
-        where: {
-          shopId: this.data.shop._id,
-          // state: 0 
-        }
+        entity: {}
       },
     });
-    // console.log(res);
-    const list = res?.result?.data || [];
+    let list = res?.result?.data || [];
+    const shopList = await app.getShopList()
+    list = list.map((item) => {
+      for (let index = 0; index < shopList.length; index++) {
+        const element = shopList[index];
+        if (item.shopId == element._id) {
+          item.shopName = element.name
+          return item
+        }
+      }
+      return item
+    })
     this.setData({
       list,
       isRefreshing: false
@@ -136,8 +126,14 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
+  async onShow() {
+    this.setData({
+      isLoading: true
+    })
+    await this.getApplicationList();
+    this.setData({
+      isLoading: false
+    })
   },
 
   /**

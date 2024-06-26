@@ -9,11 +9,11 @@
 <block wx:else>
   <form catchsubmit="formSubmit" catchreset="formReset">
     <view class="cu-form-group margin-top">
-      <view class="title">选择店铺</view>
-      <picker name="shopIndex" bindchange="PickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
-        <view class="picker">
+      <view class="title">当前店铺</view>
+      <picker disabled="{{true}}" name="shopIndex" bindchange="PickerChange" value="{{index}}" range="{{shopList}}" range-key="name">
+        <!-- <view class="picker"> -->
           {{shopList[index].name?shopList[index].name:'请选择一家店铺...'}}
-        </view>
+        <!-- </view> -->
       </picker>
     </view>
     <block wx:if="{{hadApplication}}">

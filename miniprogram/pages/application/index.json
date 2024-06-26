@@ -1,5 +1,6 @@
 {
-    "usingComponents": {
-      "upLoadFile": "/components/upLoadFile/index"
-    }
+  "usingComponents": {
+    "upLoadFile": "/components/upLoadFile/index",
+    "shopBar": "/components/shopBar/index"
+  }
 }

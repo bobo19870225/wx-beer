@@ -1,5 +1,9 @@
 const app = getApp()
 const db = wx.cloud.database()
+const page = {
+  pageNumber: 1,
+  pageSize: 10
+}
 Page({
   /**
    * 页面的初始数据
@@ -18,7 +22,13 @@ Page({
   onLoad(options) {
 
   },
+  onShopChange(e) {
+    this.loadData()
+  },
   async loadData() {
+    if (this.data.isLoading) {
+      return
+    }
     this.setData({
       isLoading: true
     })
@@ -45,7 +55,7 @@ Page({
       applicationList: res.data || []
     })
     this.setData({
-      hasMore: orderList.length == page.pageSize,
+      hasMore: this.data.applicationList.length == page.pageSize,
       isRefreshing: false
     })
   },

@@ -5,19 +5,8 @@ cloud.init({
 });
 const db = cloud.database();
 exports.main = async (event, context) => {
-  const where = event.where
-  const shopId = where.shopId
-  const state = where.state
-  if (!shopId) {
-    return {
-      success: false,
-      rusult: '参数不完整'
-    };
-  }
-  const res = await db.collection('task').where({
-    shopId,
-    state
-  }).get();
+  const where = event.entity 
+  const res = await db.collection('task').where(where).orderBy('createDate','desc').get();
   return {
     success: true,
     data: res.data

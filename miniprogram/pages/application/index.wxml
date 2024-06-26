@@ -7,7 +7,7 @@
   <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange"></shopBar>
+<shopBar bind:onShopChange="onShopChange" selectable="{{false}}"></shopBar>
 
 <!-- 有数据 -->
 <view wx:if="{{ applicationList.length >= 1 }}">
@@ -32,14 +32,6 @@
           <view class="text-cut text-sm"> 电话：{{item.phone}}</view>
           <view class="text-cut text-sm"> 备注：{{item.remarks}}</view>
           <view class="text-cut text-sm"> {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}</view>
-        </view>
-        <view wx:if="{{item.state==0}}" class="action padding-bottom-xs">
-          <button class="cu-btn bg-red shadow sm" style="width: 90rpx;" bind:tap="applicationDispass" data-item="{{item}}">
-            驳回
-          </button>
-          <button class="cu-btn bg-blue shadow sm" style="margin-left: 9rpx;width: 120rpx;" bind:tap="applicationPass" data-item="{{item}}">
-            审核通过
-          </button>
         </view>
       </view>
     </view>

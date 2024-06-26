@@ -25,7 +25,10 @@ Component({
     roleList: []
   },
   attached() {
-
+    console.log("attached");
+  },
+  show() {
+    console.log("show");
   },
 
   /**
@@ -161,7 +164,7 @@ Component({
       this.setData({
         isLoading: true
       })
-      const shop = this.data.shop
+      const shop = await app.getShop()
       const vipPackageBuy = this.data.vipPackageBuy
       const price = Number.parseInt(vipPackageBuy.price)
       const entry = Number.parseInt(vipPackageBuy.entry)
@@ -210,15 +213,6 @@ Component({
       })
     },
     switchMode() {
-      // wx.getStorage({
-      //     key: 'role',
-      //     success(res) {
-      //         console.log(res.data)
-      //     },
-      //     complete(res) {
-      //         console.log("complete", res)
-      //     }
-      // })
       this.setData({
         showRoleDialog: true
       })
