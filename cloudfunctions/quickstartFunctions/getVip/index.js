@@ -40,12 +40,6 @@ exports.main = async (event, context) => {
       foreignField: '_openid',
       as: 'userList',
     })
-    .lookup({
-      from: 'user',
-      localField: '_openid',
-      foreignField: '_openid',
-      as: 'userList',
-    })
     .project({
       _openid: 1,
       account: 1,

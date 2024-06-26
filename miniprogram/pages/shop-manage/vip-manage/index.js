@@ -50,7 +50,7 @@ Page({
     })
     this.setData({
       isRefreshing: false,
-      list: res.result.data || []
+      list: res.result.list || []
     })
   },
   /**
