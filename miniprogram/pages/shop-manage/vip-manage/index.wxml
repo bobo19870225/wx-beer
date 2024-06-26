@@ -1,52 +1,60 @@
 <wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">会员管理</view>
+    <view slot="backText">返回</view>
+    <view slot="content">会员管理</view>
 </cu-custom>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
 
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-  <view class='gray-text text-xs'>加载中...</view>
+    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+    <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 有数据 -->
 <view wx:if="{{ list.length > 0 }}">
-  <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="loadData" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
-    <block wx:for="{{ list }}" wx:key="_id" wx:for-index="index">
-      <view class="cu-list menu ">
-        <view class="cu-item">
-          <view class="content">
-            <view class="text-gray  flex" style="gap: 21rpx;">
-              <view>{{ item.user.name||'未知昵称' }}</view>
-              <view class="text-sm">{{ item.user.phone||'未设置电话' }}</view>
-            </view>
+    <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="loadData" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMore">
+        <block wx:for="{{ list }}" wx:key="_id" wx:for-index="index">
+            <view class="cu-list menu-avatar">
+                <view class="cu-item">
+                    <image class="cu-avatar round lg" src="{{item.user.avatarUrl||'../../../images/avatar.svg'}}">
+                    </image>
+                    <view class="content">
+                        <view class="text-gray  flex" style="gap: 21rpx;">
+                            <view class="text-sm">{{ item.user.name||'未知昵称' }}</view>
+                            <view class="text-sm">{{ item.user.phone||'未设置电话' }}</view>
+                            <view class="text-sm">
+                                充值 <span class="text-price">{{filter.formatMoney(item.account.recharge)}}</span>
+                            </view>
+                        </view>
 
-            <view class="text-gray text-sm flex" style="gap: 21rpx;">
-              <view class="text-green text-sm">
-                账户余额：<span class="text-price">{{filter.formatMoney(item.account.balance)}}</span>
-              </view>
-              <view style="color: gray;">
-                剩余存酒：{{item.account.beer}}瓶
-              </view>
-              <view style="color: gray;">
-                充值金额：<span class="text-price">{{filter.formatMoney(item.account.recharge)}}</span>
-              </view>
-            </view>
+                        <view class="text-gray text-sm flex text-cut" style="gap: 21rpx;">
+                            <view class="text-green text-sm">
+                                余额 <span class="text-price">{{filter.formatMoney(item.account.balance)}}</span>
+                            </view>
+                            <view style="color: gray;">
+                                存酒{{item.account.beer}}瓶
+                            </view>
+                        </view>
+                        <!-- <view class="text-grey text-xs">
+                            更新时间：{{filter.format(item.updateDate,'YY-MM-DD hh:mm:ss') }}
+                        </view> -->
+                    </view>
+                    <view class="action">
 
-            <view class="text-grey text-xs">
-              更新时间：{{filter.format(item.updateDate,'YY-MM-DD hh:mm:ss') }}
+                    </view>
+                </view>
             </view>
-          </view>
-        </view>
-      </view>
-    </block>
-  </scroll-view>
+        </block>
+    </scroll-view>
+    <view class="flex" style="position: fixed;bottom: 90rpx;width: 100vw;">
+        <button wx:if="{{fileUrl}}" bind:tap="copyFileUrl" class="cu-btn round bg-blue">导出成功，复制下载链接</button>
+        <button wx:else bind:tap="savaExcel" class="cu-btn round bg-blue">批量导出</button>
+    </view>
 </view>
 <!-- 无数据 -->
 <block wx:else>
-  <view style="text-align: center;margin-top: 20vh;">
-    <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
-    <view style="top: -240rpx;">暂无数据</view>
-  </view>
+    <view style="text-align: center;margin-top: 20vh;">
+        <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+        <view style="top: -240rpx;">暂无数据</view>
+    </view>
 </block>

@@ -7,7 +7,7 @@
     <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange" isShopManage="{{isShopManage}}"></shopBar>
+<shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
 <!-- 有数据 -->
 <view wx:if="{{ billList.length >= 1 }}">
     <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="loadData" bindscrolltolower="loadMore" refresher-triggered="{{isRefreshing}}">

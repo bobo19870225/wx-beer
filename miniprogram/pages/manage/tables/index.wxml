@@ -10,7 +10,7 @@
     <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange"></shopBar>
+<shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
 <!-- 数据加载完毕 -->
 
 <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">

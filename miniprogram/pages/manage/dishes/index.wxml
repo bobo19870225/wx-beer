@@ -11,7 +11,7 @@
     <view class='gray-text text-xs'>加载中...</view>
 </view>
 <!-- 店铺 -->
-<shopBar bind:onShopChange="onShopChange"></shopBar>
+<shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
     <scroll-view>
@@ -22,7 +22,7 @@
                 <view class="content padding-left">
                     <text class="text-cut"> {{item.title}}</text>
                     <view class="cu-tag round bg-gray sm">
-                      <span class="text-price">{{filter.formatMoney(item.price)}}</span>
+                        <span class="text-price">{{filter.formatMoney(item.price)}}</span>
                     </view>
                     <view class="text-gray text-sm flex">
                         <text wx:if="{{item.classifyTag}}" class="text-cut round bg-blue cu-tag"> {{item.classifyTag}}</text>
@@ -44,5 +44,5 @@
             </view>
         </view>
     </scroll-view>
-    <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="addGoods">新增商品</button>
+    <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round lg" bind:tap="addGoods">新增商品</button>
 </block>
