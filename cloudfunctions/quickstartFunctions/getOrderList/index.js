@@ -23,13 +23,18 @@ exports.main = async (event, context) => {
   if (page && page.pageSize && page.pageSize > 0 && page.pageSize < 100) {
     pageSize = page.pageSize //非法值设为最大值
   }
+  // 厨师看正序的
+  let sort = -1
+  if (entity.state == 1) {
+    sort = 1
+  }
   // ================== 分页参数END ===========================
   entity.isDelete = false
   return await db.collection('order')
     .aggregate()
     .match(entity)
     .sort({
-      createDate: -1,
+      createDate: sort,
     })
     .skip((pageNumber - 1) * pageSize)
     .limit(pageSize)

@@ -59,11 +59,13 @@ Page({
     })
   },
   onShow() {
+    // 处理付款后跳转，完成后清掉app.globalData.PageCur
     const PageCur = app.globalData.PageCur
     if (PageCur) {
       this.setData({
         PageCur
       })
+      app.globalData.PageCur = ''
     }
   },
   NavChange(e) {
