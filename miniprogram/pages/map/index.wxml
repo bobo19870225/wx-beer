@@ -1,8 +1,23 @@
-<!--pages/manage/shop-map/index.wxml-->
 <cu-custom bgColor="bg-white" isBack="{{false}}">
   <view slot="backText">返回</view>
   <view slot="content">选择店铺</view>
 </cu-custom>
+<!-- 加载框 -->
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+  <view class='gray-text text-xs'>加载中...</view>
+</view>
+<view class="cu-bar search bg-white">
+  <view class="search-form round">
+    <text class="cuIcon-search"></text>
+    <input type="text" value="{{searchKey}}" placeholder="您想吃点啥，请输入..." confirm-type="search" bindconfirm="onSearch" bindinput="onInput"></input>
+  </view>
+  <view class="action">
+    <text bind:tap="onSearch" class="cuIcon-search">
+    </text>
+    <text bind:tap="resetShopList" class="cuIcon-refresh">
+    </text>
+  </view>
+</view>
 <map id="mapId" style="width: 100vw;height: {{containerHeight}}rpx;" latitude="26.20252849089062" longitude="105.47991719994945" markers="{{markers}}" scale="8" show-location="true" show-scale="true" bindmarkertap="onMapSelect" bindupdated="onMapLoaded">
 </map>
 <view class="cu-list menu bg-white" style="position: fixed;  bottom: 0;z-index: 100;width: 100vw;padding-bottom: 100rpx;">
@@ -10,7 +25,12 @@
     <view class="content">
       <text class="text-cut"> {{item.name}}</text>
     </view>
-    <view wx:if="{{index==indexShop}}" class="cu-tag round bg-blue sm">当前店铺</view>
+    <view wx:if="{{item._id==shop._id}}" class="cu-tag round bg-blue sm">当前店铺</view>
   </view>
-  <button class="cu-btn round bg-blue margin-tb lg" style="width: 90vw;left: 5vw;" bind:tap="onSure">确定选择</button>
+  <view wx:if="{{shopList.length<1}}" style="text-align: center;position: relative;">
+    <image src="../../images/no-shop.svg" mode="widthFix">
+    </image>
+    <view class="text-lg text-gray" style="bottom: 90rpx;position: absolute;width: 100%;"> 很抱歉，没有找到匹配的店铺</view>
+  </view>
+  <button disabled="{{shopList.length<1}}" class="cu-btn round bg-blue margin-tb lg" style="width: 90vw;left: 5vw;" bind:tap="onSure">确定选择</button>
 </view>

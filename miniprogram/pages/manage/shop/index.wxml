@@ -12,16 +12,6 @@
 </view>
 <!-- 数据加载完毕 -->
 <block wx:if="{{ !isLoading }}">
-    <view class="cu-bar search bg-white">
-        <view class="search-form round">
-            <text class="cuIcon-search"></text>
-            <input type="text" placeholder="输入店名搜索" confirm-type="search"></input>
-        </view>
-        <view class="action">
-            <text class="cuIcon-search">
-            </text>
-        </view>
-    </view>
     <scroll-view>
         <view class="cu-list menu margin-top-sm">
             <view class="cu-item" wx:for="{{ shopList }}" wx:key="_id">
