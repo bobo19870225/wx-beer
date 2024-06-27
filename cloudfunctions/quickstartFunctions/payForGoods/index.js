@@ -53,12 +53,11 @@ exports.main = async (event, context) => {
         const result = await db.runTransaction(async transaction => {
             let accountRes = null
             if (payType == 0) { //普通支付
-                entity.updateDate = new Date()
-                entity.state = 1 // 付款成功
-                delete entity._id
-                delete entity.goodsList
                 const resOrder = await transaction.collection('order').doc(orderId).update({
-                    data: entity
+                    data: {
+                        updateDate: new Date(),
+                        state: 1 // 付款成功
+                    }
                 })
                 if (resOrder) {
                     const billAdd = await transaction.collection('bill').add({
@@ -91,28 +90,27 @@ exports.main = async (event, context) => {
                 if (!accountRes) {
                     await transaction.rollback(-100)
                 }
-            }
-            entity.updateDate = new Date()
-            entity.state = 1 // 付款成功
-            delete entity._id
-            delete entity.goodsList
-            const resOrder = await transaction.collection('order').doc(orderId).update({
-                data: entity
-            })
-            if (resOrder) {
-                const billAdd = await transaction.collection('bill').add({
+                const resOrder = await transaction.collection('order').doc(orderId).update({
                     data: {
-                        _openid,
-                        createDate: new Date(),
-                        remarks: '店内消费',
-                        orderId,
-                        money: total,
-                        shopId,
-                        type: 1,
+                        updateDate: new Date(),
+                        state: 1
                     }
                 })
-                if (!billAdd) {
-                    await transaction.rollback(-300)
+                if (resOrder) {
+                    const billAdd = await transaction.collection('bill').add({
+                        data: {
+                            _openid,
+                            createDate: new Date(),
+                            remarks: '店内消费',
+                            orderId,
+                            money: total,
+                            shopId,
+                            type: 1,
+                        }
+                    })
+                    if (!billAdd) {
+                        await transaction.rollback(-300)
+                    }
                 }
             } else {
                 await transaction.rollback(-200)

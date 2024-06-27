@@ -3,12 +3,12 @@
 <order wx:if="{{PageCur=='order'}}"></order>
 <user-center wx:if="{{PageCur=='user-center'}}" bind:onSwitchMode="onSwitchMode"></user-center>
 <!-- 店长端 -->
-<shop-manage wx:if="{{PageCur=='shop-manage'}}" bind:onSwitchMode="onSwitchMode"></shop-manage>
 <watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
-<!-- 超级管理员端 -->
-<!-- <manage wx:if="{{PageCur=='manage'}}"></manage> -->
-<super-manage wx:if="{{PageCur=='super-manage'}}" bind:onSwitchMode="onSwitchMode"></super-manage>
+<table wx:if="{{PageCur=='table'}}"></table>
+<shop-manage wx:if="{{PageCur=='shop-manage'}}" bind:onSwitchMode="onSwitchMode"></shop-manage>
 
+<!-- 超级管理员端 -->
+<super-manage wx:if="{{PageCur=='super-manage'}}" bind:onSwitchMode="onSwitchMode"></super-manage>
 
 <view class="cu-bar tabbar bg-white shadow foot">
     <view wx:if="{{mode=='client'}}" class="action" bindtap="NavChange" data-cur="start">
@@ -36,7 +36,12 @@
         </view>
         <view class="{{PageCur=='watchOrder'?'text-blue':'text-gray'}}">听单</view>
     </view>
-
+    <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="table">
+        <view class='cuIcon-cu-image'>
+            <image src="/images/tabbar/table{{PageCur=='table'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='table'?'text-blue':'text-gray'}}">餐位</view>
+    </view>
     <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="shop-manage">
         <view class='cuIcon-cu-image'>
             <image src="/images/tabbar/shop-manage{{PageCur=='shop-manage'?'_cur':''}}.png"></image>

@@ -37,10 +37,10 @@
                         <text class="cuIcon-edit">
                         </text>
                     </button>
-                    <view class="flex align-center margin-top text-df" style="gap: 12rpx;">
+                    <!-- <view class="flex align-center margin-top text-df" style="gap: 12rpx;">
                         是否空闲
                         <switch checked="{{item.isIdle}}" bindchange="changeState" data-tableSeats="{{item}}"></switch>
-                    </view>
+                    </view> -->
                 </view>
             </view>
         </view>

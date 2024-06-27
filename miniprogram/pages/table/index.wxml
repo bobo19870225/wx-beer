@@ -1,0 +1,37 @@
+<cu-custom bgColor="bg-white" isBack="{{false}}">
+    <view slot="backText">返回</view>
+    <view slot="content">餐位</view>
+</cu-custom>
+<!-- 对话框 -->
+<dialog showDialogProps="{{showDialog}}" postDataProps="{{dialogData}}" bind:onOk="onDelete"> </dialog>
+<!-- 数据加载，显示loading态 -->
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+    <view class='gray-text text-xs'>加载中...</view>
+</view>
+<!-- 店铺 -->
+<shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
+<!-- 数据加载完毕 -->
+<scroll-view refresher-enabled="true" style="height: {{containerHeight - 120}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
+    <view class="cu-list menu margin-top-sm">
+        <view class="cu-item " wx:for="{{ tablesList }}" wx:key="_id">
+            <image class="cu-avatar radius lg" src="{{item.img||'../../images/icons/morentu.svg'}}">
+            </image>
+            <view class="content padding-left">
+                <text class="text-cut"> {{item.name}}</text>
+                <view class="text-gray text-sm flex">
+                    <text wx:if="{{item.guiGe}}" class="text-cut round bg-blue cu-tag"> {{item.guiGe}}人座</text>
+                </view>
+                <view class="text-gray text-sm flex">
+                    <text class="text-cut"> 备注：{{item.remarks}}</text>
+                </view>
+            </view>
+            <view class="action">
+                <view class="flex align-center margin-top text-df" style="gap: 12rpx;">
+                    是否空闲
+                    <switch checked="{{item.isIdle}}" bindchange="changeState" data-tableSeats="{{item}}">
+                    </switch>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>

@@ -186,7 +186,6 @@ Page({
                 entity
             },
         }).then((res) => {
-            console.log("updateOrder", res);
             wx.hideLoading()
             if (res.result.success) {
                 app.globalData.PageCur = "order"

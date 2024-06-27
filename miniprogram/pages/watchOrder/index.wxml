@@ -1,70 +1,90 @@
 <wxs src="../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{false}}">
-  <view slot="backText">返回</view>
-  <view slot="content">听单</view>
+    <view slot="backText">返回</view>
+    <view slot="content">听单</view>
 </cu-custom>
 <view>
-  <!-- 数据加载，显示loading态 -->
-  <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <view class='gray-text text-xs'>加载中...</view>
-  </view>
-  <!-- 店铺 -->
-  <shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
-
-  <!-- 数据加载完毕 -->
-  <block wx:if="{{ !isLoading }}">
+    <!-- 数据加载，显示loading态 -->
+    <view class='cu-load load-modal' wx:if="{{isLoading}}">
+        <view class='gray-text text-xs'>加载中...</view>
+    </view>
+    <!-- 店铺 -->
+    <shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
     <!-- 有数据 -->
     <view wx:if="{{ orderList.length >= 1 }}">
-      <view class="margin text-red">出菜完成请点击【已上菜】</view>
-      <scroll-view scroll-y="true" style="height: {{containerHeight-240}}rpx;" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}">
-
-        <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
-          <view class="cu-card">
-            <view class="cu-item shadow">
-              <view wx:if="{{orderDetail.tableSeats&&orderDetail.tableSeats[0]}}" class="cu-tag bg-gray">{{orderDetail.tableSeats[0].name}}</view>
-              <view wx:if="{{orderDetail.dinersNumb}}" class="cu-tag bg-gray">{{orderDetail.dinersNumb}}人用餐</view>
-
-              <button style="width: 120rpx;float: right;right: 21rpx;top: 12rpx;" class=" cu-tag cu-btn round bg-blue sm" data-data="{{orderDetail}}" bind:tap="setOrderFinish">已上菜</button>
-
-              <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
-                <view class="cu-list menu-avatar">
-                  <view class="cu-item">
-                    <image class="cu-avatar round lg" src="{{goodsDetail.img||'.../../images/icons/morentu.svg'}}" mode="aspectFill" />
-                    <view class="content flex-sub">
-                      <view class="flex justify-between ">
-                        <view class="text-grey">{{ goodsDetail.title }}</view>
-                      </view>
-                      <view class="text-gray text-sm flex justify-between">
-                        <view style="color: gold;">
-                          <span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
-                        </view>
-                        <view class="text-gray text-sm">
-                          x{{ goodsDetail.number}}
-                        </view>
-                      </view>
+        <view class="margin text-red">未上菜{{orderList.length}}单，上菜完成请点击【已上菜】</view>
+        <!-- 订单列表 -->
+        <view class="VerticalBox">
+            <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx);">
+                <view class="cu-item {{index==TabCur?'text-blue cur':''}}" wx:for="{{tableList}}" wx:key="index" bindtap='tabSelect' data-index="{{item.value}}">
+                    {{item.name}}
+                </view>
+            </scroll-view>
+            <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height: {{containerHeight - 180}}rpx;" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain" refresher-enabled="true" bindrefresherrefresh="getOrderList" refresher-triggered="{{isRefreshing}}">
+                <view class=" padding-top padding-lr-sm" wx:for="{{tableList}}" wx:key="index" id="main-{{item.value}}">
+                    <view class='cu-bar solid-bottom bg-white'>
+                        <text class='cuIcon-title text-blue'>{{item.name}}</text>
                     </view>
-                  </view>
+                    <view class="bg-white" style="min-height: 900rpx;position: relative;">
+                        <!-- 订单 -->
+                        <view style="padding: 9rpx;border-bottom: 1rpx solid lightgray;" wx:if="{{m1.isShow(item,orderDetail)}}" wx:for="{{orderList}}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index" class="cu-item cur">
+                            <view wx:if="{{orderDetail.state==0}}" class="cu-tag bg-purple">待支付</view>
+                            <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
+                            <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">已付款</view>
+
+                            <view wx:if="{{orderDetail.dinersNumb}}" class="cu-tag">{{orderDetail.dinersNumb}}人用餐</view>
+                            <view bind:tap="setOrderFinish" data-data="{{orderDetail}}" class="cu-tag round bg-blue margin-left-lg">已上菜</view>
+
+                            <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">
+                                <view class="cu-list menu-avatar">
+                                    <view class="cu-item">
+                                        <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
+                                        <view class="content">
+                                            <block wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}">
+                                                <view class="text-gray text-sm flex justify-between">
+                                                    <view class="text-grey">{{ goodsDetail.title }}</view>
+                                                    <view class="text-gray text-sm">
+                                                        x{{ goodsDetail.number}}
+                                                    </view>
+                                                </view>
+                                            </block>
+                                            <block wx:else>
+                                                <view class="text-gray text-sm flex justify-between">
+                                                    <view class="text-grey">{{ goodsDetail.title }}</view>
+                                                    <!-- <view style="color: gray;">
+                                                        会员存酒
+                                                    </view> -->
+                                                    <view class="text-gray text-sm">
+                                                        x{{ goodsDetail.number}}
+                                                    </view>
+                                                </view>
+                                            </block>
+                                        </view>
+                                    </view>
+                                </view>
+                            </block>
+                            <view>
+                                支付时间：{{filter.format(orderDetail.updateDate, 'YY-MM-DD hh:mm:ss')}}
+                            </view>
+                        </view>
+                    </view>
                 </view>
-              </block>
-              <view class="content padding flex align-center">
-                <view>
-                  {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
-                </view>
-                <view class="margin-left ">
-                  备注：<span>{{orderDetail.remarks}}</span>
-                </view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </scroll-view>
+                <view style="height: 90rpx;"></view>
+            </scroll-view>
+        </view>
     </view>
     <!-- 无数据 -->
     <block wx:else>
-      <view style="text-align: center;margin-top: 20vh;">
-        <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
-        <view style="top: -240rpx;">暂无数据</view>
-      </view>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
     </block>
-  </block>
 </view>
+
+<wxs module="m1">
+    var isShow = function (item, order) {
+        return item._id == order.tableSeatsId
+    }
+    module.exports.isShow = isShow;
+</wxs>
