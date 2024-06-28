@@ -1,5 +1,4 @@
 const cloud = require('wx-server-sdk');
-
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
@@ -11,10 +10,12 @@ exports.main = async (event, context) => {
     let res = null
     if (id) {
       delete entity._id
+      entity.updateDate = new Date()
       res = await db.collection('user').doc(id).update({
         data: entity
       });
     } else {
+      entity.createDate = new Date()
       res = await db.collection('user').add({
         data: entity
       });

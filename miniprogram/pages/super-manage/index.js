@@ -1,148 +1,173 @@
 const app = getApp()
 const db = wx.cloud.database()
 Component({
-    options: {
-        addGlobalClass: true,
-    },
+  options: {
+    addGlobalClass: true,
+  },
 
-    /**
-     * 页面的初始数据
-     */
-    data: {
-        isLoading: false,
-        isRefreshing: false,
-        userInfo: {},
-        containerHeight: app.globalData.containerHeight,
-        showRoleDialog: false,
-        roleList: [{
-            text: '管理员',
-            value: 'superManage',
-            checked: true
-        }, {
-            text: '店长',
-            value: 'shopManage'
-        }, {
-            text: '客户',
-            value: 'client'
-        }],
-        shopNumber: 0,
-        totalIncom: 0
-    },
-    attached() {
-        app.getShopList().then((res) => {
-            this.setData({
-                shopNumber: res.length
-            })
-        })
-        this.loadData();
-    },
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    isLoading: false,
+    isRefreshing: false,
+    userInfo: {},
+    containerHeight: app.globalData.containerHeight,
+    showRoleDialog: false,
+    roleList: [{
+      text: '管理员',
+      value: 'superManage',
+      checked: true
+    }, {
+      text: '店长',
+      value: 'shopManage'
+    }, {
+      text: '客户',
+      value: 'client'
+    }],
+    shopNumber: 0,
+    totalIncom: 0
+  },
+  attached() {
+    app.getShopList().then((res) => {
+      this.setData({
+        shopNumber: res.length
+      })
+    })
+    this.loadData();
+  },
 
-    /**
-     * 组件的方法列表
-     */
-    methods: {
-        loadData() {
-            this.getUser(true);
-            this.getTotalIncom();
-        },
-        getTotalIncom() {
-            wx.cloud.callFunction({
-                name: 'quickstartFunctions',
-                data: {
-                    type: 'getTotalIncom',
-                }
-            }).then((res) => {
-                this.setData({
-                    totalIncom: res.result?.list[0]?.total || 0
-                })
-            })
-        },
-        async getUser(forceupdates) {
-            console.log("super-manage getUser");
-            const res = await app.getUserInfoAll(forceupdates)
-            const userInfo = res.userInfo
-            this.setData({
-                userInfo,
-                isRefreshing: false
-            })
-        },
-        onChooseAvatar(e) {
-            const {
-                avatarUrl
-            } = e.detail
-            const userInfo = this.data.userInfo
-            userInfo.avatarUrl = avatarUrl
-            this.setData({
-                userInfo
-            })
-            wx.cloud.callFunction({
-                name: 'quickstartFunctions',
-                data: {
-                    type: 'updateUser',
-                    entity: userInfo
-                }
-            }).then((res) => {
-                console.log("TTT", res);
-            })
-        },
-
-        /**
-         * 切换角色
-         * @param {*} e 
-         */
-        onSelecteRole(e) {
-            const mode = e.detail.value
-            this.triggerEvent('onSwitchMode', mode)
-        },
-        closeRoleDialog() {
-            this.setData({
-                showRoleDialog: false
-            })
-        },
-        goToVipManage() {
-            wx.navigateTo({
-                url: '/pages/manage/vip/index',
-            })
-        },
-        goTopManageShop() {
-            wx.navigateTo({
-                url: '/pages/manage/shop/index',
-            })
-        },
-        goToApplicationManage() {
-            wx.navigateTo({
-                url: '/pages/manage/application/index',
-            })
-        },
-        gotoBillPage() {
-            wx.navigateTo({
-                url: `/pages/user-center/bill/index?isSuperManage=true`,
-            });
-        },
-        goToOperation() {
-            wx.navigateTo({
-                url: '/pages/manage/operation/index?isSuperManage=true',
-            })
-        },
-        gotoSettingPage(e) {
-            const that = this
-            wx.navigateTo({
-                url: '/pages/user-center/setting/index',
-                events: {
-                    callbackData: (userInfo) => {
-                        console.log("callbackData", userInfo);
-                        that.setData({
-                            userInfo
-                        })
-                    },
-                },
-            })
-        },
-        switchMode() {
-            this.setData({
-                showRoleDialog: true
-            })
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    loadData() {
+      this.getUser(true);
+      this.getTotalIncom();
+    },
+    getTotalIncom() {
+      wx.cloud.callFunction({
+        name: 'quickstartFunctions',
+        data: {
+          type: 'getTotalIncom',
         }
+      }).then((res) => {
+        this.setData({
+          totalIncom: res.result?.list[0]?.total || 0
+        })
+      })
     },
+    async getUser(forceupdates) {
+      console.log("super-manage getUser");
+      const res = await app.getUserInfoAll(forceupdates)
+      const userInfo = res.userInfo
+      this.setData({
+        userInfo,
+        isRefreshing: false
+      })
+    },
+    /**
+     * 更换头像
+     * @param {*} e 
+     */
+    onChooseAvatar(e) {
+      wx.showLoading({
+        title: '上传中...'
+      })
+      const {
+        avatarUrl
+      } = e.detail
+      const userInfo = this.data.userInfo
+      const cloudPath = 'userAvatar/' + userInfo._openid + Date.now() + '.png'
+      // 将图片上传至云存储空间
+      wx.cloud.uploadFile({
+        // 指定上传到的云路径
+        cloudPath: cloudPath,
+        // 指定要上传的文件的小程序临时文件路径
+        filePath: avatarUrl,
+        // 成功回调
+        success: res => {
+          userInfo.avatarUrl = res.fileID
+          wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+              type: 'updateUser',
+              entity: {
+                _id: userInfo._id,
+                avatarUrl: userInfo.avatarUrl
+              }
+            }
+          }).then((res) => {
+            if (res.result.success) {
+              this.setData({
+                userInfo
+              })
+            }
+            wx.hideLoading()
+            console.log("updateUser", res);
+          })
+        },
+        complete: res => {}
+      })
+    },
+
+    /**
+     * 切换角色
+     * @param {*} e 
+     */
+    onSelecteRole(e) {
+      const mode = e.detail.value
+      this.triggerEvent('onSwitchMode', mode)
+    },
+    closeRoleDialog() {
+      this.setData({
+        showRoleDialog: false
+      })
+    },
+    goToVipManage() {
+      wx.navigateTo({
+        url: '/pages/manage/vip/index',
+      })
+    },
+    goTopManageShop() {
+      wx.navigateTo({
+        url: '/pages/manage/shop/index',
+      })
+    },
+    goToApplicationManage() {
+      wx.navigateTo({
+        url: '/pages/manage/application/index',
+      })
+    },
+    gotoBillPage() {
+      wx.navigateTo({
+        url: `/pages/user-center/bill/index?isSuperManage=true`,
+      });
+    },
+    goToOperation() {
+      wx.navigateTo({
+        url: '/pages/manage/operation/index?isSuperManage=true',
+      })
+    },
+    gotoSettingPage(e) {
+      const that = this
+      wx.navigateTo({
+        url: '/pages/user-center/setting/index',
+        events: {
+          callbackData: (userInfo) => {
+            console.log("callbackData", userInfo);
+            that.setData({
+              userInfo
+            })
+          },
+        },
+      })
+    },
+    switchMode() {
+      this.setData({
+        showRoleDialog: true
+      })
+    }
+  },
 
 });

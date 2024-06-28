@@ -106,23 +106,48 @@ Component({
         userInfo
       })
     },
+    /**
+     * 更换头像
+     * @param {*} e 
+     */
     onChooseAvatar(e) {
+      wx.showLoading({
+        title: '上传中...'
+      })
       const {
         avatarUrl
       } = e.detail
       const userInfo = this.data.userInfo
-      userInfo.avatarUrl = avatarUrl
-      this.setData({
-        userInfo
-      })
-      wx.cloud.callFunction({
-        name: 'quickstartFunctions',
-        data: {
-          type: 'updateUser',
-          entity: userInfo
-        }
-      }).then((res) => {
-        console.log("TTT", res);
+      const cloudPath = 'userAvatar/' + userInfo._openid + Date.now() + '.png'
+      // 将图片上传至云存储空间
+      wx.cloud.uploadFile({
+        // 指定上传到的云路径
+        cloudPath: cloudPath,
+        // 指定要上传的文件的小程序临时文件路径
+        filePath: avatarUrl,
+        // 成功回调
+        success: res => {
+          userInfo.avatarUrl = res.fileID
+          wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+              type: 'updateUser',
+              entity: {
+                _id: userInfo._id,
+                avatarUrl: userInfo.avatarUrl
+              }
+            }
+          }).then((res) => {
+            if (res.result.success) {
+              this.setData({
+                userInfo
+              })
+            }
+            wx.hideLoading()
+            console.log("updateUser", res);
+          })
+        },
+        complete: res => {}
       })
     },
     /**
