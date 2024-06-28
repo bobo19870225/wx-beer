@@ -3,6 +3,8 @@ const getMiniProgramCode = require('./getMiniProgramCode/index');
 const getUser = require('./getUser/index');
 const updateUser = require('./updateUser/index');
 const getOrderList = require('./getOrderList/index');
+const getOngoingOrdersList = require('./getOngoingOrdersList/index');
+
 const deleteShop = require('./deleteShop/index');
 const updateGoods = require('./updateGoods/index');
 const deleteGoods = require('./deleteGoods/index');
@@ -88,6 +90,8 @@ exports.main = async (event, context) => {
        */
     case 'getOrderList':
       return await getOrderList.main(event, context);
+    case 'getOngoingOrdersList':
+      return await getOngoingOrdersList.main(event, context);
     case 'updateOrder':
       return await updateOrder.main(event, context);
     case 'payForGoods':
