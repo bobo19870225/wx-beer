@@ -51,11 +51,17 @@ Page({
             });
             return
         }
-        const res = await db.collection('tableSeats').where({
-            isDelete: false,
-            shopId: this.data.shop._id
-        }).get()
-        const tablesList = res?.data || [];
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getIdleTable',
+                entity: {
+                    shopId: this.data.shop._id
+                }
+            }
+        })
+        console.log(res);
+        const tablesList = res?.result.list || [];
         this.setData({
             isLoading: false,
             tablesList

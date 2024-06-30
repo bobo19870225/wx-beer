@@ -4,7 +4,7 @@
 <user-center wx:if="{{PageCur=='user-center'}}" bind:onSwitchMode="onSwitchMode"></user-center>
 <!-- 店长端 -->
 <watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
-<table wx:if="{{PageCur=='table'}}"></table>
+<!-- <table wx:if="{{PageCur=='table'}}"></table> -->
 <shop-manage wx:if="{{PageCur=='shop-manage'}}" bind:onSwitchMode="onSwitchMode"></shop-manage>
 
 <!-- 超级管理员端 -->
@@ -36,12 +36,12 @@
         </view>
         <view class="{{PageCur=='watchOrder'?'text-blue':'text-gray'}}">听单</view>
     </view>
-    <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="table">
+    <!-- <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="table">
         <view class='cuIcon-cu-image'>
             <image src="/images/tabbar/table{{PageCur=='table'?'_cur':''}}.png"></image>
         </view>
         <view class="{{PageCur=='table'?'text-blue':'text-gray'}}">餐位</view>
-    </view>
+    </view> -->
     <view wx:if="{{mode=='shopManage'}}" class="action" bindtap="NavChange" data-cur="shop-manage">
         <view class='cuIcon-cu-image'>
             <image src="/images/tabbar/shop-manage{{PageCur=='shop-manage'?'_cur':''}}.png"></image>

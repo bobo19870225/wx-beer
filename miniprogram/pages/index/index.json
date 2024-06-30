@@ -7,7 +7,6 @@
         "super-manage": "/pages/super-manage/index",
 
         "shop-manage": "/pages/shop-manage/index",
-        "watchOrder": "/pages/watchOrder/index",
-        "table": "/pages/table/index"
+        "watchOrder": "/pages/watchOrder/index"
     }
 }

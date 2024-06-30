@@ -119,13 +119,15 @@
                                 <view class="flex">
                                     <view>{{item.name}}</view>
                                     <view class="cu-tag round margin-left bg-blue sm">{{item.guiGe}}人座</view>
-                                    <view class="text-green" style="flex: 1;" wx:if="{{item.isIdle}}">空闲</view>
-                                    <view class="text-gray" style="text-decoration: line-through;flex: 1;" wx:if="{{!item.isIdle}}">已占用</view>
+                                    <view class="text-df" style="flex: 1;" wx:if="{{item.isIdle>0}}">
+                                        需排队(当前排队{{item.isIdle}}单)
+                                    </view>
+                                    <view class="text-green text-df" style="flex: 1;" wx:else>空闲</view>
                                 </view>
                                 <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
                             </view>
                             <view class="action">
-                                <radio class="radio" disabled="{{!item.isIdle}}" value="{{item._id}}"></radio>
+                                <radio class="radio" value="{{item._id}}"></radio>
                             </view>
                         </view>
                     </view>

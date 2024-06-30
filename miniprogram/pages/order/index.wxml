@@ -19,9 +19,9 @@
                 <view class="cu-card">
                     <view class="cu-item shadow">
                         <view wx:if="{{orderDetail.state==0}}" class="cu-tag bg-purple">待支付</view>
-                        <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
-                        <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
-
+                        <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">排队中...</view>
+                        <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-purple">正在用餐</view>
+                        <view wx:if="{{orderDetail.state==3}}" class="cu-tag bg-gray">已完成</view>
 
                         <view wx:if="{{orderDetail.tableSeats&&orderDetail.tableSeats[0]}}" class="cu-tag">{{orderDetail.tableSeats[0].name}}</view>
                         <view wx:if="{{orderDetail.dinersNumb}}" class="cu-tag">{{orderDetail.dinersNumb}}人用餐</view>
