@@ -33,6 +33,6 @@
         </picker>
     </view>
     <view class="flex padding" style="width: 100vw;">
-        <button class="cu-btn round bg-blue" style="flex: 1;" formType="submit">保存</button>
+        <button class="cu-btn round bg-blue lg" style="flex: 1;" formType="submit">保存</button>
     </view>
 </form>

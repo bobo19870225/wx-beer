@@ -1,5 +1,6 @@
 {
     "usingComponents": {
-        "shopBar": "/components/shopBar/index"
+        "shopBar": "/components/shopBar/index",
+        "pageList": "/components/pageList/index"
     }
 }

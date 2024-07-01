@@ -1,0 +1,4 @@
+<scroll-view scroll-y="true" style="{{style}}" refresher-enabled="true" bindrefresherrefresh="loadData" refresher-triggered="{{isRefreshing}}" bindscrolltolower="loadMoreData">
+    <slot name="listContent"></slot>
+    <view class="cu-load bg-white {{isLoadMore?'loading':''}} {{!hasMore&&!isLoadMore?'over':''}}"></view>
+</scroll-view>

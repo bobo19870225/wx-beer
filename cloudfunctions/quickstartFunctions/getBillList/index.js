@@ -1,13 +1,14 @@
-const cloud = require('wx-server-sdk');
+const cloud = require('wx-server-sdk')
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
-const db = cloud.database();
+const db = cloud.database()
+const _ = db.command
 exports.main = async (event, context) => {
     try {
         let {
             shopId,
-            _openid,
+            isClient
         } = event.entity
 
         // ================== 分页参数 ==============================
@@ -22,13 +23,19 @@ exports.main = async (event, context) => {
             pageSize = page.pageSize //非法值设为最大值
         }
         // ================== 分页参数END ===========================
-
-        let where = {}
-        if (shopId) {
-            where.shopId = shopId
+        if (!shopId) {
+            return {
+                success: false,
+                errMsg: 'shopId is null'
+            }
         }
-        if (_openid) {
-            where._openid = _openid
+        let where = {}
+        if (isClient) {
+            where._openid = cloud.getWXContext().OPENID
+            // 0,充值；1，会员支付；2，微信支付
+            where.type = _.in([0, 1, 2])
+        } else {
+            where.shopId = shopId
         }
         res = await db.collection('bill')
             .where(where)

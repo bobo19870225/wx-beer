@@ -5,11 +5,15 @@ Page({
      */
     data: {
         isLoading: false,
-        isRefreshing: false,
-        billList: [],
+        list: [],
         containerHeight: app.globalData.containerHeight,
         isShopManage: false,
         isSuperManage: false,
+        getListData: null,
+        page: {
+            pageNumber: 1,
+            pageSize: 15
+        }
     },
 
     /**
@@ -19,6 +23,7 @@ Page({
         this.setData({
             isShopManage: options.isShopManage == 'true',
             isSuperManage: options.isSuperManage == 'true',
+            getListData: this.getPageData
         })
 
     },
@@ -35,7 +40,7 @@ Page({
         this.setData({
             isLoading: true
         })
-        await this.loadData()
+        await this.getPageData(this.data.page)
         this.setData({
             isLoading: false
         })
@@ -43,31 +48,37 @@ Page({
     /**
      * 加载账单
      */
-    async loadData() {
+    getPageData: async function (page) {
         const shop = await app.getShop()
         const entity = {
             shopId: shop._id
         }
-        if (!this.data.isShopManage && !this.data.isSuperManage) {
-            entity['_openid'] = await app.getOpenid()
-        }
-        console.log(entity);
-        wx.cloud.callFunction({
+        entity.isClient = !this.data.isShopManage && !this.data.isSuperManage
+        console.log(entity)
+        const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getBillList',
-                entity: entity
-            }
-        }).then((res) => {
-            this.setData({
-                isRefreshing: false
-            })
-            if (res.result.success) {
-                this.setData({
-                    billList: res.result.data
-                })
+                entity: entity,
+                page
             }
         })
+        if (res.result.success) {
+            const list = res.result.data
+            if (page.pageNumber == 1) {
+                this.setData({
+                    list
+                })
+            } else {
+                let listTemp = this.data.list
+                listTemp = listTemp.concat(list);
+                this.setData({
+                    list: listTemp
+                })
+            }
+            return list.length == page.pageSize
+        }
+        return false
     },
     loadMore(e) {
         console.log("loadMore", e);
