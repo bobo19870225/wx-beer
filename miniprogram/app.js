@@ -67,11 +67,11 @@ App({
   /**
    * 获取全量用户信息
    */
-  async getUserInfoAll(forceupdates) {
+  async getUserInfoAll(forceupdates, callPage) {
     if (!forceupdates && this.globalData.userInfoAll) {
       return this.globalData.userInfoAll
     }
-    console.log("run getUser");
+    console.log("run getUser", callPage);
     const shop = await this.getShop()
     const res = await wx.cloud.callFunction({
       name: 'quickstartFunctions',

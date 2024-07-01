@@ -87,11 +87,12 @@ Component({
       wx.navigateTo({
         url: '/pages/map/index',
         events: {
-          callbackData: (shop) => {
+          callbackData: async (shop) => {
             const shopId = shop._id
             if (shopId) {
               if (this.properties.cacheable) {
                 app.globalData.shop = shop
+                await app.getUserInfoAll(true, 'shopBar') //强制更新用户信息
               }
               this.setData({
                 shop
