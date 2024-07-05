@@ -25,7 +25,7 @@ Component({
     roleList: []
   },
   attached() {
-    console.log("attached");
+
   },
   show() {
     console.log("show");
@@ -127,7 +127,6 @@ Component({
       this.setData({
         shop,
       })
-      console.log("######");
       this.getVipType();
       this.setData({
         loading: true
@@ -180,10 +179,28 @@ Component({
         vipPackageBuy
       })
     },
+    /**
+     * 在线充值
+     * 先判断 用户信息是否完善，不完善跳转设置页面
+     */
     toBeVip() {
-      this.setData({
-        showPayDialog: true
-      })
+      if (this.data.userInfo?.phone) {
+        this.setData({
+          showPayDialog: true
+        })
+      } else {
+        const that = this
+        wx.showModal({
+          title: '重要提示',
+          content: '为保障您的会员权益和提供优质的会员服务，需要您完善个人信息后再购买会员套餐。',
+          success(res) {
+            if (res.confirm) {
+              that.gotoSettingPage()
+            } 
+          }
+        })
+
+      }
     },
     async payVip() {
       this.setData({
@@ -211,6 +228,7 @@ Component({
           }
         },
       });
+      console.log(res)
       await this.getUser(true)
       this.closePayDialog()
       this.setData({
@@ -228,7 +246,7 @@ Component({
         url: '/pages/user-center/setting/index',
         events: {
           callbackData: (userInfo) => {
-            console.log("callbackData", userInfo);
+            // console.log("callbackData", userInfo);
             that.setData({
               userInfo
             })

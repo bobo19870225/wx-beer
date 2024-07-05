@@ -12,10 +12,10 @@ Page({
   },
   onSwitchMode(e) {
     const mode = e.detail
-    console.log('onSwitchMode', mode);
     if (!mode) {
       return
     }
+    console.log('onSwitchMode', mode);
     let PageCur = null
     if (mode == 'client') {
       PageCur = 'start'

@@ -14,9 +14,9 @@ App({
     this.initGlobalData()
     console.log("APP_OnLaunch END")
   },
-  async initGlobalData() {
+   initGlobalData() {
     this.getShopList()
-    this.getUserInfoAll()
+    this.getUserInfoAll(true,'app')
   },
   initUI() {
     const windowInfo = wx.getWindowInfo()
@@ -71,7 +71,7 @@ App({
     if (!forceupdates && this.globalData.userInfoAll) {
       return this.globalData.userInfoAll
     }
-    console.log("run getUser", callPage);
+    console.log("app getUser", callPage);
     const shop = await this.getShop()
     const res = await wx.cloud.callFunction({
       name: 'quickstartFunctions',

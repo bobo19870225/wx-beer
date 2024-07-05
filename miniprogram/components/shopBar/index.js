@@ -72,7 +72,6 @@ Component({
       if (this.properties.cacheable) {
         app.globalData.shop = shop
       }
-      console.log("shopBar", shopList);
       this.setData({
         index,
         shopList,

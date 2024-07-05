@@ -28,7 +28,6 @@ Component({
         }
     },
     attached() {
-        console.log("attached");
         that = this
         this.setData({
             getListData: this.getPageData
