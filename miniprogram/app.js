@@ -14,9 +14,9 @@ App({
     this.initGlobalData()
     console.log("APP_OnLaunch END")
   },
-   initGlobalData() {
-    this.getShopList()
-    this.getUserInfoAll(true,'app')
+  async initGlobalData() {
+    await this.getShopList()
+    this.getUserInfoAll(true, 'app')
   },
   initUI() {
     const windowInfo = wx.getWindowInfo()
