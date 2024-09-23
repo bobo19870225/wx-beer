@@ -85,7 +85,7 @@ Page({
       })
       return
     }
-    if (imgs.length != 2) {
+    if (!imgs||imgs.length != 2) {
       wx.showToast({
         title: '需要两张店铺图片',
         icon: 'error'

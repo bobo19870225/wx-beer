@@ -18,9 +18,9 @@
         <input name="entry" placeholder="请填写..." value="{{vip.entry}}"></input>
     </view>
     <view class="cu-form-group" bind:tap="openMap">
-        <view class="title lable-width">赠送啤酒数</view>
+        <view class="title lable-width">免单人次</view>
         <input name="beer" placeholder="请填写..." value="{{vip.beer}}"></input>
-        <text class="text-orange">瓶</text>
+        <text class="text-orange">人/次</text>
     </view>
     <!-- rate -->
     <view class="cu-form-group" bind:tap="openMap">

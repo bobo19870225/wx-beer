@@ -22,10 +22,8 @@ Page({
   async initData() {
     db.collection("vipPackage").where({
       isDelete: false
-    }).where({
-      isDelete: false
     }).orderBy('price', 'asc').get().then((res) => {
-      console.log(res);
+    //   console.log(res);
       const vipList = res.data
       this.setData({
         vipList

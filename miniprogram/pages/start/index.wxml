@@ -4,7 +4,7 @@
     <view slot="content">慧管店</view>
 </cu-custom>
 <view wx:if="{{step==0}}" style="width: 100vw;height: {{containerHeight}}rpx;text-align: center;background-color: white;">
-    <image style="margin-top: 180rpx;" src="cloud://beer-1g75udik38f745cf.6265-beer-1g75udik38f745cf-1326620965/home-bg.png" mode="widthFix"></image>
+    <image style="margin-top: 180rpx;" src="cloud://dev-7gn3bhvx7b13e76d.6465-dev-7gn3bhvx7b13e76d-1326620965/home.jpg" mode="widthFix"></image>
     <button style="position: fixed;bottom: 180rpx;left: 10vw; width: 80vw;" class="cu-btn round bg-blue lg" bind:tap="orderNow">
         <image style="width: 72rpx;left: -24rpx;" src="../../images/icons/diancan.svg" mode="widthFix"></image>
         <view>
@@ -26,11 +26,11 @@
     </view>
 
     <view class="text-gray" style="padding-left: 18rpx;margin-top: 24rpx;width: 100vw;text-align: start;">
-        请选择就餐人数
+        请选择就餐人数，最少三人
     </view>
     <view class="bg-white padding">
         <view class="grid col-4 margin-bottom text-center text-lg">
-            <view style="background-color:{{selecteIndex==index+1?'orange':'rgb(230, 230, 230)'}}; border-radius: 50%;width: 18vw;height: 18vw; margin: 2vw;color: {{selecteIndex==index+1?'white':''}};line-height: 18vw;" wx:for="{{16}}" wx:key="index" bind:tap="onSelecte" data-value="{{index+1}}">{{index+1}}</view>
+            <view wx:if="{{index > 1}}" style="background-color:{{selecteIndex==index+1?'orange':'rgb(230, 230, 230)'}}; border-radius: 50%;width: 18vw;height: 18vw; margin: 2vw;color: {{selecteIndex==index+1?'white':''}};line-height: 18vw;" wx:for="{{16}}" wx:key="index" bind:tap="onSelecte" data-value="{{index+1}}">{{index+1}}</view>
         </view>
     </view>
     <button style="position: fixed;bottom: 180rpx;left: 5vw; width: 90vw;" class="cu-btn round bg-blue lg" bind:tap="gotoGoodsPage">

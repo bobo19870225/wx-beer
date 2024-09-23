@@ -22,7 +22,7 @@ Component({
   data: {
     containerHeight: app.globalData.containerHeight,
     step: 0,
-    selecteIndex: 1
+    selecteIndex: 3
   },
 
   /**

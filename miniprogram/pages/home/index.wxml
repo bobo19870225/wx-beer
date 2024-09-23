@@ -84,10 +84,10 @@
                             </view>
                             <view style="width: 100% ;text-align: center;">
                                 <view class="goods-flex">
-                                    <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                    <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail}}" src=" ../../images/icons/reduce.png">
                                     </image>
                                     <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                                    <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                    <image class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail}}" src=" ../../images/icons/add.png">
                                     </image>
                                 </view>
                             </view>
@@ -113,10 +113,10 @@
                                 </view>
                                 <view style="width: 100% ;text-align: center;">
                                     <view class="goods-flex">
-                                        <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                        <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail}}" src=" ../../images/icons/reduce.png">
                                         </image>
                                         <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                                        <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                        <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail}}" src=" ../../images/icons/add.png">
                                         </image>
                                         <view class="btn-add" wx:else></view>
                                     </view>
@@ -142,10 +142,10 @@
                                     </view>
                                     <view style="width: 100% ;text-align: center;">
                                         <view class="goods-flex">
-                                            <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/reduce.png">
+                                            <image wx:if="{{goodsDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{goodsDetail}}" src=" ../../images/icons/reduce.png">
                                             </image>
                                             <view wx:if="{{goodsDetail.number > 0}}" class="price-symbol">{{goodsDetail.number}}</view>
-                                            <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail._id}}" src=" ../../images/icons/add.png">
+                                            <image wx:if="{{m1.isShowAddBtn(goodsDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{goodsDetail}}" src=" ../../images/icons/add.png">
                                             </image>
                                             <view class="btn-add" wx:else></view>
                                         </view>
@@ -200,10 +200,10 @@
                         </view>
                         <view style="width: 100% ;text-align: center;">
                             <view class="goods-flex">
-                                <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/reduce.png">
+                                <image wx:if="{{ordersDetail.number > 0}}" class="btn-add" bind:tap="reduceGoods" data-index="{{ordersDetail}}" src=" ../../images/icons/reduce.png">
                                 </image>
                                 <view wx:if="{{ordersDetail.number > 0}}" class="price-symbol">{{ordersDetail.number}}</view>
-                                <image wx:if="{{m1.isShowAddBtn(ordersDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{ordersDetail._id}}" src=" ../../images/icons/add.png">
+                                <image wx:if="{{m1.isShowAddBtn(ordersDetail,vipLevel)}}" class="btn-add" bind:tap="addGoods" data-index="{{ordersDetail}}" src=" ../../images/icons/add.png">
                                 </image>
                                 <view class="btn-add" wx:else></view>
                             </view>

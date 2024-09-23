@@ -23,6 +23,10 @@
                         价格：￥{{item.price}}
                     </view>
                     <view>
+                        实际到账：￥{{item.entry}}
+                    </view>
+                    
+                    <view>
                         折扣率：{{item.rate==100?'不打':item.rate/10}}折
                     </view>
                     <view>

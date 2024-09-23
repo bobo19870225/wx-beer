@@ -146,22 +146,38 @@ Page({
         });
     },
     addGoods(e) {
-        let id = e.currentTarget.dataset.index
+        const data = e.currentTarget.dataset.index
+        const id = data._id
         this._handleOrder(id, true)
     },
     reduceGoods(e) {
-        let id = e.currentTarget.dataset.index
+        const data = e.currentTarget.dataset.index
+        const id = data._id
         this._handleOrder(id, false)
     },
     _handleOrder(goodsId, isAdd = true) {
         let total = 0
         let vipTotal = 0
         let totalNumber = 0
+        let guoDiNumber = 0
+        this.data.goodsList.forEach(item => {
+            if (item.classify[1] == '25e993b766ee364b0bfe23013c721a88') { //锅底只能点两种
+                let number = item.number || 0
+                guoDiNumber += number
+            }
+        });
+        if (guoDiNumber > 1 && isAdd) {
+            wx.showToast({
+                title: '最多能点两份锅底',
+                icon: 'error'
+            })
+            return
+        }
         let temp = this.data.goodsList.map((item) => {
+            let number = item.number || 0
             if (item._id == goodsId + "") {
-                let number = item.number
                 if (isAdd) {
-                    item.number = number ? number + 1 : 1
+                    item.number = number + 1
                 } else {
                     item.number = number > 0 ? number - 1 : number
                 }
