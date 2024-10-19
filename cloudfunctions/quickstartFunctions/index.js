@@ -18,6 +18,7 @@ const getShopListByKey = require('./getShopListByKey/index');
 const getApplication = require('./getApplication/index');
 const genMpQrcode = require('./genMpQrcode/index');
 const getVip = require('./getVip/index');
+const getVipPackage = require('./getVipPackage/index');
 const updateVipPackage = require('./updateVipPackage/index');
 const payForVip = require('./payForVip/index');
 const payForGoods = require('./payForGoods/index');
@@ -105,6 +106,8 @@ exports.main = async (event, context) => {
              */
         case 'getVip':
             return await getVip.main(event, context);
+        case 'getVipPackage':
+            return await getVipPackage.main(event, context);
         case 'updateVipPackage':
             return await updateVipPackage.main(event, context);
         case 'payForVip':

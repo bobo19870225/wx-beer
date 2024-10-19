@@ -38,10 +38,10 @@
                 <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
               </view>
             </view>
-            <view style="text-align: center;">
-              <view class="padding">存酒</view>
+            <view bind:tap="gotoCouponPage" style="text-align: center;">
+              <view class="padding">优惠券</view>
               <view style="font-size: 35rpx;font-weight: bold;">
-                {{vipInfo.account.beer||'0'}}
+                {{totalCouponNumber}}张
               </view>
             </view>
           </view>

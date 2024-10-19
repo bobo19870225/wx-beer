@@ -25,10 +25,19 @@
                     <view>
                         实际到账：￥{{item.entry}}
                     </view>
-                    
+
                     <view>
                         折扣率：{{item.rate==100?'不打':item.rate/10}}折
                     </view>
+
+                    <view class="flex">
+                        优惠券：
+                        <view class="cu-tag bg-gray" wx:for="{{item.coupon}}" wx:for-item="couponDetail" wx:key="_id" wx:for-index="couponIndex">
+                            {{couponDetail.value}} {{couponDetail.type==2?'元':'人/次'}}{{couponDetail.name}}{{item.couponNumber[couponIndex]}}张
+                        </view>
+
+                    </view>
+
                     <view>
                         备注：{{item.remarks}}
                     </view>

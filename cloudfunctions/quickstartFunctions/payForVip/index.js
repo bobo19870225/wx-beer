@@ -14,10 +14,9 @@ exports.main = async (event, context) => {
     const shopId = entity.shopId
     const entry = entity.entry
     const price = entity.price
-    const beer = entity.beer
+    const coupon = entity.coupon
     const vipPackageId = entity.vipPackageId
-    console.log(entity);
-    if (!_openid || !shopId || !entry || !beer || !price || !vipPackageId) {
+    if (!_openid || !shopId || !entry || !coupon || !price || !vipPackageId) {
       return {
         success: false,
         errMsg: '参数不完整:' + JSON.stringify(entity)
@@ -41,7 +40,7 @@ exports.main = async (event, context) => {
             account: {
               recharge: _.inc(price),
               balance: _.inc(entry),
-              beer: _.inc(beer),
+              coupon: coupon,
             },
             updateDate: new Date(),
             isDelete: false
@@ -56,7 +55,7 @@ exports.main = async (event, context) => {
             account: {
               recharge: price,
               balance: entry,
-              beer: beer,
+              coupon: coupon,
             },
             createDate: new Date(),
             isDelete: false
