@@ -12,12 +12,13 @@ Page({
         total: 0,
         vipTotal: 0,
         preferential: 0,
-        beer: 0, //会员存酒
         containerHeight: app.globalData.containerHeightNoTabBar,
         showDialogPay: false,
         tablesList: null,
         dinersNumb: app.globalData.dinersNumb,
-        tableSeatsId: null
+        tableSeatsId: null,
+        vipLevel: null,
+        vipAccount: null,
     },
 
     /**
@@ -26,6 +27,7 @@ Page({
     async onLoad(options) {
         const shop = await app.getShop()
         const vipLevel = await app.getVipLevel()
+        const vipAccount = await app.getVipAccount()
         const _openid = await app.getOpenid()
         const res = await db.collection('order').where({
             isDelete: false,
@@ -37,6 +39,7 @@ Page({
         this.setData({
             shop,
             vipLevel,
+            vipAccount,
             orderList,
         })
         this.getTablesList()
@@ -60,15 +63,30 @@ Page({
                 }
             }
         })
-        console.log(res);
         const tablesList = res?.result.list || [];
         this.setData({
             isLoading: false,
             tablesList
         });
     },
+    onCouponelecte(e) {
+        console.log("onCouponelecte", e);
+        let selecteCoupon = null
+        for (let index = 0; index < this.data.vipAccount.coupon.length; index++) {
+            const element = this.data.vipAccount.coupon[index];
+            if (element._id == e.detail.value) {
+                selecteCoupon = element
+                break
+            }
+        }
+        let vipTotal = this.data.vipTotal
+        vipTotal -= selecteCoupon.value
+        this.setData({
+            vipTotal: vipTotal
+        })
+        // console.log("onCouponelecte", selecteCoupon);
+    },
     onSelectOrder(e) {
-        console.log("onSelectOrder", e);
         const orderId = e.detail.value
         const orderList = this.data.orderList.filter((value) => {
             return orderId == value._id
@@ -76,14 +94,10 @@ Page({
         let preferential = null
         let total = 0;
         let vipTotal = 0;
-        let beer = 0;
+
         const order = orderList[0]
         order.goodsList.forEach(elementg => {
-            if (elementg._id == '8d1a732f6668632f02bffddc546aef20') {
-                beer += elementg.number
-            } else {
-                total += elementg.number * elementg.price
-            }
+            total += elementg.number * elementg.price
         });
         if (this.data.vipLevel) {
             vipTotal = total * this.data.vipLevel.rate / 100
@@ -94,7 +108,6 @@ Page({
             total: total,
             vipTotal: vipTotal,
             preferential: preferential,
-            beer
         })
     },
     /**
@@ -102,7 +115,6 @@ Page({
      * @param {*} e 
      */
     onTableSelecte(e) {
-        // console.log(e);
         this.setData({
             tableSeatsId: e.detail.value
         })
@@ -181,7 +193,6 @@ Page({
         entity.tableSeatsId = this.data.tableSeatsId
         //桌位
         entity.total = total
-        entity.beer = this.data.beer
         entity.rate = this.data.vipLevel?.rate || 100
         entity.remarks = remarks
         entity.dinersNumb = this.data.dinersNumb //用餐人数

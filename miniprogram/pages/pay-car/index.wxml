@@ -102,7 +102,7 @@
 
     <view class="cu-modal bottom-modal {{showDialogPay?'show':''}}">
         <view class="cu-dialog">
-            <view class="cu-bar bg-white justify-end align-center">
+            <view class="cu-bar bg-white justify-end align-center " style="border-bottom:1px solid lightgray">
                 <view class="content">
                     应付：<span class="text-price">{{filter.formatMoney(total)}}</span>
                 </view>
@@ -110,7 +110,7 @@
                     <text class="cuIcon-close text-red"></text>
                 </view>
             </view>
-            <view style="text-align: start;padding-left: 60rpx;background-color: white;font-size: 30rpx;"> 请选座位(就餐人数 {{dinersNumb}}) </view>
+            <view class="padding-top" style="text-align: start;padding-left: 60rpx;background-color: white;font-size: 30rpx;"> 请选座位(就餐人数 {{dinersNumb}}) </view>
             <view class="padding bg-white">
                 <radio-group bindchange="onTableSelecte">
                     <view class="cu-list menu" style="width: 90vw;">
@@ -138,16 +138,37 @@
                         <view class="title">备注</view>
                         <textarea style="text-align: start;" name="remarks" maxlength="300" placeholder="可填写口味，偏好等..."></textarea>
                     </view>
-
-                    <view class="flex justify-between" style="gap: 18rpx;">
-                        <button wx:if="{{preferential}}" class="cu-btn round bg-blue text-orange" style="flex: 1;" data-type="vipPay" formType="submit">
-                            <text class="cuIcon-vip"></text>会员支付（立省<span class="text-price">{{filter.formatMoney(preferential)}}</span>）
-                        </button>
-                        <button class="cu-btn round bg-gray" style="{{preferential?'width: 210rpx;':'width: 90%;'}}" data-type="wxPay" formType="submit">
-                            <text class="cuIcon-pay"></text> 微信支付
-                        </button>
-                    </view>
                 </form>
+
+                <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;">
+                    优惠券
+                </view>
+
+                <radio-group bindchange="onCouponelecte">
+                    <view class="cu-list menu" style="width: 90vw;">
+                        <view class="cu-item" wx:for="{{vipAccount.coupon}}" wx:key="index">
+                            <view class="content">
+                                <view class="flex">
+                                    <view>{{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}</view>
+                                    <view class="cu-tag round margin-left bg-blue sm">剩余{{item.number}}张</view>
+                                </view>
+                                <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
+                            </view>
+                            <view class="action">
+                                <radio disabled="{{item.usePrice>total}}" class="radio" value="{{item._id}}"></radio>
+                            </view>
+                        </view>
+                    </view>
+                </radio-group>
+
+                <view class="flex justify-between margin-bottom" style="gap: 18rpx;">
+                    <button wx:if="{{preferential}}" class="cu-btn round bg-blue text-orange" style="flex: 1;" data-type="vipPay" formType="submit">
+                        <text class="cuIcon-vip"></text>会员支付（<span class="text-price">{{filter.formatMoney(vipTotal)}}</span>）
+                    </button>
+                    <button class="cu-btn round bg-gray" style="{{preferential?'width: 210rpx;':'width: 90%;'}}" data-type="wxPay" formType="submit">
+                        <text class="cuIcon-pay"></text> 微信支付
+                    </button>
+                </view>
             </view>
         </view>
     </view>

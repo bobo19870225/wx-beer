@@ -121,6 +121,22 @@ App({
                 vipInfo.vipLevel.next = 0
             }
         }
+        // 补全优惠券信息
+        let coupon = await db.collection("coupon").where({
+            isDelete: false
+        }).get()
+        const couponList = coupon.data
+        if (vipInfo.account.coupon && vipInfo.account.coupon.length > 0) {
+            vipInfo.account.coupon = vipInfo.account.coupon.map(element => {
+                for (let index = 0; index < couponList.length; index++) {
+                    const coupon = couponList[index];
+                    if (element.couponId == coupon._id) {
+                        return Object.assign({}, element, coupon);
+                    }
+                }
+                return element
+            });
+        }
         this.globalData.userInfoAll = {
             userInfo,
             vipInfo
