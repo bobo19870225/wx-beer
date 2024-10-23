@@ -4,7 +4,7 @@
     <view slot="content">慧管店</view>
 </cu-custom>
 <view wx:if="{{step==0}}" style="width: 100vw;height: {{containerHeight}}rpx;text-align: center;background-color: white;">
-    <image style="margin-top: 180rpx;" src="cloud://dev-7gn3bhvx7b13e76d.6465-dev-7gn3bhvx7b13e76d-1326620965/home.jpg" mode="widthFix"></image>
+    <image style="margin-top: 180rpx;" src="cloud://dev-1gic3map3d8dabe0.6465-dev-1gic3map3d8dabe0-1330757186/home.jpg" mode="widthFix"></image>
     <button style="position: fixed;bottom: 180rpx;left: 10vw; width: 80vw;" class="cu-btn round bg-blue lg" bind:tap="orderNow">
         <image style="width: 72rpx;left: -24rpx;" src="../../images/icons/diancan.svg" mode="widthFix"></image>
         <view>

@@ -9,21 +9,46 @@
         <input name="name" value="{{vip.name}}" placeholder="请输入..."></input>
     </view>
 
-    <view class="cu-form-group" bind:tap="openMap">
+    <view class="cu-form-group">
         <view class="title lable-width">套餐价格</view>
         <input name="price" placeholder="请填写..." value="{{vip.price}}"></input>
     </view>
-    <view class="cu-form-group" bind:tap="openMap">
+    <view class="cu-form-group">
         <view class="title lable-width">实际到账</view>
         <input name="entry" placeholder="请填写..." value="{{vip.entry}}"></input>
     </view>
-    <view class="cu-form-group" bind:tap="openMap">
-        <view class="title lable-width">免单人次</view>
-        <input name="beer" placeholder="请填写..." value="{{vip.beer}}"></input>
-        <text class="text-orange">人/次</text>
+    <view class="cu-form-group">
+        <view class="title lable-width">优惠券</view>
+        <view wx:for="{{selectCoupons}}">
+            <view class="cu-tag round bg-gray">
+                {{item.value}}元{{item.name}}
+            </view>
+        </view>
+        <text class="cuIcon-add lg text-gray" bind:tap="showCoupons"></text>
+    </view>
+    <!-- 优惠券弹框 -->
+    <view class="cu-modal bottom-modal {{showCoupons?'show':''}}" bindtap="hideCoupons">
+        <view class="cu-dialog" catchtap>
+            <view class="cu-bar bg-white">
+                <view class="action text-blue" bindtap="hideCoupons">取消</view>
+                <view class="action text-green" data-value="'ok'" bindtap="hideCoupons">确定</view>
+            </view>
+            <view class="grid col-2 padding-sm">
+                <view wx:for="{{coupons}}" class="padding-xs" wx:key="_id">
+                    <view style="width: 45vw;height: 100px;" class="cu-btn orange sm  {{item.checked?'bg-orange':'line-orange'}}" bind:tap="ChooseCheckbox" data-value="{{item._id}}">
+                        <view>
+                            {{item.value}}元{{item.name}}
+                            <view class="margin-top">
+                                {{item.remarks}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
     </view>
     <!-- rate -->
-    <view class="cu-form-group" bind:tap="openMap">
+    <view class="cu-form-group">
         <view class="title lable-width">折扣率</view>
         <input name="rate" placeholder="请填写..." value="{{vip.rate}}"></input>
         <text class="text-orange">折</text>

@@ -71,7 +71,7 @@ Component({
             }
             // 计算优惠券总数量
             let totalCouponNumber = 0;
-            if (vipInfo.account.coupon && vipInfo.account.coupon.length > 0) {
+            if (vipInfo && vipInfo.account.coupon && vipInfo.account.coupon.length > 0) {
                 vipInfo.account.coupon.forEach(element => {
                     totalCouponNumber += element.number
                 });
@@ -182,7 +182,7 @@ Component({
                 url: `/pages/manage/coupon/index`,
             });
         },
-        
+
         radioChange(e) {
             let id = e.detail.value
             let vipPackageBuy = null
@@ -251,7 +251,7 @@ Component({
                     }
                 },
             });
-            // console.log(res)
+            console.log(res)
             await this.getUser(true)
             this.closePayDialog()
             this.setData({

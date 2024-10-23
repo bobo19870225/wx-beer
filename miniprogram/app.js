@@ -5,7 +5,7 @@ App({
             console.error('请使用 2.2.3 或以上的基础库以使用云能力');
         } else {
             wx.cloud.init({
-                env: 'dev-7gn3bhvx7b13e76d',
+                env: 'dev-1gic3map3d8dabe0',
                 traceUser: true,
             });
         }
@@ -126,7 +126,7 @@ App({
             isDelete: false
         }).get()
         const couponList = coupon.data
-        if (vipInfo.account.coupon && vipInfo.account.coupon.length > 0) {
+        if (vipInfo && vipInfo.account.coupon && vipInfo.account.coupon.length > 0) {
             vipInfo.account.coupon = vipInfo.account.coupon.map(element => {
                 for (let index = 0; index < couponList.length; index++) {
                     const coupon = couponList[index];

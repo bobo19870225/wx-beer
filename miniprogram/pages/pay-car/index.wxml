@@ -138,9 +138,8 @@
                         <view class="title">备注</view>
                         <textarea style="text-align: start;" name="remarks" maxlength="300" placeholder="可填写口味，偏好等..."></textarea>
                     </view>
-                </form>
 
-                <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;">
+                    <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;">
                     优惠券
                 </view>
 
@@ -161,7 +160,7 @@
                     </view>
                 </radio-group>
 
-                <view class="flex justify-between margin-bottom" style="gap: 18rpx;">
+                    <view class="flex justify-between margin-bottom" style="gap: 18rpx;">
                     <button wx:if="{{preferential}}" class="cu-btn round bg-blue text-orange" style="flex: 1;" data-type="vipPay" formType="submit">
                         <text class="cuIcon-vip"></text>会员支付（<span class="text-price">{{filter.formatMoney(vipTotal)}}</span>）
                     </button>
@@ -169,6 +168,11 @@
                         <text class="cuIcon-pay"></text> 微信支付
                     </button>
                 </view>
+                </form>
+
+               
+
+               
             </view>
         </view>
     </view>

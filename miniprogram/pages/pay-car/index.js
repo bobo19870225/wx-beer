@@ -138,6 +138,7 @@ Page({
         let remarks = e.detail.value.remarks
         let total = 0
         let payType = 1
+        console.log(e);
         if (typeSub == 'vipPay') {
             total = this.data.vipTotal
             payType = 1
@@ -172,6 +173,7 @@ Page({
                         success(res) {
                             // 支付成功回调，实现自定义的业务逻辑
                             console.log('唤起支付组件成功：', res);
+                            that.callPayForGoods(0, total, remarks)
                         },
                         fail(err) {
                             // 支付失败回调
@@ -180,7 +182,7 @@ Page({
                         complete() {
                             wx.hideLoading()
                             // 模拟支付成功
-                            that.callPayForGoods(0, total, remarks)
+
                         }
                     });
                 },
