@@ -67,7 +67,7 @@ exports.main = async (event, context) => {
                         _openid: wxContext.OPENID,
                         createDate: new Date(),
                         remarks: '店铺支出',
-                        money: total,
+                        money: -total,
                         shopId,
                         type: 3,
                     }

@@ -23,7 +23,7 @@
                                         {{filter.formatMoney(item.money)}}
                                     </span>
                                     <span wx:if="{{item.type==3}}" class="text-price" style="color:red">
-                                        {{filter.formatMoney(-item.money)}}
+                                        {{filter.formatMoney(item.money)}}
                                     </span>
                                     <view wx:if="{{item.type==3}}" class="cu-tag line-red round sm">店铺支出</view>
                                 </view>

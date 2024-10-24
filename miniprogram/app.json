@@ -25,7 +25,9 @@
         "pages/shop-manage/spend-management-edit/index",
         "pages/application/edit",
         "pages/shop-manage/vip-manage/index",
-        "pages/manage/coupon/index"
+        "pages/manage/coupon/index",
+        "pages/super-manage/coupon/index",
+        "pages/super-manage/coupon-edit/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#FD6C55",

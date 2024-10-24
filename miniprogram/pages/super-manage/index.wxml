@@ -62,6 +62,10 @@
                 <image class="setting_icon" style="padding: 3rpx;" src="../../images/icons/vip.svg" />
                 <view class="text-gray text-xs">会员套餐管理</view>
             </view>
+            <view class="setting_item" bind:tap="goToCouponManage">
+                <image class="setting_icon" style="padding: 3rpx;" src="../../images/icons/coupon.svg" />
+                <view class="text-gray text-xs">优惠券管理</view>
+            </view>
             <view class="setting_item" bind:tap="goToApplicationManage">
                 <image class="setting_icon" style="padding: 6rpx;" src="../../images/icons/sqgl.svg" />
                 <view class="text-gray text-xs">申请管理</view>
