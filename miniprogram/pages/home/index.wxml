@@ -70,7 +70,7 @@
                             <view class="content">
                                 <view>
                                     <text class="text-cut">{{goodsDetail.title }}</text>
-                                    <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                                    <view wx:if="{{goodsDetail.classifyTag=='锅底'}}" class="cu-tag round bg-orange sm">1人/份</view>
                                 </view>
                                 <view class="text-gray text-sm ">
                                     <view class="text-cut">
@@ -100,7 +100,7 @@
                                 <view class="content">
                                     <view>
                                         <text class="text-cut">{{goodsDetail.title }}</text>
-                                        <!-- <view class="cu-tag round bg-orange sm">6人</view> -->
+                                        <view wx:if="{{goodsDetail.classifyTag=='锅底'}}" class="cu-tag round bg-orange sm">1人/份</view>
                                     </view>
                                     <view class="text-gray text-sm ">
                                         <view class="text-cut">

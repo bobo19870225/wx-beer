@@ -44,5 +44,8 @@ exports.main = async (event, context) => {
         .project({
             goodsList: 0,
         })
+        .sort({
+          isIdle: 1
+        })
         .end()
 };

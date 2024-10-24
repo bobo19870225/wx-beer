@@ -2,7 +2,9 @@
  * 微信支付 - 下单
  */
 const cloud = require('wx-server-sdk');
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+});
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -13,15 +15,22 @@ exports.main = async (event, context) => {
 
   // 商户存储订单号到数据库，便于后续与微信侧订单号关联。例如使用云开发云存储能力：
   // db.collection('orders').add({ data: { outTradeNo } });
-
+  const description = event.data.description || '<商品描述>'
+  const total = event.data.total
+  if (!total) {
+    return {
+      success: false,
+      errMsg: '金额异常'
+    };
+  }
   const res = await cloud.callFunction({
     name: 'cloudbase_module',
     data: {
       name: 'wxpay_order',
       data: {
-        description: '<商品描述>',
+        description,
         amount: {
-          total: 1, // 订单金额
+          total: total * 100, // 订单金额
           currency: 'CNY',
         },
         // 商户生成的订单号

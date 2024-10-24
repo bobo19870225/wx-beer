@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   try {
     const _ = db.command
     const entity = event.entity
-    const _openid = entity._openid
+    const _openid = cloud.getWXContext().OPENID
     const name = entity.name
     const shopId = entity.shopId
     const entry = entity.entry
