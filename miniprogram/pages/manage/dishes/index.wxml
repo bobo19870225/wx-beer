@@ -28,7 +28,7 @@
                         <text wx:if="{{item.classifyTag}}" class="text-cut round bg-blue cu-tag"> {{item.classifyTag}}</text>
                     </view>
                     <view class="text-gray text-sm flex">
-                        <text class="text-cut"> 备注：{{item.remarks}}</text>
+                        <text class="" style="max-width: 360rpx;"> 备注：{{item.remarks}}</text>
                     </view>
                 </view>
                 <view class="action">
