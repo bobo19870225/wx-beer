@@ -36,14 +36,14 @@ Component({
           callbackData: async (shop) => {
             const shopId = shop._id
             if (shopId) {
-              if (this.properties.cacheable) {
-                app.globalData.shop = shop
-                await app.getUserInfoAll(true, 'start') //强制更新用户信息
-              }
               this.setData({
                 shop,
                 step: 1
               })
+              if (this.properties.cacheable) {
+                app.globalData.shop = shop
+                await app.getUserInfoAll(true, 'start') //强制更新用户信息
+              }
               console.log("RRR", this.data.step);
             }
           },
@@ -64,7 +64,7 @@ Component({
         url: '/pages/home/index',
         success(result) {
           app.globalData.dinersNumb = that.data.selecteIndex
-          // console.log(that.data.selecteIndex);
+          console.log(app.globalData.dinersNumb);
         }
       })
     },

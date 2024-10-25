@@ -24,7 +24,7 @@
         </image>
         <view>{{shop.name}}</view>
     </view>
-
+    
     <view class="text-gray" style="padding-left: 18rpx;margin-top: 24rpx;width: 100vw;text-align: start;">
         请选择就餐人数，最少三人
     </view>

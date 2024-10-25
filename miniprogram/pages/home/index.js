@@ -22,7 +22,7 @@ Page({
     load: true,
     shop: null,
     vipLevel: null,
-    vipAccount: null
+    vipAccount: null,
   },
 
   /**
@@ -161,12 +161,12 @@ Page({
     let totalNumber = 0
     let guoDiTypeNumber = 0
     let guoDiOldId = null
-
-
-
+    // console.log("OOO", this.data.goodsList)
     let temp = this.data.goodsList.map((item) => {
+      // console.log("AAA&&&", item.number)
       if (item._id == goodsId + "") {
         let number = item.number || 0
+        // console.log("AAA0", number)
         if (isAdd) {
           number++ //预先加一
           if (item.classify[1] == '25e993b766ee364b0bfe23013c721a88') { //锅底只能点两种
@@ -201,7 +201,7 @@ Page({
       }
       return item
     })
-    
+
     let orderTemp = temp.filter((item) => {
       if (item.number > 0) {
         totalNumber += item.number
@@ -236,17 +236,23 @@ Page({
   async goToPay(e) {
     if (this.data.orderList.length > 0) {
       const shopId = this.data.shop._id
-      var _openid = await app.getOpenid()
+      const dinersNumb = app.globalData.dinersNumb
+      console.log("SS", dinersNumb);
+      if (!dinersNumb) {
+        wx.showToast({
+          title: '请先确定用餐人数',
+          icon: "error"
+        })
+        return
+      }
       wx.cloud.callFunction({
         name: 'quickstartFunctions',
         data: {
           type: 'updateOrder',
           entity: {
-            _openid,
-            createDate: new Date(),
-            isDelete: false,
             goodsList: this.data.orderList,
             shopId,
+            dinersNumb,
             // 下单成功，待支付
             state: 0
           },

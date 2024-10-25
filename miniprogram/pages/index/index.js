@@ -49,7 +49,7 @@ Page({
         entity: {
           _openid,
           isDelete: false,
-          createDate: new Date()
+          createDate: Date.now()
         }
       },
     }).then((res) => {

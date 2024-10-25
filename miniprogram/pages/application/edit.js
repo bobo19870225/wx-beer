@@ -116,7 +116,7 @@ Page({
                 imgs,
                 state: 0, //待审核
                 remarks: remarks ? remarks : "无",
-                createDate: new Date(),
+                createDate: Date.now(),
             },
             success: (res) => {
                 wx.navigateBack()

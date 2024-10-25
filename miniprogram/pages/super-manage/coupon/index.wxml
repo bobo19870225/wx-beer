@@ -1,30 +1,33 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">优惠券管理</view>
+  <view slot="backText">返回</view>
+  <view slot="content">优惠券管理</view>
 </cu-custom>
 
 <!-- 数据加载，显示loading态 -->
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text text-xs'>加载中...</view>
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text text-xs'>加载中...</view>
 </view>
 
 <!-- 数据加载完毕 -->
 <block>
-    <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
-        <view class="cu-list menu margin-top-sm">
-            <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
-                <view class="content padding-left">
-                    <text class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}} {{item.number}}张</text>
-                    <view class="text-gray text-sm flex">
-                        <text class="text-cut"> 备注：{{item.remarks}}</text>
-                    </view>
-                </view>
-                <view class="action">
-                    <!-- <text class="cuIcon-edit"></text> -->
-                </view>
-            </view>
+  <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
+    <view class="cu-list menu margin-top-sm">
+      <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
+        <view class="content padding-left">
+          <view class="text-cut">
+            {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
+            <view class="cu-tag round bg-gray margin-left">{{item.type==1?'会员券':'活动券'}}</view>
+          </view>
+          <view class="text-gray text-sm flex">
+            <text class="text-cut"> 备注：{{item.remarks}}</text>
+          </view>
         </view>
-    </scroll-view>
-    <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="add">新增优惠券</button>
+        <view class="action">
+          <text class="cuIcon-edit" data-id="{{item._id}}" bind:tap="handleEdit"></text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="add">新增优惠券</button>
 </block>

@@ -42,7 +42,7 @@ exports.main = async (event, context) => {
               balance: _.inc(entry),
               coupon: coupon,
             },
-            updateDate: new Date(),
+            updateDate: Date.now(),
             isDelete: false
           }
         })
@@ -57,7 +57,7 @@ exports.main = async (event, context) => {
               balance: entry,
               coupon: coupon,
             },
-            createDate: new Date(),
+            createDate: Date.now(),
             isDelete: false
           }
         })
@@ -66,7 +66,7 @@ exports.main = async (event, context) => {
         const billAdd = await transaction.collection('bill').add({
           data: {
             _openid,
-            createDate: new Date(),
+            createDate: Date.now(),
             remarks: 'vip充值',
             vipPackageId,
             money: price,

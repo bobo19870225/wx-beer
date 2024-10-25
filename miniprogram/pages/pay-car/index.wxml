@@ -13,7 +13,7 @@
   <!-- 数据加载完毕 -->
   <block wx:if="{{ !isLoading }}">
     <!-- 有数据 -->
-    <scroll-view scroll-y="true" style="height: {{containerHeight}}rpx;" wx:if="{{ orderList.length >= 1 }}">
+    <scroll-view scroll-y="true" style="height: {{containerHeight-200}}rpx;" wx:if="{{ orderList.length >= 1 }}">
       <radio-group bindchange="onSelectOrder">
         <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
           <view class="cu-card" style="width: 100vw;">
@@ -57,6 +57,7 @@
               </block>
               <view class="content padding flex align-center justify-between">
                 <view>
+                  <!-- {{orderDetail.createDate}} -->
                   {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}
                 </view>
                 <view class="margin-left ">
