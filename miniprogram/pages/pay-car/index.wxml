@@ -18,6 +18,7 @@
         <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
           <view class="cu-card" style="width: 100vw;">
             <view class="cu-item shadow">
+              <view  class="cu-tag bg-green">{{orderDetail.dinersNumb}}人餐</view>
               <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-green">已完成</view>
               <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">制作中</view>
               <block wx:for="{{ orderDetail.goodsList }}" wx:for-item="goodsDetail" wx:key="_id" wx:for-index="index">

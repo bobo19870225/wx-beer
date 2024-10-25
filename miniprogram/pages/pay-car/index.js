@@ -15,7 +15,7 @@ Page({
     containerHeight: app.globalData.containerHeightNoTabBar,
     showDialogPay: false,
     tablesList: null,
-    dinersNumb: app.globalData.dinersNumb,
+    // dinersNumb: app.globalData.dinersNumb,
     tableSeatsId: null,
     vipLevel: null,
     vipAccount: null,
@@ -211,7 +211,7 @@ Page({
     entity.total = total
     entity.rate = this.data.vipLevel?.rate || 100
     entity.remarks = remarks
-    entity.dinersNumb = this.data.dinersNumb //用餐人数
+    // entity.dinersNumb = this.data.dinersNumb //用餐人数
     wx.cloud.callFunction({
       name: 'quickstartFunctions',
       data: {
