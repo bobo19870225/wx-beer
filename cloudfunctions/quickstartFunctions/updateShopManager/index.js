@@ -59,7 +59,7 @@ exports.main = async (event, context) => {
       const resUpdateUser = await transaction.collection('user').doc(user._id).update({
         data: {
           manageShopIds,
-          updateDate: new Date(),
+          updateDate: Date.now(),
           updateOpenId: _openid
         }
       })
@@ -69,7 +69,7 @@ exports.main = async (event, context) => {
       const resUpdateTask = await transaction.collection('task').doc(taskId).update({
         data: {
           state: 1, //审核通过
-          updateDate: new Date(),
+          updateDate: Date.now(),
           updateOpenId: _openid
         }
       })

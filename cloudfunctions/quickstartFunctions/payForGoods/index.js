@@ -63,7 +63,7 @@ exports.main = async (event, context) => {
                         tableSeatsId,
                         dinersNumb,
                         remarks,
-                        updateDate: new Date(),
+                        updateDate: Date.now(),
                         state: 1 // 付款成功
                     }
                 })
@@ -91,7 +91,7 @@ exports.main = async (event, context) => {
                         account: {
                             balance: _.inc(-total),
                         },
-                        updateDate: new Date(),
+                        updateDate: Date.now(),
                     }
                 })
                 if (!accountRes) {
@@ -105,7 +105,7 @@ exports.main = async (event, context) => {
                         tableSeatsId,
                         dinersNumb,
                         remarks,
-                        updateDate: new Date(),
+                        updateDate: Date.now(),
                         state: 1 // 付款成功
                     }
                 })
@@ -113,7 +113,7 @@ exports.main = async (event, context) => {
                     const billAdd = await transaction.collection('bill').add({
                         data: {
                             _openid,
-                            createDate: new Date(),
+                            createDate:new Date(),
                             remarks: '店内消费',
                             orderId,
                             money: total,

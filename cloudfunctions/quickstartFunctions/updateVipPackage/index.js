@@ -11,12 +11,12 @@ exports.main = async (event, context) => {
     try {
         let res = null
         if (event.id) {
-            event.data.updateDate = new Date()
+            event.data.updateDate = Date.now()
             res = await db.collection('vipPackage').doc(event.id).update({
                 data: event.data,
             });
         } else {
-            event.data.createDate = new Date()
+            event.data.createDate = Date.now()
             res = await db.collection('vipPackage').add({
                 data: event.data,
             });

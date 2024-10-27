@@ -43,7 +43,7 @@ exports.main = async (event, context) => {
             if (id) {
                 delete entity._id
                 entity.updateOpenId = wxContext.OPENID
-                entity.updateDate = new Date()
+                entity.updateDate = Date.now()
                 res = await transaction.collection('spend').doc(id).update({
                     data: entity,
                 });
@@ -53,7 +53,7 @@ exports.main = async (event, context) => {
                 }
                 const billAdd = await transaction.collection('bill').doc(res.data.billId).update({
                     data: {
-                        updateDate: new Date(),
+                        updateDate:new Date(),
                         money: total,
                     }
                 })
@@ -65,7 +65,7 @@ exports.main = async (event, context) => {
                 const billAdd = await transaction.collection('bill').add({
                     data: {
                         _openid: wxContext.OPENID,
-                        createDate: new Date(),
+                        createDate:new Date(),
                         remarks: '店铺支出',
                         money: -total,
                         shopId,
@@ -75,7 +75,7 @@ exports.main = async (event, context) => {
                 if (!billAdd || !billAdd._id) {
                     await transaction.rollback(-100)
                 }
-                entity.createDate = new Date()
+                entity.createDate = Date.now()
                 entity._openid = wxContext.OPENID
                 entity.billId = billAdd._id
                 res = await transaction.collection('spend').add({

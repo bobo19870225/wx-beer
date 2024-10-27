@@ -33,18 +33,18 @@ exports.main = async (event, context) => {
                 res = await db.collection('order').doc(id).update({
                     data: {
                         isDelete,
-                        deleteDate: new Date()
+                        deleteDate: Date.now()
                     }
                 });
             } else { //全量更新
                 delete entity._id
-                entity.updateDate = new Date()
+                entity.updateDate = Date.now()
                 res = await db.collection('order').doc(id).update({
                     data: entity,
                 });
             }
         } else {
-            entity.createDate = new Date()
+            entity.createDate = Date.now()
             entity.isDelete = false
             res = await db.collection('order').add({
                 data: entity,
