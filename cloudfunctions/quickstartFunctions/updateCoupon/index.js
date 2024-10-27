@@ -14,12 +14,12 @@ exports.main = async (event, context) => {
     let res = null
     if (id) {
       delete entity._id
-      entity.updateDate = Date.now()
+      entity.updateDate = new Date()
       res = await db.collection('coupon').doc(id).update({
         data: entity,
       });
     } else {
-      entity.createDate = Date.now()
+      entity.createDate = new Date()
       res = await db.collection('coupon').add({
         data: entity
       });

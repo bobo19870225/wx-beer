@@ -222,8 +222,8 @@ Component({
 
       const shop = await app.getShop()
       const vipPackageBuy = this.data.vipPackageBuy
-      const price = Number.parseInt(vipPackageBuy.price)
-      const entry = Number.parseInt(vipPackageBuy.entry)
+      const price = Number.parseFloat(vipPackageBuy.price)
+      const entry = Number.parseFloat(vipPackageBuy.entry)
       const couponNumber = vipPackageBuy.couponNumber
       const coupon = vipPackageBuy.coupon.map((value, index) => {
         return {
@@ -231,7 +231,7 @@ Component({
           number: couponNumber[index]
         }
       })
-
+console.log(price);
       wx.showLoading({
         title: '正在支付...',
         mask: true
@@ -272,7 +272,7 @@ Component({
               // 支付成功回调，实现自定义的业务逻辑
               console.log('唤起支付组件成功：', res);
               const vipPackageId = vipPackageBuy._id
-              this.setData({
+              that.setData({
                 isLoading: true
               })
               wx.cloud.callFunction({
@@ -281,7 +281,7 @@ Component({
                   type: 'payForVip',
                   entity: {
                     shopId: shop._id,
-                    name: this.data.userInfo.name,
+                    name: that.data.userInfo.name,
                     vipPackageId,
                     price,
                     entry,

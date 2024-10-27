@@ -19,7 +19,6 @@
             <radio-group bindchange="onSelectOrder">
                 <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card" style="width: 100vw;">
-
                         <view class="cu-item shadow">
                             <view style="position: absolute;right: 52rpx;z-index: 10;top: 48rpx;">
                                 <radio value="{{orderDetail._id}}"></radio>
@@ -32,8 +31,13 @@
                                     <view class="cu-item">
                                         <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
                                         <view class="content flex-sub">
-                                            <view class="text-grey">{{ goodsDetail.title }}</view>
-                                            <block wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}">
+                                            <view class="text-grey">
+                                                {{ goodsDetail.title }}
+                                                <view wx:if="{{goodsDetail.addIndex}}" class="cu-tag margin-left round bg-cyan">
+                                                加菜{{goodsDetail.addIndex}}
+                                                </view>
+                                            </view>
+                                            <block>
                                                 <view class="text-gray text-sm flex justify-between">
                                                     <view style="color: gray;">
                                                         原价：<span class="text-price">{{filter.formatMoney(goodsDetail.price)}}</span>
@@ -48,20 +52,13 @@
                                                     （{{vipLevel.rate/10}}折）
                                                 </view>
                                             </block>
-                                            <block wx:else>
-                                                <view class="text-gray text-sm flex justify-between">
-                                                    <view style="color: gray;">
-                                                        会员存酒
-                                                    </view>
-                                                    <view class="text-gray text-sm">
-                                                        x{{ goodsDetail.number}}
-                                                    </view>
-                                                </view>
-                                            </block>
                                         </view>
                                     </view>
                                 </view>
                             </block>
+                            <view style="width: 90%;margin-left: 5%;" class="cuIcon-add text-center cu-btn round sm" data-item="{{orderDetail}}" bind:tap="addOrder">
+                                加菜
+                            </view>
                             <view class="content padding flex align-center justify-between">
                                 <view>
                                     {{filter.format(orderDetail.createDate, 'YY-MM-DD hh:mm:ss')}}

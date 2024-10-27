@@ -20,12 +20,16 @@
             <view slot="listContent">
                 <block wx:for="{{ list }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
                     <view class="cu-card">
-                        <view class="cu-item shadow">
+                        <view class="cu-item shadow" style="position: relative;">
                             <view wx:if="{{orderDetail.state==0}}" class="cu-tag bg-purple">待支付</view>
                             <view wx:if="{{orderDetail.state==1}}" class="cu-tag bg-orange">排队中...</view>
                             <view wx:if="{{orderDetail.state==2}}" class="cu-tag bg-purple">正在用餐</view>
                             <view wx:if="{{orderDetail.state==3}}" class="cu-tag bg-gray">已完成</view>
-
+                            <view style="position: absolute;top: 6rpx;right: 48rpx;z-index: 10;" wx:if="{{orderDetail.state!=3}}">
+                                <button class="cu-btn bg-blue round sm " style="width: 100rpx;margin-left: 12rpx;" data-item="{{orderDetail}}" bind:tap="addOrder">
+                                    加菜
+                                </button>
+                            </view>
                             <view wx:if="{{orderDetail.tableSeats&&orderDetail.tableSeats[0]}}" class="cu-tag">{{orderDetail.tableSeats[0].name}}</view>
                             <view wx:if="{{orderDetail.dinersNumb}}" class="cu-tag">{{orderDetail.dinersNumb}}人用餐</view>
 
@@ -34,7 +38,12 @@
                                     <view class="cu-item">
                                         <image class="cu-avatar round lg" src="{{goodsDetail.img||'../../images/icons/morentu.svg'}}" mode="aspectFill" />
                                         <view class="content">
-                                            <view class="text-grey">{{ goodsDetail.title }}</view>
+                                            <view class="text-grey">
+                                                {{ goodsDetail.title }}
+                                                <view wx:if="{{goodsDetail.addIndex}}" class="cu-tag margin-left round bg-cyan">
+                                                    加菜{{goodsDetail.addIndex}}
+                                                </view>
+                                            </view>
                                             <block wx:if="{{goodsDetail._id!='8d1a732f6668632f02bffddc546aef20'}}">
                                                 <view class="text-gray text-sm flex justify-between">
                                                     <view style="color: gray;">
@@ -80,6 +89,7 @@
                                         取消
                                     </button>
                                 </view>
+
                             </view>
                         </view>
                     </view>

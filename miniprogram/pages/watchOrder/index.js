@@ -57,7 +57,7 @@ Component({
                     }
                 }
             })
-            console.log(res);
+            // console.log(res);
             let tableList = res?.result.list || [];
             tableList = tableList.map((item, index) => {
                 item.value = index

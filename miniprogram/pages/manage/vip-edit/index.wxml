@@ -19,9 +19,15 @@
     </view>
     <view class="cu-form-group">
         <view class="title lable-width">优惠券</view>
-        <view wx:for="{{selectCoupons}}">
-            <view class="cu-tag round bg-gray">
-                {{item.value}}元{{item.name}}
+        <view style="text-align: center;">
+            <view class="cu-tag round bg-gray margin-top-sm" wx:for="{{selectCoupons}}">
+                <text class="cuIcon-move text-red" data-id="{{item._id}}" bind:tap="moveCouponNumber">
+                </text>
+                <view class="padding-lr-sm">
+                    {{item.value}}元{{item.name}} X{{item.number||1}}
+                </view>
+                <text class="cuIcon-add text-green" data-id="{{item._id}}" bind:tap="addCouponNumber">
+                </text>
             </view>
         </view>
         <text class="cuIcon-add lg text-gray" bind:tap="showCoupons"></text>

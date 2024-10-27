@@ -49,7 +49,6 @@ Page({
         entity: {
           _openid,
           isDelete: false,
-          createDate: Date.now()
         }
       },
     }).then((res) => {

@@ -67,6 +67,14 @@ Component({
                 }
             })
         },
+        addOrder(e) {
+            wx.navigateTo({
+                url: '/pages/home/index',
+                success: (res) => {
+                    res.eventChannel.emit('order', e.currentTarget.dataset.item)
+                }
+            })
+        },
         async onDelete(e) {
             const id = e.detail.id
             wx.showLoading({

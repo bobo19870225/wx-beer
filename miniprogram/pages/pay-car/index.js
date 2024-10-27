@@ -154,8 +154,17 @@ Page({
             }
         })
     },
+    addOrder(e) {
+        console.log(e.currentTarget.dataset.item);
+        wx.navigateTo({
+            url: '/pages/home/index',
+            success: (res) => {
+                res.eventChannel.emit('order', e.currentTarget.dataset.item)
+            }
+        })
+    },
     async onDelete(e) {
-        const id =  e.detail.id
+        const id = e.detail.id
         wx.showLoading({
             title: '处理中...',
             mask: true
@@ -271,7 +280,7 @@ Page({
             } else {
                 wx.showToast({
                     icon: 'error',
-                    title: '下单失败！' + res.errMsg,
+                    title: res.result.errMsg,
                 })
             }
         })

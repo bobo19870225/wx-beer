@@ -35,13 +35,43 @@ Page({
             isLoading: true
         })
         db.collection('coupon').where({
-            isDelete: false
+            isDelete: false,
+            type: 1
         }).get().then((res) => {
-            console.log(res);
             this.setData({
-                coupons: res.data,
+                coupons: res.data.map((item) => {
+                    item.number = 1
+                    return item
+                }),
                 isLoading: false
             })
+        })
+    },
+    addCouponNumber(e) {
+        console.log(e.currentTarget.dataset.id)
+        const id = e.currentTarget.dataset.id
+        let temp = this.data.selectCoupons.map((item) => {
+            if (item._id == id) {
+                item.number += 1
+            }
+            return item
+        })
+        this.setData({
+            selectCoupons: temp
+        })
+    },
+    moveCouponNumber(e) {
+        const id = e.currentTarget.dataset.id
+        let temp = this.data.selectCoupons.map((item) => {
+            if (item._id == id) {
+                if (item.number > 1) {
+                    item.number -= 1
+                }
+            }
+            return item
+        })
+        this.setData({
+            selectCoupons: temp
         })
     },
     showCoupons(e) {
@@ -49,8 +79,8 @@ Page({
             showCoupons: true
         })
     },
+
     hideCoupons(e) {
-        console.log(e);
         if (e.currentTarget.dataset.value == 'ok') {
 
         }
@@ -88,12 +118,12 @@ Page({
         })
     },
     formSubmit(e) {
+        console.log(e);
         let {
             name,
             remarks,
             price,
             entry,
-            beer,
             rate,
         } = e.detail.value
         if (!name) {
@@ -117,13 +147,7 @@ Page({
             })
             return
         }
-        if (!beer) {
-            wx.showToast({
-                title: '赠送啤酒数必填',
-                icon: 'error'
-            })
-            return
-        }
+
         if (!rate) {
             wx.showToast({
                 title: '折扣率必填',
@@ -131,10 +155,15 @@ Page({
             })
             return
         }
-        price = Number.parseInt(price)
-        entry = Number.parseInt(entry)
-        beer = Number.parseInt(beer)
+        price = Number.parseFloat(price)
+        entry = Number.parseFloat(entry)
         rate = Number.parseInt(rate)
+        let coupon = []
+        let couponNumber = []
+        this.data.selectCoupons.forEach((item) => {
+            coupon.push(item._id)
+            couponNumber.push(item.number)
+        })
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
@@ -144,7 +173,8 @@ Page({
                     name,
                     price,
                     entry,
-                    beer,
+                    coupon,
+                    couponNumber,
                     rate,
                     remarks,
                     isDelete: false

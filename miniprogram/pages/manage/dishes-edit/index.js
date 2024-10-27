@@ -136,8 +136,7 @@ Page({
       })
       return
     }
-    price = Number.parseInt(price)
-    // vipPrice = Number.parseInt(vipPrice)
+    price = Number.parseFloat(price)
     if (!img) {
       wx.showToast({
         title: '请上传一张商品图片',
