@@ -12,7 +12,7 @@
     <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
     <view class='gray-text text-xs'>加载中...</view>
   </view>
-  <scroll-view refresher-enabled="true" bindrefresherrefresh="getUser" refresher-triggered="{{isRefreshing}}" style="height: {{containerHeight - 120}}rpx;position: relative;">
+  <scroll-view refresher-enabled="true" bindrefresherrefresh="initData" refresher-triggered="{{isRefreshing}}" style="height: {{containerHeight - 120}}rpx;position: relative;">
     <view class="flex justify-between">
       <view class="margin text-gray" bind:tap="gotoSettingPage"> {{userInfo.name?'欢迎您 '+ userInfo.name : '未设置昵称'}}</view>
     </view>
@@ -93,7 +93,7 @@
         <radio-group bindchange="radioChange">
           <view style="width: 100vw;" class="flex padding align-center " wx:for="{{vips}}" wx:key="value">
             <view class="margin-lr">
-              <radio value="{{item._id}}" checked="{{false}}" />
+              <radio value="{{item._id}}" checked="{{item.checked}}" />
             </view>
             <view style="text-align: start;">
               <view>
