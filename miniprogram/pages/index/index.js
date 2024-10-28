@@ -67,6 +67,18 @@ Page({
       app.globalData.PageCur = ''
     }
   },
+  /**
+   * 分享触发
+   */
+  onShareAppMessage() {
+    
+  },
+/**
+ * 分享朋友圈触发
+ */
+  onShareTimeline() {
+    
+  },
   NavChange(e) {
     this.setData({
       PageCur: e.currentTarget.dataset.cur
