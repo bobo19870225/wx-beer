@@ -172,7 +172,7 @@ Component({
                 isDelete: false
             }).get()
             let vips = res.data
-            if (this.data.vipInfo.isBuyFans) {
+            if (this.data.vipInfo && this.data.vipInfo.isBuyFans) {
                 vips.shift()
             }
             this.setData({
