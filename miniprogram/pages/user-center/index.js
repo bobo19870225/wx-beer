@@ -137,8 +137,10 @@ Component({
             })
             this.initData()
         },
+        /**
+         * 拉取数据
+         */
         async initData() {
-
             this.setData({
                 loading: true,
                 vipPackageBuy: null

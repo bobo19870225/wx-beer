@@ -10,6 +10,11 @@ App({
             });
         }
         this.globalData = {};
+        wx.login({
+          success: (res) => {
+            console.log("APP_login success")
+          },
+        })
         this.initUI()
         this.initGlobalData()
         console.log("APP_OnLaunch END")
