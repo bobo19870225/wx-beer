@@ -126,13 +126,10 @@
         </view>
     </view>
     <!-- 活动分享 -->
-    <view style="position: fixed;bottom: 100px;width: 100%;text-align: center;">
-        <image style="height: 20px;" src="../../images/share.svg" mode="heightFix">
-
-        </image>
-        <button style="background-color: transparent;position: absolute;top: 0;right: 0; left: 0; height: 20px;width: 128px;" open-type="share">
-
+    <!-- <view style="position: fixed;bottom: 100px;width: 100%;text-align: center;">
+        <image style="height: 20px;" src="../../images/share.svg" mode="heightFix" />
+        <button style="background-color: transparent;position: absolute;top: 0;
+        right: 0; left: 0; height: 20px;width: 128px;" open-type="share">
         </button>
-    </view>
-
+    </view> -->
 </view>

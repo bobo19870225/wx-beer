@@ -266,8 +266,8 @@ Component({
                     type: 'wxpay_order',
                     data: {
                         description: 'VIP充值',
-                        // total: 0.01 //测试
-                        total: price //金额
+                        total: 0.01 //测试
+                        // total: price //金额
                     }
                 },
 
