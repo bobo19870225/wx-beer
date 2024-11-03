@@ -105,7 +105,7 @@ App({
             for (let index = 0; index < vipPackageInfo.length; index++) {
                 const element = vipPackageInfo[index];
                 const d = element.price - vipInfo.account.recharge
-                console.log(vipInfo)
+                // console.log(vipInfo)
                 if (d == 0) {
                     vipInfo.vipLevel = element
                     if (index + 1 == vipPackageInfo.length) {

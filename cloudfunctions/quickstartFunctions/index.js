@@ -32,6 +32,9 @@ const updateShopManager = require('./updateShopManager/index');
 const getIdleTable = require('./getIdleTable/index');
 const updateCoupon = require('./updateCoupon/index');
 const getActivityId = require('./getActivityId/index');
+const getActiveCouponList = require('./getActiveCouponList/index');
+const qiangCoupon = require('./qiangCoupon/index');
+
 
 
 
@@ -136,6 +139,12 @@ exports.main = async (event, context) => {
              */
         case 'updateCoupon':
             return await updateCoupon.main(event, context);
+        case 'getActiveCouponList':
+            return await getActiveCouponList.main(event, context);
+        case 'qiangCoupon':
+            return await qiangCoupon.main(event, context);
+
+
             /**
              * 活动分享
              */

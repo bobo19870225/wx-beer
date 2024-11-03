@@ -11,18 +11,52 @@
 
 <!-- 数据加载完毕 -->
 
-<scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
-    <view class="cu-list menu margin-top-sm">
-        <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
-            <view class="content padding-left">
-                <text class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}} {{item.number}}张</text>
-                <view class="text-gray text-sm flex">
-                    <text class="text-cut"> 备注：{{item.remarks}}</text>
-                </view>
-            </view>
-            <view class="action">
-
-            </view>
-        </view>
+<scroll-view scroll-x class="bg-white nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+    <view class="cu-item {{index==TabCur?'text-green cur':''}}" wx:for="{{tables}}" wx:key='value' bindtap="tabSelect" data-id="{{index}}">
+        {{item.title}}
     </view>
 </scroll-view>
+<block wx:if="{{TabCur==0}}">
+    <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
+        <view class="cu-list menu margin-top-sm">
+            <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
+                <view class="content padding-left">
+                    <text class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}} {{item.number}}张</text>
+                    <view class="text-gray text-sm flex">
+                        <text class="text-cut"> 备注：{{item.remarks}}</text>
+                    </view>
+                </view>
+                <view class="action">
+
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+</block>
+<block wx:if="{{TabCur==1}}">
+    <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getActiveCouponList" refresher-triggered="{{isLoadingActive}}">
+        <view class="cu-list menu margin-top-sm">
+            <view class="cu-item " wx:for="{{ activeCouponList }}" wx:key="_id">
+                <view class="content padding-left">
+                    <view class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
+                        <span wx:if="{{item.releaseNumber==-1}}">
+                            （ 无限量发放 ）
+                        </span>
+                        <span wx:else>
+                            剩余 {{item.releaseNumber}}张
+                        </span>
+                    </view>
+                    <view class="text-gray text-sm flex">
+                        <text class="text-cut"> 备注：{{item.remarks}}</text>
+                    </view>
+                </view>
+                <view class="action">
+                    <image wx:if="{{!item.get}}" bind:tap="qiang" data-item="{{item}}" style="width: 40px;height: 40px;" src="../../../images/qiang.svg">
+                    </image>
+                    <image wx:else style="width: 40px;height: 40px;" src="../../../images/coupon_ get.svg">
+                    </image>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+</block>

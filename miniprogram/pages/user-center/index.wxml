@@ -33,13 +33,18 @@
                     <view class="text-gray text-sm margin-top">{{vipInfo.vipLevel.remarks}}</view>
                     <view class="flex justify-around">
                         <view bind:tap="gotoBillPage" style="text-align: center;">
-                            <view class="padding">余额</view>
+                            <view class="padding text-lg">余额</view>
                             <view style="font-size: 35rpx;font-weight: bold;">
                                 <span class="text-price">{{filter.formatMoney(vipInfo.account.balance||0.00)}}</span>
                             </view>
                         </view>
                         <view bind:tap="gotoCouponPage" style="text-align: center;">
-                            <view class="padding">优惠券</view>
+                            <view class="padding text-lg" style="position: relative;">
+                                优惠券
+                                <span class="text-sm text-orange">
+                                    8张可领
+                                </span>
+                            </view>
                             <view style="font-size: 35rpx;font-weight: bold;">
                                 {{totalCouponNumber}}张
                             </view>
