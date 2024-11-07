@@ -1,3 +1,4 @@
+<wxs src="../../format.wxs" module="filter" />
 <cu-custom bgColor="bg-white" isBack="{{true}}">
     <view slot="backText">返回</view>
     <view slot="content">我的优惠券</view>
@@ -21,9 +22,23 @@
         <view class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
                 <view class="content padding-left">
-                    <text class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}} {{item.number}}张</text>
+                    <view class="flex justify-between">
+                        <view>
+                            {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
+                        </view>
+                        <view wx:if="{{item.number}}" class="margin-left">
+                            剩余{{item.number}}张
+                        </view>
+                        <view wx:else class="margin-left text-gray">
+                            已用完
+                        </view>
+                        <view class="cu-tag bg-cyan " style="width: 90px;">{{filter.format(item.endDate,'deadline')}}</view>
+                    </view>
                     <view class="text-gray text-sm flex">
-                        <text class="text-cut"> 备注：{{item.remarks}}</text>
+                        <text class=""> 备注：{{item.remarks}}</text>
+                    </view>
+                    <view class="text-gray text-sm flex">
+                        <text class="text-cut"> 截止日期：{{item.endDate}}</text>
                     </view>
                 </view>
                 <view class="action">
@@ -42,19 +57,28 @@
                         <span wx:if="{{item.releaseNumber==-1}}">
                             （ 无限量发放 ）
                         </span>
-                        <span wx:else>
-                            剩余 {{item.releaseNumber}}张
-                        </span>
+                        <block wx:else>
+                            <span class="margin-left">
+                                发放{{item.releaseNumber}}张
+                            </span>
+                            <span class="margin-left">
+                                剩{{item.releaseNumber-(item.hasReleaseNumber||0)}}张
+                            </span>
+                        </block>
                     </view>
                     <view class="text-gray text-sm flex">
                         <text class="text-cut"> 备注：{{item.remarks}}</text>
+                    </view>
+                    <view class="text-gray text-sm flex">
+                        <text class="text-cut"> 截止日期：{{item.endDate}}</text>
                     </view>
                 </view>
                 <view class="action">
                     <image wx:if="{{!item.get}}" bind:tap="qiang" data-item="{{item}}" style="width: 40px;height: 40px;" src="../../../images/qiang.svg">
                     </image>
-                    <image wx:else style="width: 40px;height: 40px;" src="../../../images/coupon_ get.svg">
-                    </image>
+                    <view wx:else class="text-orange">
+                        已领<span class="cuIcon-check"></span>
+                    </view>
                 </view>
             </view>
         </view>

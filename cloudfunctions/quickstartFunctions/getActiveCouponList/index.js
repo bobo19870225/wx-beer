@@ -24,15 +24,14 @@ exports.main = async (event, context) => {
         const dateNow = new Date()
 
         res = await db.collection('coupon')
-            .where(_.expr($.and([$.lte([$.dateFromString({
-                    dateString: '$startDate'
-                }), dateNow]),
-                $.gte([$.dateFromString({
-                    dateString: '$endDate'
-                }), dateNow]),
-                $.eq(['$isDelete', false])
-            ])))
-            .orderBy('createDate', 'desc')
+            .where(_.expr(
+                $.and([$.eq(['$type', 2]),
+                    $.gte([$.dateFromString({
+                        dateString: '$endDate'
+                    }), dateNow]),
+                    $.eq(['$isDelete', false])
+                ])))
+            .orderBy('endDate', 'asc')
             .skip((pageNumber - 1) * pageSize)
             .limit(pageSize)
             .get();
