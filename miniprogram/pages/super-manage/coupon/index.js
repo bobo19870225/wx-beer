@@ -14,10 +14,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    this.getTablesList()
+    this.getCouponList()
   },
 
-  async getTablesList() {
+  async getCouponList() {
     db.collection("coupon").where({
       isDelete: false
     }).get().then((res) => {

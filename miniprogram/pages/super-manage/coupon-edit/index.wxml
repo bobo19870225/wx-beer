@@ -1,55 +1,71 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">新增优惠券</view>
+    <view slot="backText">返回</view>
+    <view slot="content">新增优惠券</view>
 </cu-custom>
 
 <form catchsubmit="formSubmit" catchreset="formReset">
-  <view class="cu-form-group margin-top">
-    <view class="title lable-width">优惠券名称</view>
-    <input name="name" value="{{coupon.name}}" placeholder="请输入..."></input>
-  </view>
-  <view class="cu-form-group">
-    <view class="title lable-width">类型 </view>
-    <radio-group name='type' bindchange="radioChange">
-      <label class="padding" wx:for="{{types}}" wx:key="value">
-        <radio value="{{item.value}}" checked="{{item.value==type}}" />
-        {{item.name}}
-      </label>
-    </radio-group>
-  </view>
-  <view class="cu-form-group">
-    <view class="title lable-width">价值</view>
-    <input name="value" type="digit" placeholder="请填写..." value="{{coupon.value}}"></input>
-    <view>元</view>
-  </view>
-  <view wx:if="{{type==2}}" class="cu-form-group">
-    <view class="title lable-width">开始日期</view>
-    <picker name='startDate' mode="date" value="{{coupon.startDate}}" bindchange="bindStartDateChange">
-      <view class="picker">
-        {{coupon.startDate||'请选择'}}
-      </view>
-    </picker>
-  </view>
-  <view wx:if="{{type==2}}" class="cu-form-group">
-    <view class="title lable-width">结束日期</view>
-    <picker name='endDate' mode="date" value="{{coupon.endDate}}" start="{{coupon.startDate}}" bindchange="bindEndDateChange">
-      <view class="picker">
-        {{coupon.endDate||'请选择'}}
-      </view>
-    </picker>
-  </view>
-  <view class="cu-form-group">
-    <view class="title">起始金额</view>
-    <view>（满多少元可用）</view>
-    <input name="usePrice" type="digit" placeholder="请填写..." value="{{coupon.usePrice||coupon.value||0}}"></input>
-    <view>元</view>
-  </view>
-  <view class="cu-form-group align-start">
-    <view class="title lable-width">备注</view>
-    <textarea name="remarks" value="{{coupon.remarks}}" maxlength="300" placeholder="请输入备注..."></textarea>
-  </view>
-  <view class="flex padding" style="gap: 8px">
-    <button class="cu-btn round bg-blue" formType="submit">提交</button>
-    <button class="cu-btn round bg-black" formType="reset">重置</button>
-  </view>
+    <view class="cu-form-group margin-top">
+        <view class="title lable-width">优惠券名称</view>
+        <input name="name" value="{{coupon.name}}" placeholder="请输入..."></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title lable-width">类型 </view>
+        <radio-group name='type' bindchange="radioChange" style="display: grid;justify-items: start;">
+            <label class="padding-tb-sm" style="width: 70vw;" wx:for="{{types}}" wx:key="value">
+                <radio value="{{item.value}}" checked="{{item.value==type}}" />
+                {{item.name}}
+            </label>
+        </radio-group>
+    </view>
+    <view class="cu-form-group">
+        <view class="title lable-width">价值</view>
+        <input name="value" type="digit" placeholder="请填写..." value="{{coupon.value}}"></input>
+        <view>元</view>
+    </view>
+    <block wx:if="{{type==2}}">
+        <view class="cu-form-group">
+            <view class="title lable-width">开始日期</view>
+            <picker name='startDate' mode="date" value="{{coupon.startDate}}" bindchange="bindStartDateChange">
+                <view class="picker">
+                    {{coupon.startDate||'请选择'}}
+                </view>
+            </picker>
+        </view>
+        <view class="cu-form-group">
+            <view class="title lable-width">结束日期</view>
+            <picker name='endDate' mode="date" value="{{coupon.endDate}}" start="{{coupon.startDate}}" bindchange="bindEndDateChange">
+                <view class="picker">
+                    {{coupon.endDate||'请选择'}}
+                </view>
+            </picker>
+        </view>
+        <!-- <view class="cu-form-group">
+            <view class="title lable-width">发放日期</view>
+            <picker name='releaseDate' mode="date" value="{{coupon.releaseDate||coupon.startDate}}" start="{{coupon.startDate}}" end="{{coupon.endDate}}" bindchange="bindReleaseDateChange">
+                <view class="picker">
+                    {{coupon.releaseDate||'请选择'}}
+                </view>
+            </picker>
+        </view> -->
+        <view class="cu-form-group">
+            <view class="title">发放数量（不限制填-1）</view>
+            <input name="releaseNumber" type="digit" placeholder="请填写..." value="{{coupon.releaseNumber}}"></input>
+            <view>张</view>
+        </view>
+    </block>
+
+    <view class="cu-form-group">
+        <view class="title">起始金额</view>
+        <view>（满多少元可用）</view>
+        <input name="usePrice" type="digit" placeholder="请填写..." value="{{coupon.usePrice||coupon.value||0}}"></input>
+        <view>元</view>
+    </view>
+    <view class="cu-form-group align-start">
+        <view class="title lable-width">备注</view>
+        <textarea name="remarks" value="{{coupon.remarks}}" maxlength="300" placeholder="请输入备注..."></textarea>
+    </view>
+    <view class="flex padding" style="gap: 8px">
+        <button class="cu-btn round bg-blue" formType="submit">提交</button>
+        <button class="cu-btn round bg-black" formType="reset">重置</button>
+    </view>
 </form>

@@ -22,6 +22,7 @@ Page({
         tableSeatsId: null,
         vipLevel: null,
         vipAccount: null,
+        selecteCoupon: null,
     },
 
     /**
@@ -31,6 +32,16 @@ Page({
         const shop = await app.getShop()
         const vipLevel = await app.getVipLevel()
         const vipAccount = await app.getVipAccount()
+        // if (vipAccount.coupon) {
+        //     vipAccount.coupon = vipAccount.coupon.map((item) => {
+        //         if (item.number <= 0) {
+        //             item.disabled = true
+        //         } else {
+        //             item.disabled = false
+        //         }
+        //         return item
+        //     })
+        // }
         this.setData({
             shop,
             vipLevel,
@@ -83,19 +94,28 @@ Page({
         });
     },
     onCouponelecte(e) {
-        console.log("onCouponelecte", e);
+        // console.log("onCouponelecte", e);
         let selecteCoupon = null
-        for (let index = 0; index < this.data.vipAccount.coupon.length; index++) {
-            const element = this.data.vipAccount.coupon[index];
+        let vipAccount = this.data.vipAccount
+        for (let index = 0; index < vipAccount.coupon.length; index++) {
+            const element = vipAccount.coupon[index];
             if (element._id == e.detail.value) {
                 selecteCoupon = element
-                break
+                element.checked = true
+            } else {
+                element.checked = false
             }
         }
         let vipTotal = this.data.vipTotal
         vipTotal -= selecteCoupon.value
+        let total = this.data.total
+        total -= selecteCoupon.value
+        console.log("III", vipAccount);
         this.setData({
-            vipTotal: vipTotal
+            vipAccount,
+            vipTotal,
+            total,
+            selecteCoupon
         })
         // console.log("onCouponelecte", selecteCoupon);
     },
@@ -141,8 +161,28 @@ Page({
         })
     },
 
-    closeDialogPay() {
+    closeDialogPay(e) {
+        if (e) { //点关闭
+            let total = this.data.total
+            let vipTotal = this.data.vipTotal
+            let selecteCoupon = this.data.selecteCoupon
+            if (selecteCoupon) {
+                total += selecteCoupon.value
+                vipTotal += selecteCoupon.value
+                this.setData({
+                    total,
+                    vipTotal,
+                    selecteCoupon: null,
+                })
+            }
+        }
+        let vipAccount = this.data.vipAccount
+        for (let index = 0; index < vipAccount.coupon.length; index++) {
+            let element = vipAccount.coupon[index]
+            element.checked = false
+        }
         this.setData({
+            vipAccount,
             showDialogPay: false
         })
     },
@@ -263,7 +303,22 @@ Page({
         entity.total = total
         entity.rate = this.data.vipLevel?.rate || 100
         entity.remarks = remarks
-        // entity.dinersNumb = this.data.dinersNumb //用餐人数
+        entity.dinersNumb = this.data.dinersNumb //用餐人数
+        let selecteCoupon = this.data.selecteCoupon
+        if (selecteCoupon) {
+            let coupon = this.data.vipAccount.coupon.map((item) => {
+                if (item._id == this.data.selecteCoupon._id) {
+                    if (item.number > 0) {
+                        item.number -= 1
+                    }
+                }
+                delete item.checked
+                return item
+            })
+            entity.coupon = coupon
+        }
+        console.log(entity)
+        // return
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {

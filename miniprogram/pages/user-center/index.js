@@ -137,8 +137,10 @@ Component({
             })
             this.initData()
         },
+        /**
+         * 拉取数据
+         */
         async initData() {
-
             this.setData({
                 loading: true,
                 vipPackageBuy: null
@@ -172,7 +174,7 @@ Component({
                 isDelete: false
             }).get()
             let vips = res.data
-            if (this.data.vipInfo.isBuyFans) {
+            if (this.data.vipInfo && this.data.vipInfo.isBuyFans) {
                 vips.shift()
             }
             this.setData({
@@ -264,8 +266,8 @@ Component({
                     type: 'wxpay_order',
                     data: {
                         description: 'VIP充值',
-                        // total: 0.01 //测试
-                        total: price //金额
+                        total: 0.01 //测试
+                        // total: price //金额
                     }
                 },
 

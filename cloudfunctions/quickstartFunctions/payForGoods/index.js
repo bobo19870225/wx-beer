@@ -24,6 +24,7 @@ exports.main = async (event, context) => {
         const remarks = entity.remarks
         const dinersNumb = entity.dinersNumb
         const payType = entity.payType
+        let coupon = entity.coupon
         const rate = entity.rate
         if (!orderId || !shopId || !total || payType == null || payType == undefined) {
             return {
@@ -33,18 +34,19 @@ exports.main = async (event, context) => {
         }
         // _openid 和 shopId 确定一条记录
         let vipId = null
+        const vipRes = await db.collection('vip').where({
+            _openid,
+            shopId
+        }).get()
+        const vipData = vipRes.data
+        let account = null
+        if (vipData && vipData.length > 0) {
+            const vip = vipRes.data[0]
+            vipId = vip._id
+            account = vip.account
+        }
+
         if (payType == 1) {
-            const vipRes = await db.collection('vip').where({
-                _openid,
-                shopId
-            }).get()
-            const vipData = vipRes.data
-            let account = null
-            if (vipData && vipData.length > 0) {
-                const vip = vipRes.data[0]
-                vipId = vip._id
-                account = vip.account
-            }
             // 余额不足
             if (account.balance - total < 0) {
                 return {
@@ -52,6 +54,7 @@ exports.main = async (event, context) => {
                     errMsg: '余额不足'
                 }
             }
+
         }
         const result = await db.runTransaction(async transaction => {
             let accountRes = null
@@ -85,11 +88,27 @@ exports.main = async (event, context) => {
                 } else {
                     await transaction.rollback(-100)
                 }
+                if (vipId && coupon) { //使用了会员券
+                    accountRes = await transaction.collection('vip').doc(vipId).update({
+                        data: {
+                            account: {
+                                coupon
+                            },
+                            updateDate: Date.now(),
+                        }
+                    })
+                    if (!accountRes) {
+                        await transaction.rollback(-100)
+                    }
+                }
             } else if (payType == 1) { //VIP支付
+                // 回写coupon
+                coupon = coupon || account.coupon
                 accountRes = await transaction.collection('vip').doc(vipId).update({
                     data: {
                         account: {
                             balance: _.inc(-total),
+                            coupon
                         },
                         updateDate: Date.now(),
                     }
@@ -113,7 +132,7 @@ exports.main = async (event, context) => {
                     const billAdd = await transaction.collection('bill').add({
                         data: {
                             _openid,
-                            createDate:new Date(),
+                            createDate: new Date(),
                             remarks: '店内消费',
                             orderId,
                             money: total,

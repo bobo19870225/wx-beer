@@ -17,8 +17,8 @@
         <!-- 有数据 -->
         <scroll-view scroll-y="true" style="height: {{containerHeight-200}}rpx;" wx:if="{{ orderList.length >= 1 }}">
             <radio-group bindchange="onSelectOrder">
-                <block wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index">
-                    <view class="cu-card" style="width: 100vw;">
+                <block>
+                    <view wx:for="{{ orderList }}" wx:for-item="orderDetail" wx:key="_id" wx:for-index="index" class="cu-card" style="width: 100vw; position: relative;">
                         <view class="cu-item shadow">
                             <view style="position: absolute;right: 52rpx;z-index: 10;top: 48rpx;">
                                 <radio value="{{orderDetail._id}}"></radio>
@@ -34,7 +34,7 @@
                                             <view class="text-grey">
                                                 {{ goodsDetail.title }}
                                                 <view wx:if="{{goodsDetail.addIndex}}" class="cu-tag margin-left round bg-cyan">
-                                                加菜{{goodsDetail.addIndex}}
+                                                    加菜{{goodsDetail.addIndex}}
                                                 </view>
                                             </view>
                                             <block>
@@ -143,28 +143,33 @@
                     <view class="cu-form-group align-start">
                         <view class="title">备注</view>
                         <textarea class="bg-gray" style="text-align: start;padding: 12px;border-radius: 4px;" name="remarks" maxlength="300" placeholder="可填写口味，偏好等...">
-            </textarea>
+                        </textarea>
                     </view>
-
-                    <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;">
-                        优惠券
-                    </view>
-                    <radio-group bindchange="onCouponelecte">
-                        <view class="cu-list menu" style="width: 90vw;">
-                            <view class="cu-item" wx:for="{{vipAccount.coupon}}" wx:key="index">
-                                <view class="content">
-                                    <view class="flex">
-                                        <view>{{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}</view>
-                                        <view class="cu-tag round margin-left bg-blue sm">剩余{{item.number}}张</view>
+                    <!-- 优惠券 -->
+                    <block wx:if="{{vipAccount&&vipAccount.coupon&&vipAccount.coupon.length>0}}">
+                        <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;">
+                            优惠券
+                        </view>
+                        <radio-group bindchange="onCouponelecte">
+                            <view class="cu-list menu" style="width: 90vw;">
+                                <view class="cu-item" wx:for="{{vipAccount.coupon}}" wx:key="index">
+                                    <view class="content">
+                                        <view class="flex">
+                                            <view>{{item.value}}元{{item.name}}</view>
+                                            <view class="cu-tag round margin-left bg-blue sm">剩余{{item.number}}张</view>
+                                        </view>
+                                        <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
                                     </view>
-                                    <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
-                                </view>
-                                <view class="action">
-                                    <radio disabled="{{item.usePrice>total}}" class="radio" value="{{item._id}}"></radio>
+                                    <!-- {{item.checked}} -->
+
+                                    <view class="action">
+                                        <radio disabled="{{item.number<=0||item.usePrice>total}}" class="radio" value="{{item._id}}" checked="{{item.checked==true}}">
+                                        </radio>
+                                    </view>
                                 </view>
                             </view>
-                        </view>
-                    </radio-group>
+                        </radio-group>
+                    </block>
                     <view class="flex justify-between margin-bottom" style="gap: 18rpx;">
                         <button wx:if="{{preferential}}" class="cu-btn round bg-blue text-orange" style="flex: 1;" data-type="vipPay" formType="submit">
                             <text class="cuIcon-vip"></text>会员支付（<span class="text-price">{{filter.formatMoney(vipTotal)}}</span>）

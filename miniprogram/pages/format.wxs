@@ -1,7 +1,6 @@
 function format(ts, option) {
     ts = ts || "";
     var date = getDate(ts);
-    //   var date = getDate(ts)
     var year = date.getFullYear()
     var month = date.getMonth() + 1
     var day = date.getDate()
@@ -9,6 +8,24 @@ function format(ts, option) {
     var hour = date.getHours()
     var minute = date.getMinutes()
     var second = date.getSeconds()
+
+    if (option == 'deadline') {
+        var now = getDate();
+        var oneDay = 24 * 60 * 60 * 1000; // 一个自然日的毫秒数
+
+        var yearDiff = date.getFullYear() - now.getFullYear();
+        var monthDiff = date.getMonth() - now.getMonth();
+        var dayDiff = date.getDate() - now.getDate();
+        var totalDiff = yearDiff * 365 + monthDiff * 30 + dayDiff; // 计算完整年份和不满一年的天数差异
+        if (totalDiff > 0) {
+            if (totalDiff < 3) {
+                return '即将过期'
+            }
+            return totalDiff + '天后过期'
+        } else {
+            return '已过期'
+        }
+    }
 
     //获取 年月日
     if (option == 'YY-MM-DD') return [year, month, day].map(formatNumber).join('-')
