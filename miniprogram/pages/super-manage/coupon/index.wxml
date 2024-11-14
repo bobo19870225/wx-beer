@@ -11,8 +11,8 @@
 
 <!-- 数据加载完毕 -->
 <block>
-  <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
-    <view class="cu-list menu margin-top-sm">
+  <scroll-view refresher-enabled="true" scroll-y style="height: {{containerHeight - 120}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
+    <view class="cu-list menu margin-tb-sm">
       <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
         <view class="content padding-left">
           <view class="text-cut">
@@ -20,7 +20,7 @@
             <view class="cu-tag round bg-gray margin-left">{{item.type==1?'会员券':'活动券'}}</view>
           </view>
           <view class="text-gray text-sm flex">
-            <text class="text-cut"> 备注：{{item.remarks}}</text>
+            <text class=""> 备注：{{item.remarks}}</text>
           </view>
         </view>
         <view class="action">
@@ -28,6 +28,7 @@
         </view>
       </view>
     </view>
+    <view  style="width: 100%;text-align: center;color: lightgray;">——  我是有底线的  ——</view>
   </scroll-view>
   <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="add">新增优惠券</button>
 </block>
