@@ -20,7 +20,7 @@
     <view class="cu-form-group">
         <view class="title lable-width">优惠券</view>
         <view style="text-align: center;">
-            <view class="cu-tag round bg-gray margin-top-sm" wx:for="{{selectCoupons}}">
+            <view class="cu-tag round bg-gray margin-top-sm" wx:for="{{selectCoupons}}" wx:key="_id">
                 <text class="cuIcon-move text-red" data-id="{{item._id}}" bind:tap="moveCouponNumber">
                 </text>
                 <view class="padding-lr-sm">
@@ -39,7 +39,7 @@
                 <view class="action text-blue" bindtap="hideCoupons">取消</view>
                 <view class="action text-green" data-value="'ok'" bindtap="hideCoupons">确定</view>
             </view>
-            <view class="grid col-2 padding-sm">
+            <view class="grid col-2 padding-sm" style="max-height: 60vh;overflow-y: auto;">
                 <view wx:for="{{coupons}}" class="padding-xs" wx:key="_id">
                     <view style="width: 45vw;height: 100px;" class="cu-btn orange sm  {{item.checked?'bg-orange':'line-orange'}}" bind:tap="ChooseCheckbox" data-value="{{item._id}}">
                         <view>

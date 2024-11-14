@@ -42,16 +42,16 @@
                         备注：{{item.remarks}}
                     </view>
                 </view>
-                <!-- <view class="action">
-                    <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="delete" data-shopid="{{item._id}}">
+                <view class="action">
+                    <!-- <button class="cu-btn bg-red shadow sm" style="width: 50rpx;border-radius: 50%;" bind:tap="delete" data-shopid="{{item._id}}">
                         <text class="cuIcon-delete">
                         </text>
-                    </button>
+                    </button> -->
                     <button class="cu-btn bg-blue shadow sm" style="width: 50rpx;border-radius: 50%;margin-left: 9rpx;" bind:tap="edit" data-id="{{item._id}}">
                         <text class="cuIcon-edit">
                         </text>
                     </button>
-                </view> -->
+                </view>
             </view>
         </view>
     </scroll-view>

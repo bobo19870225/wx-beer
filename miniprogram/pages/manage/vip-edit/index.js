@@ -36,7 +36,6 @@ Page({
         })
         db.collection('coupon').where({
             isDelete: false,
-            type: 1
         }).get().then((res) => {
             this.setData({
                 coupons: res.data.map((item) => {
@@ -111,6 +110,27 @@ Page({
         })
         db.collection('vipPackage').doc(id).get().then((res) => {
             console.log(res);
+            let coupon = res.data.coupon
+            const couponNumber = res.data.couponNumber
+            let selectCoupons = []
+            if (coupon) {
+                let coupons = this.data.coupons.map((value) => {
+                    coupon.forEach((element, index) => {
+                        const number = couponNumber[index]
+                        if (value._id == element) {
+                            value.number = number
+                            value.checked = true
+                            selectCoupons.push(value)
+                        }
+                    })
+                    return value
+                });
+                console.log("LLL", selectCoupons);
+                this.setData({
+                    coupons,
+                    selectCoupons
+                })
+            }
             this.setData({
                 vip: res.data,
                 isLoading: false
