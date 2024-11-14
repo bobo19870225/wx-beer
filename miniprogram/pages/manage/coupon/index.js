@@ -6,7 +6,7 @@ Page({
      */
     data: {
         isLoading: false,
-        isLoadingActive: false,
+        isMyLoading: false,
         couponList: [],
         activeCouponList: [],
         containerHeight: app.globalData.containerHeight,
@@ -18,16 +18,18 @@ Page({
         }, {
             title: '活动券',
             value: 2,
-        }]
+        }],
+        getListDataMy: null,
+        getListDataAct: null,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     async onLoad(options) {
-        // this.getTablesList()
         this.setData({
             isLoading: true,
+            isMyLoading: true
         })
     },
 
@@ -38,10 +40,8 @@ Page({
             scrollLeft: (e.currentTarget.dataset.id - 1) * 60
         })
         if (TabCur == 1) {
-            // this.getActiveCouponList()
-            this.setData({
-                isLoadingActive: true,
-            })
+            this.getActiveCouponList()
+
         }
     },
     qiang(e) {
@@ -62,9 +62,7 @@ Page({
                 wx.showToast({
                     title: '领取成功',
                 })
-                this.setData({
-                    isLoadingActive: true
-                })
+                this.getActiveCouponList()
             } else {
                 wx.showToast({
                     title: res.result.errMsg,
@@ -73,12 +71,16 @@ Page({
             }
         })
     },
-    async getActiveCouponList() {
+    async getActiveCouponList(page = {
+        pageNumber: 1,
+        pageSize: 10
+    }) {
         this.setData({
+            isLoading: true,
             activeCouponList: []
         })
         let vipAccount = await app.getVipAccount(true)
-        wx.cloud.callFunction({
+        const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getActiveCouponList',
@@ -89,32 +91,34 @@ Page({
                     }
                 }
             },
-        }).then((res) => {
-            let activeCouponList = res.result.data
-            console.log(vipAccount.coupon);
-            let couponIds = ''
-            if (vipAccount.coupon) {
-                let couponidArr = []
-                vipAccount.coupon.forEach(element => {
-                    couponidArr.push(element._id)
-                });
-                couponIds = couponidArr.join()
-            }
-            activeCouponList = activeCouponList.map((element) => {
-                if (couponIds && couponIds.indexOf(element._id) > 0) {
-                    element.get = true
-                } else {
-                    element.get = false
-                }
-                return element
-            })
-            this.setData({
-                activeCouponList,
-                isLoadingActive: false
-            })
         })
+
+        let activeCouponList = res.result.data
+        console.log(vipAccount.coupon);
+        let couponIds = ''
+        if (vipAccount.coupon) {
+            let couponidArr = []
+            vipAccount.coupon.forEach(element => {
+                couponidArr.push(element._id)
+            });
+            couponIds = couponidArr.join()
+        }
+        activeCouponList = activeCouponList.map((element) => {
+            if (couponIds && couponIds.indexOf(element._id) > 0) {
+                element.get = true
+            } else {
+                element.get = false
+            }
+            return element
+        })
+        this.setData({
+            activeCouponList,
+            isLoading: false
+        })
+        return activeCouponList.length == page.pageSize
     },
-    async getTablesList() {
+
+    async getMyList() {
         const res = await app.getUserInfoAll(false)
         const vipInfo = res.vipInfo
         db.collection("coupon").where({
@@ -132,10 +136,10 @@ Page({
                     return element
                 });
             }
-            console.log(vipInfo.account.coupon);
             this.setData({
                 couponList: vipInfo.account.coupon,
                 isLoading: false,
+                isMyLoading: false,
             })
         })
     },
@@ -151,7 +155,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        this.setData({
+            getListDataAct: this.getActiveCouponList
+        })
     },
 
     /**

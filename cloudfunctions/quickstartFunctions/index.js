@@ -34,6 +34,7 @@ const updateCoupon = require('./updateCoupon/index');
 const getActivityId = require('./getActivityId/index');
 const getActiveCouponList = require('./getActiveCouponList/index');
 const qiangCoupon = require('./qiangCoupon/index');
+const getCouponList = require('./getCouponList/index');
 
 
 
@@ -143,6 +144,9 @@ exports.main = async (event, context) => {
             return await getActiveCouponList.main(event, context);
         case 'qiangCoupon':
             return await qiangCoupon.main(event, context);
+        case 'getCouponList':
+            return await getCouponList.main(event, context);
+
 
 
             /**

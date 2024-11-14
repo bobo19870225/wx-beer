@@ -18,7 +18,7 @@
     </view>
 </scroll-view>
 <block wx:if="{{TabCur==0}}">
-    <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getTablesList" refresher-triggered="{{isLoading}}">
+    <scroll-view scroll-y refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getMyList" refresher-triggered="{{isMyLoading}}">
         <view class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
                 <view class="content padding-left">
@@ -49,8 +49,8 @@
     </scroll-view>
 </block>
 <block wx:if="{{TabCur==1}}">
-    <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getActiveCouponList" refresher-triggered="{{isLoadingActive}}">
-        <view class="cu-list menu margin-top-sm">
+    <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListDataAct}}">
+        <view slot="listContent" class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ activeCouponList }}" wx:key="_id">
                 <view class="content padding-left">
                     <view class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
@@ -82,5 +82,5 @@
                 </view>
             </view>
         </view>
-    </scroll-view>
+    </pageList>
 </block>

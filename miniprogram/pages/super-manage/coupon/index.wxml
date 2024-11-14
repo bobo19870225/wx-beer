@@ -11,8 +11,8 @@
 
 <!-- 数据加载完毕 -->
 <block>
-    <scroll-view refresher-enabled="true" scroll-y  style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getCouponList" refresher-triggered="{{isLoading}}">
-        <view class="cu-list menu margin-top-sm">
+    <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListData}}">
+        <view slot="listContent" class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
                 <view class="content padding-left">
                     <view class="text-cut">
@@ -27,7 +27,6 @@
                 </view>
             </view>
         </view>
-        <view style="width: 100%;text-align: center;color: lightgray;">——  这是底线  ——</view>
-    </scroll-view>
+    </pageList>
     <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="add">新增优惠券</button>
 </block>
