@@ -11,7 +11,7 @@
 
 <!-- 数据加载完毕 -->
 <block>
-    <scroll-view refresher-enabled="true" style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getCouponList" refresher-triggered="{{isLoading}}">
+    <scroll-view refresher-enabled="true" scroll-y  style="height: {{containerHeight - 150}}rpx;" bindrefresherrefresh="getCouponList" refresher-triggered="{{isLoading}}">
         <view class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
                 <view class="content padding-left">
@@ -21,13 +21,13 @@
                     </view>
                     <view wx:if="{{item.type==2}}">有效期：{{item.startDate}} 至 {{item.endDate}}</view>
                     <text class="text-sm text-gray" style="width: 90px;"> 备注：{{item.remarks}}</text>
-
                 </view>
                 <view class="action">
                     <text class="cuIcon-edit" data-id="{{item._id}}" bind:tap="handleEdit"></text>
                 </view>
             </view>
         </view>
+        <view style="width: 100%;text-align: center;color: lightgray;">——  这是底线  ——</view>
     </scroll-view>
     <button style="width: 80vw;margin-left: 10vw;position: fixed;bottom: 90rpx;" class="cu-btn bg-blue round" bind:tap="add">新增优惠券</button>
 </block>
