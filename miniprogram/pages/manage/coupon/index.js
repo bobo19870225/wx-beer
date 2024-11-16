@@ -75,10 +75,12 @@ Page({
         pageNumber: 1,
         pageSize: 10
     }) {
-        this.setData({
-            isLoading: true,
-            activeCouponList: []
-        })
+        if (page.pageNumber == 1) {
+            this.setData({
+                isLoading: true,
+                activeCouponList: []
+            })
+        }
         let vipAccount = await app.getVipAccount(true)
         const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',

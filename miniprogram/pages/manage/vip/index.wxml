@@ -33,7 +33,7 @@
                     <view class="flex">
                         优惠券：
                         <view class="cu-tag bg-gray" wx:for="{{item.coupon}}" wx:for-item="couponDetail" wx:key="_id" wx:for-index="couponIndex">
-                            {{couponDetail.value}} {{couponDetail.type==2?'元':'人/次'}}{{couponDetail.name}}{{item.couponNumber[couponIndex]}}张
+                            {{couponDetail.value}} {{couponDetail.type==2?'元':'元/次'}}{{couponDetail.name}}{{item.couponNumber[couponIndex]}}张
                         </view>
 
                     </view>

@@ -24,7 +24,7 @@
                 <view class="content padding-left">
                     <view class="flex justify-between">
                         <view>
-                            {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
+                            {{item.value}}{{item.type==2?'元':'元/次'}}{{item.name}}
                         </view>
                         <view wx:if="{{item.number}}" class="margin-left">
                             剩余{{item.number}}张
@@ -53,7 +53,7 @@
         <view slot="listContent" class="cu-list menu margin-top-sm">
             <view class="cu-item " wx:for="{{ activeCouponList }}" wx:key="_id">
                 <view class="content padding-left">
-                    <view class="text-cut"> {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
+                    <view class="text-cut"> {{item.value}}{{item.type==2?'元':'元/次'}}{{item.name}}
                         <span wx:if="{{item.releaseNumber==-1}}">
                             （ 无限量发放 ）
                         </span>

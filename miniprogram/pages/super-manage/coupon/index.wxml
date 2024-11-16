@@ -16,7 +16,7 @@
             <view class="cu-item " wx:for="{{ couponList }}" wx:key="_id">
                 <view class="content padding-left">
                     <view class="text-cut">
-                        {{item.value}}{{item.type==2?'元':'人/次'}}{{item.name}}
+                        {{item.value}}{{item.type==2?'元':'元/次'}}{{item.name}}
                         <view class="cu-tag round bg-gray margin-left">{{item.type==1?'会员券':'活动券'}}</view>
                     </view>
                     <view wx:if="{{item.type==2}}">有效期：{{item.startDate}} 至 {{item.endDate}}</view>

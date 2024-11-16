@@ -1,6 +1,6 @@
-// pages/pay-car/index.js
 const app = getApp()
 const db = wx.cloud.database()
+
 Page({
     /**
      * 页面的初始数据
@@ -8,12 +8,13 @@ Page({
     data: {
         showDialog: false,
         dialogData: {},
-
         orderList: [],
         order: null,
         shop: null,
         total: 0,
+        totalOld: 0,
         vipTotal: 0,
+        vipTotalOld: 0,
         preferential: 0,
         containerHeight: app.globalData.containerHeightNoTabBar,
         showDialogPay: false,
@@ -32,16 +33,7 @@ Page({
         const shop = await app.getShop()
         const vipLevel = await app.getVipLevel()
         const vipAccount = await app.getVipAccount()
-        // if (vipAccount.coupon) {
-        //     vipAccount.coupon = vipAccount.coupon.map((item) => {
-        //         if (item.number <= 0) {
-        //             item.disabled = true
-        //         } else {
-        //             item.disabled = false
-        //         }
-        //         return item
-        //     })
-        // }
+
         this.setData({
             shop,
             vipLevel,
@@ -94,7 +86,6 @@ Page({
         });
     },
     onCouponelecte(e) {
-        // console.log("onCouponelecte", e);
         let selecteCoupon = null
         let vipAccount = this.data.vipAccount
         for (let index = 0; index < vipAccount.coupon.length; index++) {
@@ -106,9 +97,9 @@ Page({
                 element.checked = false
             }
         }
-        let vipTotal = this.data.vipTotal
+        let vipTotal = this.data.vipTotalOld
         vipTotal -= selecteCoupon.value
-        let total = this.data.total
+        let total = this.data.totalOld
         total -= selecteCoupon.value
         console.log("III", vipAccount);
         this.setData({
@@ -136,11 +127,41 @@ Page({
             vipTotal = total * this.data.vipLevel.rate / 100
             preferential = total - vipTotal
         }
+        let vipAccount = this.data.vipAccount
+        if (vipAccount.coupon) {
+            vipAccount.coupon = vipAccount.coupon.map((item) => {
+                const startDate = new Date(item.startDate)
+                const endDate = new Date(item.endDate)
+                const now = new Date()
+                if (item.number <= 0) {
+                    item.disabled = true
+                    item.tips = '已用完'
+                } else if (item.usePrice > total) {
+                    item.disabled = true
+                    const d = item.usePrice - total
+                    item.tips = '还差' + d + '元可以使用'
+                } else if (startDate.getTime() > now.getTime()) {
+                    item.disabled = true
+                    item.tips = item.startDate + '后可以使用'
+                } else if (endDate.getTime() < now.getTime()) {
+                    item.disabled = true
+                    item.tips = '已过期'
+                } else {
+                    item.disabled = false
+                }
+                item.checked = false
+                return item
+            })
+            console.log(vipAccount.coupon);
+        }
         this.setData({
             order,
+            totalOld: total,
             total: total,
             vipTotal: vipTotal,
-            preferential: preferential,
+            vipTotalOld: vipTotal,
+            preferential,
+            vipAccount
         })
     },
     /**

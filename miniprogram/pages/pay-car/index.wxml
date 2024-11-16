@@ -108,9 +108,26 @@
 
     <view class="cu-modal bottom-modal {{showDialogPay?'show':''}}">
         <view class="cu-dialog">
-            <view class="cu-bar bg-white justify-end align-center " style="border-bottom:1px solid lightgray">
-                <view class="content">
-                    应付：<span class="text-price">{{filter.formatMoney(total)}}</span>
+            <view class="cu-bar bg-white justify-between" style="border-bottom:1px solid lightgray">
+                <view style="flex: 1; text-align: start;padding-left: 6px;">
+                    <view class="text-lg text-blue" style="font-weight: bolder;">
+                        微信支付：<span class="text-price text-blue">
+                            {{filter.formatMoney(total)}}
+                        </span>
+                        <span wx:if="{{selecteCoupon}}" class="text-sm text-gary" style="font-weight: normal;">
+                            （原价：{{filter.formatMoney(totalOld)}} - {{selecteCoupon.value}}优惠券）
+                        </span>
+                    </view>
+
+                    <view wx:if="{{selecteCoupon}}" class="text-lg text-blue" style="font-weight: bolder;">
+                        会员支付：<span class="text-price text-blue">
+                            {{filter.formatMoney(vipTotal)}}
+                        </span>
+                        <span wx:if="{{selecteCoupon}}" class="text-sm text-gary" style="font-weight: normal;">
+                            （折扣价：{{filter.formatMoney(vipTotalOld)}} - {{selecteCoupon.value}}优惠券）
+                        </span>
+                    </view>
+
                 </view>
                 <view class="action" bindtap="closeDialogPay">
                     <text class="cuIcon-close text-red"></text>
@@ -147,27 +164,29 @@
                     </view>
                     <!-- 优惠券 -->
                     <block wx:if="{{vipAccount&&vipAccount.coupon&&vipAccount.coupon.length>0}}">
-                        <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;">
+                        <view style="text-align: start;padding-left: 30rpx;background-color: white;font-size: 30rpx;" class="padding-tb">
                             优惠券
                         </view>
                         <radio-group bindchange="onCouponelecte">
-                            <view class="cu-list menu" style="width: 90vw;">
-                                <view class="cu-item" wx:for="{{vipAccount.coupon}}" wx:key="index">
-                                    <view class="content">
-                                        <view class="flex">
-                                            <view>{{item.value}}元{{item.name}}</view>
-                                            <view class="cu-tag round margin-left bg-blue sm">剩余{{item.number}}张</view>
+                            <scroll-view scroll-y style="width: 90vw;height: 160px;">
+                                <view class="cu-list menu">
+                                    <view class="cu-item" wx:for="{{vipAccount.coupon}}" wx:key="index">
+                                        <view class="content">
+                                            <view class="flex">
+                                                <view>{{item.value}}元{{item.name}}</view>
+                                                <view class="cu-tag round margin-left bg-blue sm">剩余{{item.number}}张</view>
+                                            </view>
+                                            <view class="text-red" style="text-align: start;">{{item.tips}}</view>
+                                            <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
                                         </view>
-                                        <view class="text-gray text-sm" style="text-align: start;">{{item.remarks}}</view>
-                                    </view>
-                                    <!-- {{item.checked}} -->
-
-                                    <view class="action">
-                                        <radio disabled="{{item.number<=0||item.usePrice>total}}" class="radio" value="{{item._id}}" checked="{{item.checked==true}}">
-                                        </radio>
+                                        <view class="action">
+                                            <radio disabled="{{item.disabled}}" class="radio" value="{{item._id}}" checked="{{item.checked==true}}">
+                                            </radio>
+                                        </view>
                                     </view>
                                 </view>
-                            </view>
+
+                            </scroll-view>
                         </radio-group>
                     </block>
                     <view class="flex justify-between margin-bottom" style="gap: 18rpx;">

@@ -52,8 +52,8 @@ Page({
             data: {
                 fileName: shop.name + '会员数据.xlsx',
                 rowAndKey: {
-                    row: ['余额', '存酒', '累计充值', '昵称', '电话', '_openid'],
-                    key: ['balance', 'beer', 'recharge', 'name', 'phone', '_openid']
+                    row: ['余额', '累计充值', '昵称', '电话', '_openid'],
+                    key: ['balance', 'recharge', 'name', 'phone', '_openid']
                 },
                 sheetName: 'vip',
                 excelData

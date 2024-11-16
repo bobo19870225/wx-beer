@@ -31,9 +31,6 @@
                             <view class="text-green text-sm">
                                 余额 <span class="text-price">{{filter.formatMoney(item.account.balance)}}</span>
                             </view>
-                            <view style="color: gray;">
-                                存酒{{item.account.beer}}瓶
-                            </view>
                         </view>
                         <!-- <view class="text-grey text-xs">
                             更新时间：{{filter.format(item.updateDate,'YY-MM-DD hh:mm:ss') }}
