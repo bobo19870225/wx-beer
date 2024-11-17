@@ -1,6 +1,7 @@
 const app = getApp()
 const db = wx.cloud.database()
 var load = true
+var that = null
 Component({
     options: {
         addGlobalClass: true,
@@ -21,9 +22,13 @@ Component({
         TabCur: 0,
         MainCur: 0,
         VerticalNavTop: 0,
+        getListData: null
     },
     attached() {
-
+        that = this
+        this.setData({
+            getListData: this.getOrderList
+        })
     },
     /**
      * 组件的方法列表
@@ -100,8 +105,11 @@ Component({
                 })
         },
 
-        async getOrderList() {
-            this.setData({
+        async getOrderList(page = {
+            pageNumber: 1,
+            pageSize: 10
+        }) {
+            that.setData({
                 isLoading: true
             })
             const res = await wx.cloud.callFunction({
@@ -109,16 +117,27 @@ Component({
                 data: {
                     type: 'getOngoingOrdersList',
                     entity: {
-                        shopId: this.data.shop._id,
-                    }
+                        shopId: that.data.shop._id,
+                    },
+                    page,
                 },
             });
-            const orderList = res?.result?.data || [];
-            this.setData({
-                isRefreshing: false,
-                isLoading: false,
-                orderList
-            });
+            console.log("AA", res);
+            const orderList = res.result.data || [];
+            if (page.pageNumber == 1) {
+                that.setData({
+                    orderList,
+                    isLoading: false,
+                })
+            } else {
+                let listTemp = that.data.orderList
+                listTemp = listTemp.concat(orderList)
+                that.setData({
+                    orderList: listTemp,
+                    isLoading: false,
+                })
+            }
+            return orderList.length == page.pageSize
         },
         async setOrderServing(e) {
             const data = e.currentTarget.dataset.data
@@ -200,46 +219,6 @@ Component({
                 }
             })
         },
-        tabSelect(e) {
-            console.log("RRR", e);
-            this.setData({
-                TabCur: e.currentTarget.dataset.index,
-                MainCur: e.currentTarget.dataset.index,
-                VerticalNavTop: (e.currentTarget.dataset.index - 1) * 50
-            })
-        },
-        VerticalMain(e) {
-            let that = this;
-            let list = this.data.tableList;
-            let tabHeight = 0;
-            if (load) {
-                for (let i = 0; i < list.length; i++) {
-                    let view = this.createSelectorQuery().select("#main-" + list[i].value);
-                    view.fields({
-                        size: true
-                    }, data => {
-                        list[i].top = tabHeight;
-                        tabHeight = tabHeight + data.height;
-                        list[i].bottom = tabHeight;
-                    }).exec();
-                }
-                load = false
-                that.setData({
-                    tableList: list
-                })
-            }
-            let scrollTop = e.detail.scrollTop + 20;
-            for (let i = 0; i < list.length; i++) {
-                if (scrollTop > list[i].top && scrollTop < list[i].bottom) {
-                    that.setData({
-                        VerticalNavTop: (list[i].value - 1) * 50,
-                        TabCur: list[i].value
-                    })
-                    console.log(list[i].value);
-                    return false
-                }
-            }
-        }
     },
 
 })

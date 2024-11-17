@@ -12,7 +12,6 @@ function format(ts, option) {
     if (option == 'deadline') {
         var now = getDate();
         var oneDay = 24 * 60 * 60 * 1000; // 一个自然日的毫秒数
-
         var yearDiff = date.getFullYear() - now.getFullYear();
         var monthDiff = date.getMonth() - now.getMonth();
         var dayDiff = date.getDate() - now.getDate();
@@ -25,6 +24,14 @@ function format(ts, option) {
         } else {
             return '已过期'
         }
+    }
+
+    if (option == 'pastTime') {
+        var now = getDate();
+        var oneMinute = 60 * 1000; // 1分钟的毫秒数
+        var diff = Math.abs(date.getTime() - now.getTime()); // 计算两个日期的时间差（毫秒）
+        var minute = Math.floor(diff / oneMinute);
+        return minute == 0 ? '刚刚' : minute + '分钟前'; // 将时间差转换为分钟并向下取整
     }
 
     //获取 年月日
