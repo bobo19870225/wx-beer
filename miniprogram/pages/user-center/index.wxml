@@ -41,12 +41,12 @@
                         <view bind:tap="gotoCouponPage" style="text-align: center;">
                             <view class="padding text-lg" style="position: relative;">
                                 优惠券
-                                <span class="text-sm text-orange">
+                                <!-- <span class="text-sm text-orange">
                                     8张可领
-                                </span>
+                                </span> -->
                             </view>
                             <view style="font-size: 35rpx;font-weight: bold;">
-                                {{totalCouponNumber}}张
+                                {{totalCouponNumber}}张未使用
                             </view>
                         </view>
                     </view>

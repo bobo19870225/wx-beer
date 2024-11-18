@@ -30,16 +30,21 @@
             </view>
             <view class="flex justify-around">
                 <view bind:tap="goToOperation" style="text-align: center;">
-                    <!-- <image></image> -->
-                    <view class="padding">年度总收入</view>
+                    <view class="padding">总收入</view>
                     <view style="font-size: 35rpx;font-weight: bold;">
                         <span class="text-price">{{filter.formatMoney(totalIncom)}}</span>
                     </view>
                 </view>
                 <view bind:tap="gotoBillPage" style="text-align: center;">
-                    <view class="padding">年度成交订单数</view>
+                    <view class="padding">总消费</view>
                     <view style="font-size: 35rpx;font-weight: bold;">
-                        {{orderCound}}
+                        <span class="text-price">{{filter.formatMoney(totalUser)}}</span>
+                    </view>
+                </view>
+                <view bind:tap="gotoBillPage" style="text-align: center;">
+                    <view class="padding">总支出</view>
+                    <view style="font-size: 35rpx;font-weight: bold;">
+                        <span class="text-price">{{filter.formatMoney(shopExpend)}}</span>
                     </view>
                 </view>
             </view>

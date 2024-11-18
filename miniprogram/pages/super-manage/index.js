@@ -26,7 +26,9 @@ Component({
             value: 'client'
         }],
         shopNumber: 0,
-        totalIncom: 0
+        totalIncom: 0,
+        totalUser: 0,
+        shopExpend: 0,
     },
     attached() {
         app.getShopList().then((res) => {
@@ -52,8 +54,30 @@ Component({
                     type: 'getTotalIncom',
                 }
             }).then((res) => {
+                let totalIncom = 0
+                let totalUser = 0
+                let shopExpend = 0
+                if (res.result.list) {
+                    res.result.list.forEach(element => {
+                        if (element._id == 0) {//会员充值
+                            totalIncom = element.total
+                        }
+                        if (element._id == 1) {//会员消费
+                            totalUser = element.total
+                        }
+                        if (element._id == 2) {//微信消费
+                            totalUser += element.total
+                            totalIncom += element.total
+                        }
+                        if (element._id == 3) {//店铺支出
+                            shopExpend = element.total
+                        }
+                    });
+                }
                 this.setData({
-                    totalIncom: res.result?.list[0]?.total || 0
+                    totalIncom,
+                    totalUser,
+                    shopExpend
                 })
             })
         },
