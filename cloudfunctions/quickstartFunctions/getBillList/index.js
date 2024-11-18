@@ -8,7 +8,8 @@ exports.main = async (event, context) => {
     try {
         let {
             shopId,
-            isClient
+            isClient,
+            typeArr,
         } = event.entity
 
         // ================== 分页参数 ==============================
@@ -36,6 +37,9 @@ exports.main = async (event, context) => {
             where.type = _.in([0, 1, 2])
         } else {
             where.shopId = shopId
+            if (typeArr) {
+                where.type = _.in(typeArr)
+            }
         }
         res = await db.collection('bill')
             .where(where)

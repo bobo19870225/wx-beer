@@ -1,19 +1,48 @@
 const app = getApp()
+var _this = null
 Page({
     /**
      * 页面的初始数据
      */
     data: {
         isLoading: false,
-        list: [],
         containerHeight: app.globalData.containerHeight,
         isShopManage: false,
         isSuperManage: false,
-        getListData: null,
-        page: {
+
+        listIn: [],
+        getListDataIn: null,
+        pageIn: {
             pageNumber: 1,
             pageSize: 15
-        }
+        },
+
+        listUser: [],
+        getListDataUser: null,
+        pageUser: {
+            pageNumber: 1,
+            pageSize: 15
+        },
+
+        listSpend: [],
+        getListDataSpend: null,
+        pageSpend: {
+            pageNumber: 1,
+            pageSize: 15
+        },
+
+        TabCur: 0,
+        scrollLeft: 0,
+        tables: [{
+            title: '收入',
+            value: 1,
+        }, {
+            title: '消费',
+            value: 2,
+        }, {
+            title: '支出',
+            value: 3,
+        }],
     },
 
     /**
@@ -23,9 +52,24 @@ Page({
         this.setData({
             isShopManage: options.isShopManage == 'true',
             isSuperManage: options.isSuperManage == 'true',
-            getListData: this.getPageData
         })
-
+        _this = this
+    },
+    tabSelect(e) {
+        const TabCur = e.currentTarget.dataset.id
+        this.setData({
+            TabCur,
+            scrollLeft: (e.currentTarget.dataset.id - 1) * 60
+        })
+        if (TabCur == 0) {
+            this.getPageDataIn(this.data.pageIn)
+        }
+        if (TabCur == 1) {
+            this.getPageDataUser(this.data.pageUser)
+        }
+        if (TabCur == 2) {
+            this.getPageDataSpend(this.data.pageSpend)
+        }
     },
     gotoDetail(e) {
         console.log(e);
@@ -40,20 +84,28 @@ Page({
         this.setData({
             isLoading: true
         })
-        await this.getPageData(this.data.page)
+        if (this.data.isSuperManage || this.data.isShopManage) {
+            await this.getPageDataIn(this.data.pageIn)
+            await this.getPageDataUser(this.data.pageUser)
+            await this.getPageDataSpend(this.data.pageSpend)
+        } else {//客户端
+            await this.getPageDataIn(this.data.pageIn)
+        }
         this.setData({
             isLoading: false
         })
     },
     /**
-     * 加载账单
+     * 收入
+     * @param {*} page 
      */
-    getPageData: async function (page) {
+    getPageDataIn: async function (page) {
         const shop = await app.getShop()
         const entity = {
-            shopId: shop._id
+            shopId: shop._id,
+            typeArr: [0, 2]
         }
-        entity.isClient = !this.data.isShopManage && !this.data.isSuperManage
+        entity.isClient = !_this.data.isShopManage && !_this.data.isSuperManage
         console.log(entity)
         const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
@@ -66,14 +118,89 @@ Page({
         if (res.result.success) {
             const list = res.result.data
             if (page.pageNumber == 1) {
-                this.setData({
-                    list
+                _this.setData({
+                    listIn: list
                 })
             } else {
-                let listTemp = this.data.list
+                let listTemp = _this.data.listIn
                 listTemp = listTemp.concat(list);
-                this.setData({
-                    list: listTemp
+                _this.setData({
+                    listIn: listTemp
+                })
+            }
+            return list.length == page.pageSize
+        }
+        return false
+    },
+
+    /**
+     * 消费
+     * @param {*} page 
+     */
+    getPageDataUser: async function (page) {
+        const shop = await app.getShop()
+        const entity = {
+            shopId: shop._id,
+            typeArr: [1, 2]
+        }
+        entity.isClient = !_this.data.isShopManage && !_this.data.isSuperManage
+        console.log(entity)
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getBillList',
+                entity: entity,
+                page
+            }
+        })
+        if (res.result.success) {
+            const list = res.result.data
+            if (page.pageNumber == 1) {
+                _this.setData({
+                    listUser: list
+                })
+            } else {
+                let listTemp = _this.data.listUser
+                listTemp = listTemp.concat(list);
+                _this.setData({
+                    listUser: listTemp
+                })
+            }
+            return list.length == page.pageSize
+        }
+        return false
+    },
+    /**
+     * 支出
+     * @param {*} page 
+     */
+    getPageDataSpend: async function (page) {
+        const shop = await app.getShop()
+        const entity = {
+            shopId: shop._id,
+            typeArr: [3]
+        }
+        entity.isClient = !_this.data.isShopManage && !_this.data.isSuperManage
+        console.log(entity)
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getBillList',
+                entity: entity,
+                page
+            }
+        })
+        if (res.result.success) {
+            const list = res.result.data
+            if (page.pageNumber == 1) {
+                _this.setData({
+                    listSpend: list
+                })
+            } else {
+                let listTemp = _this.data.listSpend
+                listTemp = listTemp.concat(list);
+                _this.setData({
+                    listSpend: listTemp
                 })
             }
             return list.length == page.pageSize
@@ -94,7 +221,11 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        this.setData({
+            getListDataIn: this.getPageDataIn,
+            getListDataUser: this.getPageDataUser,
+            getListDataSpend: this.getPageDataSpend,
+        })
     },
 
     /**

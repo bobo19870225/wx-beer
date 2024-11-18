@@ -8,51 +8,157 @@
 </view>
 <!-- 店铺 -->
 <shopBar bind:onShopChange="onShopChange" isShopManage="{{true}}"></shopBar>
-<!-- 有数据 -->
-<view wx:if="{{ list.length >= 1 }}">
-    <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListData}}" page="{{page}}">
-        <view slot="listContent">
-            <view class="cu-list menu">
-                <block wx:for="{{ list }}" wx:key="_id" wx:for-index="index">
-                    <view class="cu-item shadow arrow" bind:tap="gotoDetail" data-item="{{item}}">
-                        <view class="content ">
-                            <view class="text-cut" style="gap: 21rpx;">
-                                <view wx:if="{{isSuperManage||isShopManage}}" class="text-df">
-                                    交易金额:
-                                    <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:green">
-                                        {{filter.formatMoney(item.money)}}
-                                    </span>
-                                    <span wx:if="{{item.type==3}}" class="text-price" style="color:red">
-                                        {{filter.formatMoney(item.money)}}
-                                    </span>
-                                    <view wx:if="{{item.type==3}}" class="cu-tag line-red round sm">店铺支出</view>
+
+<scroll-view wx:if="{{isSuperManage||isShopManage}}" scroll-x class="bg-white nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+    <view class="cu-item {{index==TabCur?'text-green cur':''}}" wx:for="{{tables}}" wx:key='value' bindtap="tabSelect" data-id="{{index}}">
+        {{item.title}}
+    </view>
+</scroll-view>
+
+
+<view wx:if="{{TabCur==0}}">
+    <!-- 有数据 -->
+    <view wx:if="{{ listIn.length >= 1 }}">
+        <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListDataIn}}" page="{{pageIn}}">
+            <view slot="listContent">
+                <view class="cu-list menu">
+                    <block wx:for="{{ listIn }}" wx:key="_id" wx:for-index="index">
+                        <view class="cu-item shadow arrow" bind:tap="gotoDetail" data-item="{{item}}">
+                            <view class="content ">
+                                <view class="text-cut" style="gap: 21rpx;">
+                                    <view wx:if="{{isSuperManage||isShopManage}}" class="text-df">
+                                        交易金额:
+                                        <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:green">
+                                            {{filter.formatMoney(item.money)}}
+                                        </span>
+                                        <span wx:if="{{item.type==3}}" class="text-price" style="color:red">
+                                            {{filter.formatMoney(item.money)}}
+                                        </span>
+                                        <view wx:if="{{item.type==3}}" class="cu-tag line-red round sm">店铺支出</view>
+                                    </view>
+                                    <view wx:else class="text-df">
+                                        交易金额:
+                                        <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:red">
+                                            {{filter.formatMoney(-item.money)}}
+                                        </span>
+                                    </view>
+                                    <view wx:if="{{item.type==0}}" class="cu-tag line-purple round sm">会员充值</view>
+                                    <view wx:if="{{item.type==1}}" class="cu-tag line-green round sm">会员消费</view>
+                                    <view wx:if="{{item.type==2}}" class="cu-tag line-green round sm">微信支付</view>
                                 </view>
-                                <view wx:else class="text-df">
-                                    交易金额:
-                                    <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:red">
-                                        {{filter.formatMoney(-item.money)}}
-                                    </span>
+                                <view class="text-gray text-sm">
+                                    {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
                                 </view>
-                                <view wx:if="{{item.type==0}}" class="cu-tag line-purple round sm">会员充值</view>
-                                <view wx:if="{{item.type==1}}" class="cu-tag line-green round sm">会员消费</view>
-                                <view wx:if="{{item.type==2}}" class="cu-tag line-green round sm">微信支付</view>
-                            </view>
-                            <view class="text-gray text-sm">
-                                {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
                             </view>
                         </view>
-                    </view>
-                </block>
+                    </block>
+                </view>
             </view>
-        </view>
-    </pageList>
-    <!-- <scroll-view scroll-y="true" style="height: {{containerHeight-110}}rpx;" refresher-enabled="true" bindrefresherrefresh="loadData" bindscrolltolower="loadMore" refresher-triggered="{{isRefreshing}}">
-    </scroll-view> -->
-</view>
-<!-- 无数据 -->
-<block wx:else>
-    <view style="text-align: center;margin-top: 20vh;">
-        <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
-        <view style="top: -240rpx;">暂无数据</view>
+        </pageList>
     </view>
-</block>
+    <!-- 无数据 -->
+    <block wx:else>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
+    </block>
+</view>
+
+<view wx:if="{{TabCur==1}}">
+    <!-- 有数据 -->
+    <view wx:if="{{ listUser.length >= 1 }}">
+        <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListDataUser}}" page="{{pageUser}}">
+            <view slot="listContent">
+                <view class="cu-list menu">
+                    <block wx:for="{{ listUser }}" wx:key="_id" wx:for-index="index">
+                        <view class="cu-item shadow arrow" bind:tap="gotoDetail" data-item="{{item}}">
+                            <view class="content ">
+                                <view class="text-cut" style="gap: 21rpx;">
+                                    <view wx:if="{{isSuperManage||isShopManage}}" class="text-df">
+                                        交易金额:
+                                        <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:green">
+                                            {{filter.formatMoney(item.money)}}
+                                        </span>
+                                        <span wx:if="{{item.type==3}}" class="text-price" style="color:red">
+                                            {{filter.formatMoney(item.money)}}
+                                        </span>
+                                        <view wx:if="{{item.type==3}}" class="cu-tag line-red round sm">店铺支出</view>
+                                    </view>
+                                    <view wx:else class="text-df">
+                                        交易金额:
+                                        <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:red">
+                                            {{filter.formatMoney(-item.money)}}
+                                        </span>
+                                    </view>
+                                    <view wx:if="{{item.type==0}}" class="cu-tag line-purple round sm">会员充值</view>
+                                    <view wx:if="{{item.type==1}}" class="cu-tag line-green round sm">会员消费</view>
+                                    <view wx:if="{{item.type==2}}" class="cu-tag line-green round sm">微信支付</view>
+                                </view>
+                                <view class="text-gray text-sm">
+                                    {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </pageList>
+    </view>
+    <!-- 无数据 -->
+    <block wx:else>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
+    </block>
+</view>
+
+<view wx:if="{{TabCur==2}}">
+    <!-- 有数据 -->
+    <view wx:if="{{ listSpend.length >= 1 }}">
+        <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListDataSpend}}" page="{{pageSpend}}">
+            <view slot="listContent">
+                <view class="cu-list menu">
+                    <block wx:for="{{ listSpend }}" wx:key="_id" wx:for-index="index">
+                        <view class="cu-item shadow arrow" bind:tap="gotoDetail" data-item="{{item}}">
+                            <view class="content ">
+                                <view class="text-cut" style="gap: 21rpx;">
+                                    <view wx:if="{{isSuperManage||isShopManage}}" class="text-df">
+                                        交易金额:
+                                        <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:green">
+                                            {{filter.formatMoney(item.money)}}
+                                        </span>
+                                        <span wx:if="{{item.type==3}}" class="text-price" style="color:red">
+                                            {{filter.formatMoney(item.money)}}
+                                        </span>
+                                        <view wx:if="{{item.type==3}}" class="cu-tag line-red round sm">店铺支出</view>
+                                    </view>
+                                    <view wx:else class="text-df">
+                                        交易金额:
+                                        <span wx:if="{{item.type==0||item.type==1||item.type==2}}" class="text-price" style="color:red">
+                                            {{filter.formatMoney(-item.money)}}
+                                        </span>
+                                    </view>
+                                    <view wx:if="{{item.type==0}}" class="cu-tag line-purple round sm">会员充值</view>
+                                    <view wx:if="{{item.type==1}}" class="cu-tag line-green round sm">会员消费</view>
+                                    <view wx:if="{{item.type==2}}" class="cu-tag line-green round sm">微信支付</view>
+                                </view>
+                                <view class="text-gray text-sm">
+                                    {{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </pageList>
+    </view>
+    <!-- 无数据 -->
+    <block wx:else>
+        <view style="text-align: center;margin-top: 20vh;">
+            <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+            <view style="top: -240rpx;">暂无数据</view>
+        </view>
+    </block>
+</view>
