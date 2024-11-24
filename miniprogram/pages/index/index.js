@@ -12,9 +12,6 @@ Page({
         const enterOptions = wx.getEnterOptionsSync()
 
         if (enterOptions.shareTicket) {
-            // this.setData({
-            //     shareTicket: enterOptions.shareTicket
-            // })
             const that = this
             wx.authPrivateMessage({
                 shareTicket: enterOptions.shareTicket,
@@ -59,7 +56,7 @@ Page({
                 })
             }
         })
-
+     
         this.onSwitchMode({
             detail: option.mode
         })

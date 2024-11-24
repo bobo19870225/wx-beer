@@ -1,5 +1,5 @@
 <wxs src="../../format.wxs" module="filter" />
-<cu-custom bgColor="bg-white" isBack="{{true}}">
+<cu-custom bgColor="bg-white" isBack="{{!isCustom}}" isCustom="{{isCustom}}">
     <view slot="backText">返回</view>
     <view slot="content">支出管理</view>
 </cu-custom>

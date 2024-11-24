@@ -18,24 +18,26 @@ exports.main = async (event, context) => {
             };
         }
         const wxContext = cloud.getWXContext();
-
-
         const isDelete = entity.isDelete
         if (isDelete == null || isDelete == undefined) {
             entity.isDelete = false
         }
-
+        let nameArr = []
+        let total = 0
         const result = await db.runTransaction(async transaction => {
             const id = entity._id
             let res = null
-
             const listSpend = entity.listSpend
-            let total = 0
+            let names = ''
             listSpend.map(element => {
                 element.money = Number.parseFloat(element.money)
                 element.price = Number.parseFloat(element.price)
                 element.number = Number.parseFloat(element.number)
                 total += element.money
+                if (names.length + element.name.length < 19) {
+                    nameArr.push(element.name)
+                    names = nameArr.join()
+                }
                 return element
             });
             entity.listSpend = listSpend
@@ -53,7 +55,7 @@ exports.main = async (event, context) => {
                 }
                 const billAdd = await transaction.collection('bill').doc(res.data.billId).update({
                     data: {
-                        updateDate:new Date(),
+                        updateDate: new Date(),
                         money: total,
                     }
                 })
@@ -65,7 +67,7 @@ exports.main = async (event, context) => {
                 const billAdd = await transaction.collection('bill').add({
                     data: {
                         _openid: wxContext.OPENID,
-                        createDate:new Date(),
+                        createDate: new Date(),
                         remarks: '店铺支出',
                         money: -total,
                         shopId,
@@ -92,8 +94,54 @@ exports.main = async (event, context) => {
                 if (!resUpdate) {
                     await transaction.rollback(-100)
                 }
+
             }
         })
+        try {
+            await cloud.openapi.subscribeMessage.send({
+                "touser": 'o82cZ7eYC0_1C30_Xeayrg69CpKk',
+                "page": 'pages/shop-manage/spend-management/index?shopId=' + shopId,
+                "lang": 'zh_CN',
+                "data": {
+                    "thing3": {
+                        "value": '一批'
+                    },
+                    "thing2": {
+                        "value": nameArr.join()
+                    },
+                    "amount6": {
+                        "value": '￥' + total
+                    },
+                },
+                "templateId": 'eL2vo4Mkxby-pjj16NlqI1uMhVVWN-e7hb_UdHOuNuU',
+                "miniprogramState": 'trial'
+            })
+
+        } catch (error) {
+
+        }
+        try {
+            await cloud.openapi.subscribeMessage.send({
+                "touser": 'o82cZ7dn9oq72jUZU9NZzyqVUqo8',
+                "page": 'pages/shop-manage/spend-management/index?shopId=' + shopId,
+                "lang": 'zh_CN',
+                "data": {
+                    "thing3": {
+                        "value": '一批'
+                    },
+                    "thing2": {
+                        "value": nameArr.join()
+                    },
+                    "amount6": {
+                        "value": '￥' + total
+                    },
+                },
+                "templateId": 'eL2vo4Mkxby-pjj16NlqI1uMhVVWN-e7hb_UdHOuNuU',
+                "miniprogramState": 'trial'
+            })
+        } catch (error) {
+
+        }
         return {
             success: true,
             result

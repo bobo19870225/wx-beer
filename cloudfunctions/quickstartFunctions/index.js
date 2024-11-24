@@ -35,6 +35,7 @@ const getActivityId = require('./getActivityId/index');
 const getActiveCouponList = require('./getActiveCouponList/index');
 const qiangCoupon = require('./qiangCoupon/index');
 const getCouponList = require('./getCouponList/index');
+const sendMessage = require('./sendMessage/index');
 
 
 
@@ -146,14 +147,17 @@ exports.main = async (event, context) => {
             return await qiangCoupon.main(event, context);
         case 'getCouponList':
             return await getCouponList.main(event, context);
-
-
-
             /**
              * 活动分享
              */
         case 'getActivityId':
             return await getActivityId.main(event, context);
+            /**
+             * 发消息
+             */
+        case 'sendMessage':
+            return await sendMessage.main(event, context);
+
 
     }
 };

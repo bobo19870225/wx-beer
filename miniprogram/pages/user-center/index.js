@@ -161,8 +161,23 @@ Component({
          * @param {*} e 
          */
         onSelecteRole(e) {
+            const _this = this
             const mode = e.detail.value
-            this.triggerEvent('onSwitchMode', mode)
+            if (mode == 'superManage'||'shopManage') {
+                wx.requestSubscribeMessage({
+                    tmplIds: ['eL2vo4Mkxby-pjj16NlqI1uMhVVWN-e7hb_UdHOuNuU'],
+                    success(res) {},
+                    fail(res) {
+                        console.log(res);
+                    },
+                    complete() {
+                        _this.triggerEvent('onSwitchMode', mode)
+                    }
+                })
+            } else {
+                const mode = e.detail.value
+                this.triggerEvent('onSwitchMode', mode)
+            }
         },
         closeRoleDialog() {
             this.setData({

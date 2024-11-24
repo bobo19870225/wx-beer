@@ -2,7 +2,8 @@
     "permissions": {
         "openapi": [
             "wxacode.get",
-            "updatableMessage.createActivityId"
+            "updatableMessage.createActivityId",
+            "subscribeMessage.send"
         ]
     }
 }
