@@ -1,4 +1,3 @@
-// pages/shop-manage/spend-management/index.js
 const app = getApp()
 var spend = null
 Page({
@@ -11,6 +10,7 @@ Page({
         isLoading: false,
         showDialogAdd: false,
         listSpend: [],
+        shop: null,
         price: null,
         money: null,
         number: 1
@@ -19,7 +19,11 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
+   async onLoad(options) {
+        const shop = await app.getShop(options.shopId)
+        this.setData({
+            shop
+        })
         const eventChannel = this.getOpenerEventChannel()
         eventChannel && eventChannel.on && eventChannel.on('postData', (data) => {
             spend = data.spend
@@ -147,7 +151,7 @@ Page({
         this.setData({
             isLoading: true
         })
-        const shop = await app.getShop()
+        const shop = this.data.shop
         const _id = spend?._id
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
@@ -156,6 +160,7 @@ Page({
                 entity: {
                     _id,
                     shopId: shop._id,
+                    shopName: shop.name,
                     listSpend
                 }
             }

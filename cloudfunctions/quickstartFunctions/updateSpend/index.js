@@ -11,6 +11,7 @@ exports.main = async (event, context) => {
     try {
         const entity = event.entity
         const shopId = entity.shopId
+        const shopName = entity.shopName
         if (!shopId) {
             return {
                 success: false,
@@ -104,7 +105,7 @@ exports.main = async (event, context) => {
                 "lang": 'zh_CN',
                 "data": {
                     "thing3": {
-                        "value": '一批'
+                        "value": shopName
                     },
                     "thing2": {
                         "value": nameArr.join()
@@ -127,7 +128,7 @@ exports.main = async (event, context) => {
                 "lang": 'zh_CN',
                 "data": {
                     "thing3": {
-                        "value": '一批'
+                        "value": shopName
                     },
                     "thing2": {
                         "value": nameArr.join()

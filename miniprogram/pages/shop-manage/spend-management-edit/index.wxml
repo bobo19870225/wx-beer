@@ -3,6 +3,7 @@
     <view slot="backText">返回</view>
     <view slot="content">支出管理</view>
 </cu-custom>
+<view style="text-align: center;">{{shop.name}}</view>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
     <view class='gray-text text-xs'>加载中...</view>
 </view>

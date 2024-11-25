@@ -4,7 +4,6 @@
 <user-center wx:if="{{PageCur=='user-center'}}" bind:onSwitchMode="onSwitchMode"></user-center>
 <!-- 店长端 -->
 <watchOrder wx:if="{{PageCur=='watchOrder'}}"></watchOrder>
-<!-- <table wx:if="{{PageCur=='table'}}"></table> -->
 <shop-manage wx:if="{{PageCur=='shop-manage'}}" bind:onSwitchMode="onSwitchMode"></shop-manage>
 
 <!-- 超级管理员端 -->

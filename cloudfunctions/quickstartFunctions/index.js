@@ -36,6 +36,7 @@ const getActiveCouponList = require('./getActiveCouponList/index');
 const qiangCoupon = require('./qiangCoupon/index');
 const getCouponList = require('./getCouponList/index');
 const sendMessage = require('./sendMessage/index');
+const getSSKey = require('./getSSKey/index');
 
 
 
@@ -157,7 +158,9 @@ exports.main = async (event, context) => {
              */
         case 'sendMessage':
             return await sendMessage.main(event, context);
-
+            case 'getSSKey':
+            return await getSSKey.main(event, context);
+            
 
     }
 };

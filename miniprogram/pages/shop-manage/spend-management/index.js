@@ -10,19 +10,20 @@ Page({
         isLoading: false,
         isCustom: false,
         spend: [],
-        shopId: '',
+        shop: null,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
-        if (options.shopId) {
-            this.setData({
-                isCustom: true,
-                shopId: options.shopId
-            })
-        }
+    async onLoad(options) {
+        const shop = await app.getShop(options.shopId)
+        app.globalData.shop = shop
+        this.setData({
+            isCustom: options.shopId ? true : false,
+            shop
+        })
+        this.getSpend()
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -41,18 +42,16 @@ Page({
         this.setData({
             isLoading: true
         })
-        let shopId = this.data.shopId
-        if (!shopId) {
-            const shop = await app.getShop()
-            shopId = shop._id
+        const shop = this.data.shop
+        if (!shop) {
+            return
         }
-        console.log(shopId);
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getSpendList',
                 entity: {
-                    shopId
+                    shopId: shop._id
                 }
             }
         }).then((res) => {

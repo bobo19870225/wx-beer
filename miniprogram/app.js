@@ -11,10 +11,11 @@ App({
         }
         this.globalData = {};
         wx.login({
-          success: (res) => {
-            console.log("APP_login success")
-          },
+            success: (res) => {
+                this.globalData.code = res.code
+            },
         })
+
         this.initUI()
         this.initGlobalData()
         console.log("APP_OnLaunch END")
@@ -168,7 +169,16 @@ App({
     /**
      * 获取当前店铺
      */
-    async getShop() {
+    async getShop(shopId) {
+        if (shopId) {
+            const shopList = await this.getShopList()
+            for (let index = 0; index < shopList.length; index++) {
+                const element = shopList[index];
+                if (element._id == shopId) {
+                    return element
+                }
+            }
+        }
         let shop = this.globalData.shop
         if (!shop) {
             const shopList = await this.getShopList()

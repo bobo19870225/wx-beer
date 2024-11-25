@@ -2,30 +2,32 @@ const app = getApp()
 Page({
     data: {
         PageCur: 'start',
-        mode: 'client'
+        mode: 'client',
+        openId: null
     },
-    onLoad(option) {
+    async onLoad(option) {
         wx.showShareMenu({
             withShareTicket: true,
             menus: ['shareAppMessage', 'shareTimeline']
         })
+        const openId = await app.getOpenid()
+        this.setData({
+            openId
+        })
         const enterOptions = wx.getEnterOptionsSync()
-
         if (enterOptions.shareTicket) {
             const that = this
             wx.authPrivateMessage({
                 shareTicket: enterOptions.shareTicket,
                 success(res) {
-                    console.log('authPrivateMessage success', res)
-                    that.setData({
-                        privateMessage: JSON.stringify(res)
-                    })
+                    if (res.valid) {
+                        that.setData({
+                            privateMessage: option.shareOpenId
+                        })
+                    }
                 },
                 fail(res) {
-                    console.log('authPrivateMessage fail', res)
-                    that.setData({
-                        privateMessage: JSON.stringify(res)
-                    })
+                   
                 }
             })
         }
@@ -45,9 +47,6 @@ Page({
                     activityId: res.result.activityId,
                     withShareTicket: true,
                     success(res) {
-                        that.setData({
-
-                        })
                         console.log(res);
                     },
                     fail(res) {
@@ -56,7 +55,7 @@ Page({
                 })
             }
         })
-     
+
         this.onSwitchMode({
             detail: option.mode
         })
@@ -124,9 +123,10 @@ Page({
      */
     onShareAppMessage(res) {
         console.log(res);
+        const openId = this.data.openId
         return {
             title: '自定义转发标题',
-            // path: '/page/user?id=123',
+            path: 'pages/index/index?shareOpenId=' + openId,
             imageUrl: '../../images/no-goods.svg'
         }
     },
