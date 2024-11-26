@@ -27,7 +27,7 @@ Page({
                     }
                 },
                 fail(res) {
-                   
+
                 }
             })
         }
@@ -122,10 +122,18 @@ Page({
      * 分享触发
      */
     onShareAppMessage(res) {
-        console.log(res);
+        wx.cloud.callFunction({
+            name: 'modelsFunctions',
+            data: {
+                type: 'updateShare',
+                entity: {}
+            },
+        }).then((res) => {
+            console.log("TEST", res);
+        })
         const openId = this.data.openId
         return {
-            title: '自定义转发标题',
+            title: '我的朋友开新店，进店就送千元礼包，快快加入！',
             path: 'pages/index/index?shareOpenId=' + openId,
             imageUrl: '../../images/no-goods.svg'
         }

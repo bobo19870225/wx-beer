@@ -38,10 +38,6 @@ const getCouponList = require('./getCouponList/index');
 const sendMessage = require('./sendMessage/index');
 const getSSKey = require('./getSSKey/index');
 
-
-
-
-// 云函数入口函数
 exports.main = async (event, context) => {
     switch (event.type) {
         /**
