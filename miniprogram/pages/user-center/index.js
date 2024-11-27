@@ -206,6 +206,11 @@ Component({
                 url: `/pages/user-center/bill/index`,
             });
         },
+        gotoSharePage(){
+            wx.navigateTo({
+                url: `/pages/user-center/share/index`,
+            });
+        },
         gotoCouponPage() {
             wx.navigateTo({
                 url: `/pages/manage/coupon/index`,
@@ -364,7 +369,6 @@ Component({
                 url: '/pages/user-center/setting/index',
                 events: {
                     callbackData: (userInfo) => {
-                        // console.log("callbackData", userInfo);
                         that.setData({
                             userInfo
                         })

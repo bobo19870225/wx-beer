@@ -1,0 +1,40 @@
+<wxs src="../../format.wxs" module="filter" />
+<cu-custom bgColor="'bg-white'" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">我的邀请记录</view>
+</cu-custom>
+<view class='cu-load load-modal' wx:if="{{isLoading}}">
+    <view class='gray-text text-xs'>加载中...</view>
+</view>
+
+<!-- 有数据 -->
+<view wx:if="{{ listShare.length >= 1 }}">
+    <pageList style="height: {{containerHeight-150}}rpx;" getListData="{{getListData}}" page="{{page}}">
+        <view slot="listContent">
+            <view class="cu-list menu">
+                <block wx:for="{{ listShare }}" wx:key="_id" wx:for-index="index">
+                    <view class="cu-item shadow arrow" data-item="{{item}}">
+                        <view class="content ">
+                            <view>
+                                是否获得奖励：{{item.isReward?'是':'否'}}
+                            </view>
+                            <view>
+                                原因：{{item.reason}}
+                            </view>
+                            <view class="text-gray text-sm">
+                                邀请时间：{{filter.format(item.createDate, 'YY-MM-DD hh:mm:ss')}}
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </pageList>
+</view>
+<!-- 无数据 -->
+<block wx:else>
+    <view style="text-align: center;margin-top: 20vh;">
+        <image style="width: 50vw;" src="../../../images/icons/no-data.svg" mode="widthFix" />
+        <view style="top: -240rpx;">暂无数据</view>
+    </view>
+</block>

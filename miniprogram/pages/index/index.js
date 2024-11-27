@@ -21,9 +21,9 @@ Page({
                 shareTicket: enterOptions.shareTicket,
                 success(res) {
                     if (res.valid) {
-                        that.setData({
-                            privateMessage: option.shareOpenId
-                        })
+                        const activityId = option.activityId
+                        const shareOpenId = option.shareOpenId
+                       
                     }
                 },
                 fail(res) {
@@ -122,11 +122,14 @@ Page({
      * 分享触发
      */
     onShareAppMessage(res) {
+        const activityId = this.data.activityId
         wx.cloud.callFunction({
             name: 'modelsFunctions',
             data: {
                 type: 'updateShare',
-                entity: {}
+                entity: {
+                    activityId
+                }
             },
         }).then((res) => {
             console.log("TEST", res);
@@ -134,7 +137,7 @@ Page({
         const openId = this.data.openId
         return {
             title: '我的朋友开新店，进店就送千元礼包，快快加入！',
-            path: 'pages/index/index?shareOpenId=' + openId,
+            path: 'pages/index/index?shareOpenId=' + openId + '&activityId=' + activityId,
             imageUrl: '../../images/no-goods.svg'
         }
     },

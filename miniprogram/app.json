@@ -27,7 +27,8 @@
         "pages/shop-manage/vip-manage/index",
         "pages/manage/coupon/index",
         "pages/super-manage/coupon/index",
-        "pages/super-manage/coupon-edit/index"
+        "pages/super-manage/coupon-edit/index",
+        "pages/user-center/share/index"
     ],
     "window": {
         "navigationBarBackgroundColor": "#FD6C55",

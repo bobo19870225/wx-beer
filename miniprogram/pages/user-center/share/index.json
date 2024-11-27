@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "pageList": "/components/pageList/index"
+    }
+}

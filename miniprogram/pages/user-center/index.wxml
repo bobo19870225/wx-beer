@@ -59,7 +59,7 @@
         <!-- SETTING -->
         <view class="padding margin-top bg-white shadow" style="border-radius: 32rpx 32rpx 0 0 ">
             <view style="font-weight: bold;">常用功能</view>
-            <view style="height: 90rpx;"></view>
+            <view style="height: 20rpx;"></view>
             <view class="settings_container margin-top-lg">
                 <view class="setting_item" bind:tap="toBeVip">
                     <image class="setting_icon" src="../../images/icons/zxcz.svg" />
@@ -81,7 +81,23 @@
                     <view class="text-gray text-xs">成为店长</view>
                 </view>
             </view>
-            <view style="height: 180rpx;"></view>
+
+            <view class="settings_container margin-top-lg">
+                <view class="setting_item" bind:tap="gotoSharePage">
+                    <image class="setting_icon" src="../../images/icons/yqjl.svg" />
+                    <view class="text-gray text-xs">邀请记录</view>
+                </view>
+                <view class="setting_item">
+                    <image class="setting_icon" />
+                </view>
+                <view class="setting_item">
+                    <image class="setting_icon" />
+                </view>
+                <view class="setting_item">
+                    <image class="setting_icon" />
+                </view>
+            </view>
+            <view style="height: 20rpx;"></view>
             <view wx:if="{{userInfo.isSuperManage||isShopManage}}" class="text-gray" style="width: 100%; text-align: center;" bind:tap="switchMode">
                 切换角色
             </view>
