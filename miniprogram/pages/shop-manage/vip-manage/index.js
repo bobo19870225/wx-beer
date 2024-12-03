@@ -16,12 +16,21 @@ Page({
         hasMore: true,
         fileUrl: null,
         containerHeight: app.globalData.containerHeight,
+        shop: null,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    async onLoad(options) {
+    onLoad(options) {
+
+    },
+    loadMore(e) {},
+    async onShopChange(e) {
+        let shop = e.detail
+        this.setData({
+            shop
+        })
         this.setData({
             isLoading: true
         })
@@ -29,10 +38,6 @@ Page({
         this.setData({
             isLoading: false
         })
-    },
-    loadMore(e) {},
-    onShopChange(e) {
-
     },
     async savaExcel() {
         this.setData({
@@ -108,13 +113,13 @@ Page({
         await this.getListData()
     },
     async getListData() {
-        const shop = await app.getShop()
+        const shop = this.data.shop
         const res = await wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {
                 type: 'getVip',
                 entity: {
-                    shopIp: shop._id
+                    shopId: shop._id
                 }
             }
         })

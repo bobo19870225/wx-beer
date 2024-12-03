@@ -13,7 +13,7 @@
         <view slot="listContent">
             <view class="cu-list menu">
                 <block wx:for="{{ listShare }}" wx:key="_id" wx:for-index="index">
-                    <view class="cu-item shadow arrow" data-item="{{item}}">
+                    <view class="cu-item shadow " data-item="{{item}}">
                         <view class="content ">
                             <view>
                                 是否获得奖励：{{item.isReward?'是':'否'}}

@@ -16,14 +16,32 @@ Page({
         })
         const enterOptions = wx.getEnterOptionsSync()
         if (enterOptions.shareTicket) {
-            const that = this
+            // const that = this
             wx.authPrivateMessage({
                 shareTicket: enterOptions.shareTicket,
                 success(res) {
                     if (res.valid) {
+
                         const activityId = option.activityId
-                        const shareOpenId = option.shareOpenId
-                       
+                        const shareID = option.shareID
+
+                        wx.cloud.callFunction({
+                            name: 'modelsFunctions',
+                            data: {
+                                type: 'handleShare',
+                                activityId,
+                                shareID
+                            },
+                        }).then((res) => {
+                            // wx.showModal({
+                            //     title: activityId,
+                            //     content: res,
+                            //     complete: (res) => {
+                            //         if (res.cancel) {}
+                            //         if (res.confirm) {}
+                            //     }
+                            // })
+                        })
                     }
                 },
                 fail(res) {
@@ -134,11 +152,10 @@ Page({
         }).then((res) => {
             console.log("TEST", res);
         })
-        const openId = this.data.openId
         return {
             title: '我的朋友开新店，进店就送千元礼包，快快加入！',
-            path: 'pages/index/index?shareOpenId=' + openId + '&activityId=' + activityId,
-            imageUrl: '../../images/no-goods.svg'
+            path: 'pages/index/index?activityId=' + activityId + '&shareID=' + this.data.openId,
+            imageUrl: 'cloud://dev-1gic3map3d8dabe0.6465-dev-1gic3map3d8dabe0-1330757186/share/fx.png'
         }
     },
     /**
