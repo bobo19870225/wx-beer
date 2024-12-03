@@ -11,6 +11,7 @@ Page({
         isCustom: false,
         spend: [],
         shop: null,
+        isRefreshing: false,
     },
 
     /**
@@ -23,7 +24,9 @@ Page({
             isCustom: options.shopId ? true : false,
             shop
         })
-        this.getSpend()
+        this.setData({
+            isRefreshing: true
+        })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -36,14 +39,16 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        this.getSpend()
+        this.setData({
+            isRefreshing: true
+        })
     },
     async getSpend() {
-        this.setData({
-            isLoading: true
-        })
         const shop = this.data.shop
         if (!shop) {
+            this.setData({
+                isRefreshing: false
+            })
             return
         }
         wx.cloud.callFunction({
@@ -55,9 +60,8 @@ Page({
                 }
             }
         }).then((res) => {
-            console.log(res);
             this.setData({
-                isLoading: false
+                isRefreshing: false
             })
             if (res.result.success) {
                 this.setData({

@@ -3,7 +3,7 @@
     <view slot="backText">返回</view>
     <view slot="content">支出管理</view>
 </cu-custom>
-<view style="text-align: center;">{{shop.name}}</view>
+<view style="text-align: center;" class="padding">{{shop.name}}</view>
 <view class='cu-load load-modal' wx:if="{{isLoading}}">
     <view class='gray-text text-xs'>加载中...</view>
 </view>
@@ -23,6 +23,11 @@
                     </view>
                     <view>
                         金额：￥{{item.money}}
+                    </view>
+                </view>
+                <view class="flex text-gray text-sm" style="gap: 18rpx;">
+                    <view>
+                        填写人：{{item.userName}}
                     </view>
                 </view>
             </view>
@@ -45,6 +50,10 @@
         </view>
         <view class="padding bg-white">
             <form catchsubmit="formSubmit" catchreset="formReset">
+                <view class="cu-form-group ">
+                    <view class="title">填写人</view>
+                    <input name="userName" value="{{user.name + '(' + user.phone + ')'}}" ></input>
+                </view>
                 <view class="cu-form-group ">
                     <view class="title">支出项</view>
                     <input name="name" placeholder="请填写支出项目..."></input>

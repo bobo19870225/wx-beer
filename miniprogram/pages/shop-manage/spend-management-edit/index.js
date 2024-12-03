@@ -13,16 +13,19 @@ Page({
         shop: null,
         price: null,
         money: null,
-        number: 1
+        number: 1,
+        user: null
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-   async onLoad(options) {
+    async onLoad(options) {
         const shop = await app.getShop(options.shopId)
+        const user = await app.getUserInfo(true,'spend-manage')
         this.setData({
-            shop
+            shop,
+            user
         })
         const eventChannel = this.getOpenerEventChannel()
         eventChannel && eventChannel.on && eventChannel.on('postData', (data) => {
@@ -98,7 +101,6 @@ Page({
     },
     formSubmit(e) {
         const value = e.detail.value
-        console.log(value);
         if (!value.name) {
             wx.showToast({
                 title: '请填写支出项',

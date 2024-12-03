@@ -77,22 +77,8 @@ App({
         if (!forceupdates && this.globalData.userInfoAll) {
             return this.globalData.userInfoAll
         }
-        console.log("app getUser", callPage);
-        const shop = await this.getShop()
-        const res = await wx.cloud.callFunction({
-            name: 'quickstartFunctions',
-            data: {
-                type: 'getUser',
-                entity: {
-                    shopId: shop._id
-                }
-            }
-        })
-        const userList = res.result.list
-        let userInfo = null
-        if (userList && userList.length > 0) {
-            userInfo = userList[0]
-        }
+        console.log("app getUserInfoAll", callPage);
+        const userInfo = await this.getUserInfo(forceupdates, callPage);
         let vipInfo = null
         if (userInfo && userInfo.vipList.length > 0) {
             vipInfo = userInfo.vipList[0]
@@ -149,7 +135,29 @@ App({
         }
         return this.globalData.userInfoAll
     },
-
+    async getUserInfo(forceupdates, callPage) {
+        if (!forceupdates && this.globalData.userInfo) {
+            return this.globalData.userInfo
+        }
+        console.log("app getUserInfo", callPage);
+        const shop = await this.getShop()
+        const res = await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+                type: 'getUser',
+                entity: {
+                    shopId: shop._id
+                }
+            }
+        })
+        const userList = res.result.list
+        let userInfo = null
+        if (userList && userList.length > 0) {
+            userInfo = userList[0]
+        }
+        this.globalData.userInfo = userInfo
+        return this.globalData.userInfo
+    },
     /**
      * 获取vip级别信息
      */
